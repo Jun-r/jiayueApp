@@ -289,7 +289,8 @@
 						  	     var itemmobile=doc.getElementById("itemmobile"+index).querySelector('.con');
 						  	     itemmobile.innerHTML=html;
 					  	    })
-			  		    	btnApply.setAttribute("data-type",type); 
+			  		    	btnApply.setAttribute("data-type",type);
+			  		    	$("#itemmobile"+index+" .mui-scroll-wrapper").scroll();
 			  		    }
 	 	                J.dataAjax(CONFING.Interface.companyHelpType,{wait:false},function(data){
 	 	                 	var dataType=data.data;
@@ -334,7 +335,9 @@
 										var isContent=doc.getElementById("itemmobile"+index).querySelector(".desc");
 										var type=this.getAttribute("data-type");
 					  		    	    getCur(index-1);
-					  		    	    if(!isContent)getAjaxDada(type,index);
+					  		    	    if(!isContent){
+					  		    	    	getAjaxDada(type,index);
+					  		    	    }
 					  		    	    slid._gotoItem(index-1,300);
 									})
 								}
@@ -345,17 +348,20 @@
 									indicators: false,
 									snap: '.mui-control-item'
 						      	});
+						      	//用于其他页面传参后触发
 						      	if(ws.type){
 						      		  var index=ws.inDex;
 						      		  $.trigger(a[index],'tap');
 						      	}
 				  	     });
+				  	     //计算当前的滚动
 			  		    var getCur=function(index){
 			  		    	  var offsetL=a[index].offsetLeft;
 			  		    	  navActive.style.cssText="width:"+resultW[index]+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
 						      var X=Math.max(Math.min(0, -offsetL + (navWidth / 2)), -maxScrollX);
 						      Tscroll.scrollTo(X,0,300);
 			  		    }
+			  		    //滑动触发
 			  		    doc.getElementById("slider").addEventListener("slide",function(e){
 			  		    	  e.stopPropagation();
 			  		    	  var index=e.detail.slideNumber;
@@ -364,7 +370,6 @@
 						 	  var type=a[index].getAttribute("data-type");
 						 	  if(!isContent){
 						 	  	getAjaxDada(type,index+1);
-						 	  	$("#itemmobile"+(index+1)+" .mui-scroll-wrapper").scroll();
 						 	  }
 			  			 });
 			  			 btnApply.addEventListener("tap",function(){

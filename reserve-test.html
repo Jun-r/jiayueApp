@@ -299,6 +299,7 @@
 					 var count = 1;
 					 var priceId=-1;    //排序id
 					 var containid=-1;  //剩余卡位排序id
+					 var SURL=null;
 					 var imgLazyloadApi=$(document).imageLazyload({
 							placeholder:'../images/60x60.gif'
 						});
@@ -466,7 +467,6 @@
 					 			    }
 					 		}
 					 		menuContent.innerHTML=arrHtml;
-					 		console.log(J.sDug(arrHtml))
 					 		if(id=='menuContent' || id=='submenuContent'){
 						 		var subN = doc.getElementById(id+'_sub');
 								if(subN)$.trigger(subN, 'tap');
@@ -490,12 +490,11 @@
 					 	 }
 					 	J.dataAjax(dataUrl,dataArr,function(data){
 					 		var arr=data.posList;
-					 		console.log(J.sDug(arr))
 					 		if(arr)setMenuList(arr,Cid);
 					 	})
 					 }
 					  var iSdesc=function(el){
-					 	 sildeMenu.close();
+					 	  sildeMenu.close();
 					 	  count=1;
 					 	  var id=el.getAttribute("id");
 					 	  var elements=doc.getElementById(id);
