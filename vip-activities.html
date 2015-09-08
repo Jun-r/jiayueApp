@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我的活动-会员中心</title>
+    <link href="css/app.css" rel="stylesheet"/>
+	<style type="text/css">
+	    .ui-page,html,body,.vip-application{
+	      	height: 100%;
+	      	padding-top:0px;
+	    }
+	    body,.ui-page{
+	    	background:#eee;
+	    }
+	    .ui-page{
+	      	padding-top:44px;
+	    }
+	     .vip-application{
+	     	position:relative;
+	     }
+	    .vip-application .mui-table-view{
+	      margin:10px 10px 10px
+	    }
+	   
+	    .mui-table-view{
+	    	background:none;
+	    }
+	    .mui-table-view .mui-table-view-cell{
+	    	margin-bottom:10px;
+	    }
+	    .mui-table-view .mui-table-view-cell a{
+	    	padding:10px 19px;
+	    	border-radius:4px;
+	    	position:relative;
+	    	-webkit-border-radius:4px;
+	    	display:block;
+	    	background:#fff;
+	    }
+	    .mui-table-view .mui-table-view-cell .info span{
+	    	display:block;
+	    	line-height:24px;
+	    	font-size:13px;
+	    	color:#333;
+	    }
+	    
+    	.mui-page-content{
+    		height:100%;
+    		position:relative;
+    	}
+    	.mui-page{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 44px;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+        li.mui-table-view-cell .mui-active{
+    		background:#e5e3e3;
+    	}
+    </style>
+</head>
+<body>
+  <div class="ui-page" id="ui-page">
+   	 <header class="ui-bar jy-bar" id="header">
+    	<a href="javascript:;" class="icon-back icon" id="back"></a>
+    	<div class="ui-title">我的活动</div>
+    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+    </header>
+	    <section class="vip-application">
+	    	<div class="mui-scroll-wrapper" id="pullrefresh">
+				<div class="mui-scroll">
+			    	<ul class="mui-table-view">
+						
+					</ul>
+				</div>
+			</div>
+	    </section>
+  </div>
+   <script src="js/mui.min.js"></script>
+   <script src="js/config.js"></script>
+   <script src="js/app.js"></script>
+   <script type="text/javascript">
+   (function($, doc) {
+   		$.plusReady(function() {
+   	     var count = 1;
+   	         stateDate=app.getStateDate(),
+   	         userid=stateDate['id'];
+   	     var pullrefresh=doc.getElementById("pullrefresh");
+		 var pullUpRefresh=function(){
+		 	var dataArr={
+		 		wait:true,
+		 		user_id:userid,
+		 		curPage:count
+		 	 }
+		 	 J.dataAjax(CONFING.Interface.userActivity,dataArr,function(data){
+		 	  if(data.type==2 || !data){
+					$('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+		 	  }else{
+			 	  var page=data.totalPage,
+			 	     infoArr=data.data;
+					 	 setTimeout(function() {
+					 	 	 var isPage=infoArr?++count>(page+1):true;
+					 		   $('#pullrefresh').pullRefresh().endPullupToRefresh((isPage));
+					 		    var table = doc.body.querySelector('.mui-table-view');
+								for (var i = 0; i <infoArr.length; i++) {
+									var html='<a href="javascript:;" class="listShow" data-id="'+infoArr[i].park_id+'">'
+									        +'<div class="info">'
+								            +'<span>活动名称：'+infoArr[i].activity_name+'</span>'
+								            +'<span>活动时间：'+infoArr[i].apply_time+'</span>'
+							                +'</div>'
+									    + '</a>';
+									var li = doc.createElement('li');
+									li.className = 'mui-table-view-cell';
+									li.innerHTML =html;
+									table.appendChild(li);
+								}
+								pullrefresh.style.opacity=1;
+					 	  }, 500);
+					}
+			 })
+		  }
+	      	//初始化单页的区域滚动
+			$('.mui-scroll-wrapper').scroll();
+      		plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+      		if ($.os.plus) {
+					setTimeout(function() {
+						$('#pullrefresh').pullRefresh().pullupLoading();
+					}, 100);
+			} else {
+				$.ready(function() {
+					$('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			$("#pullrefresh").on("tap",".listShow",function(){
+				 var showId=this.getAttribute("data-id");
+				$.openWindow({
+					id: 'activitys-show.html',
+				    url:'activitys-show.html',
+					show: {
+						autoShow:true,
+						aniShow:'pop-in',
+						duration:350
+					},
+					 extras:{
+				      sId:showId
+				    },
+					waiting: {
+						autoShow: true
+					}
+				});
+			})
+			$.init({
+	      		statusBarBackground:'#393767',
+	      		pullRefresh: {
+					container: '#pullrefresh',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullUpRefresh
+					}
+				}
+	      	});
+		});
+		
+   }(mui, document));
+   </script>
+</body>
+</html>

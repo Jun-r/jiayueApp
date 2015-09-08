@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>预定</title>
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/app.css" rel="stylesheet" />
+	<link href="css/restui.css" rel="stylesheet" />
+	<style type="text/css">
+	   .ui-page,html,body{
+	    	height:100%;
+	    }
+		img.imglazy{
+			background:#eee url('images/noPic.png') no-repeat center center;
+			background-size:62px 14px;
+		}
+		.mui-pull-loading{
+			position:absolute;
+			left:50%;
+			top:50%;
+			margin-left:-12px;
+			margin-top:-12px;
+		}
+		.mui-fullscreen {
+				position: fixed;
+				z-index: 1112000;
+				top:0;
+			    bottom:0;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			
+			.mui-preview-header {
+				height: 44px;
+				bottom: 20px;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4px;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 18px;
+			}
+			.mui-preview-image {
+				display: none;
+			}
+			.mui-preview-image.mui-preview-in {
+				display: block;
+			}
+			.mui-preview-image.mui-transitioning {
+				background: none;
+			}
+			.mui-preview-image.mui-transitioning .mui-preview-header,
+			.mui-preview-image.mui-transitioning .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item{
+				display: inline-table;
+				vertical-align: middle;
+				text-align: center;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			.content .title{
+				height:40px;
+				line-height:40px;
+				font-size:13px;
+				color:#595785;
+				padding-left:15px;
+			}
+			.content .title:before{
+				margin-right:4px;
+			}
+			.content .con{
+				background:#f5f5f5;
+				min-height:100px;
+				border-bottom:.05em solid #ddd;
+				padding:20px 35px 10px 35px;
+				color:#666;
+				font-size:13px;
+			}
+			.content .cons{
+				background:#f5f5f5;
+			}
+			.content .con p.p{
+				font-size:13px;
+				color:#333;
+			}
+			.content .con p.p span{
+				color:#666;
+			}
+			.content .con p.p em.red{
+				color:#d42f2f;
+				font-style: normal;
+			}
+			#header{
+				position: fixed;
+				top:0;
+				left:0;
+				right:0;
+			}
+			.mui-page-content {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top:44px;
+				bottom: 0;
+				width: 100%;
+			}
+			.boxBtn{
+				position:fixed;
+				bottom:0;
+				left:0;
+				right:0;
+				padding:10px 0;
+			}
+			.btnfrom{
+				width:70%;
+				margin:0 auto;
+				height:40px;
+				line-height:40px;
+				text-align:center;
+				font-size:16px;
+				background:#393767;
+				border-radius:3px;
+				-webkit-border-radius:3px;
+				color:#fff;
+				display:block;
+			}
+			.btnfrom:active{
+				background:#29284c;
+				color:#fff;
+			}
+			.mui-slider-item .mui-zoom{
+				display: table-cell;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				width: 100%;
+				height: 100%;
+				vertical-align: middle;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-slider-item .mui-zoom img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			#mui-page-content .mui-scroll-wrapper{
+				bottom:60px
+			}
+	</style>
+</head>
+<body style="background:#fff;">
+  <div class="ui-page" id="ui-page">
+    <section class="show" style="padding-bottom:1px;">
+    	 <header class="ui-bar jy-bar" id="header" style="z-index: 1111111">
+			<a href="javascript:;" class="icon-back icon"></a>
+			<div class="ui-title"><span id="ui-title"></span>详情</div>
+			<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		 </header>
+		 <div class="mui-page-content" id="mui-page-content">
+	    	 <div class="mui-scroll-wrapper">
+				 <div class="mui-scroll">
+			    	<div id="slider" class="mui-slider" style="min-height:216px;">
+			    		<div class="mui-pull-loading mui-spinner"></div>
+						<div class="mui-slider-group mui-slider-loop" id="slider-img">
+							
+						</div>
+						<div class="mui-slider-indicator" >
+				            <span class="mui-action mui-action-previous mui-icon mui-icon-back" style="display: none;"></span>
+				            <div class="mui-number">
+				                <span>1</span>/<span id="numberP">5</span>
+				            </div>
+				            <span class="mui-action mui-action-next mui-icon mui-icon-forward" style="display: none;"></span>
+				        </div>
+					</div>
+					<div class="content">
+			        	<div class="title icon icon-kw"><span id="titleH3"></span>描述</div>
+			        	<div class="con" id="contentBox1">
+			        		
+			        	</div>
+			        </div>
+			        <div class="content">
+			        	<div class="title icon icon-pt">配套设施及服务</div>
+			        	<div class="con" id="contentBox2">
+			        		
+			        	</div>
+			        </div>
+			        <!--<div class="content">
+			        	<div class="title icon phone">联系电话</div>
+			        	<div class="cons" id="contentBox3">
+			        		
+			        	</div>
+			        </div>-->
+				 </div>
+			 </div>
+			     <div class="boxBtn"><a href="javascript:;" class="btnfrom" id='xs'>申请</a></div>
+		 </div>
+    </section>
+  </div>
+  <script type="text/javascript" src="js/mui.min.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/mui.zoom.js"></script>
+  <script type="text/javascript" src="js/mui.previewimage.js"></script>
+  <script type="text/javascript" src="js/mui.lazyload.js"></script>
+  <script type="text/javascript" src="js/mui.lazyload.img.js"></script>
+  <script type="text/javascript" charset="utf-8">
+	(function($, doc) {
+		 $.init({
+		    	swipeBack: false,
+	      		statusBarBackground:'#393767'
+	     });
+	     var imgLazyloadApi=$(doc).imageLazyload({
+				placeholder:'../images/60x60.gif'
+			 });
+         var siderImg='',imgArr=[],chtmlP='';
+		 var sliderimg=doc.getElementById("slider-img");
+		 var numberP=doc.getElementById("numberP");
+		 var contentBox1=doc.getElementById("contentBox1");
+		 var contentBox2=doc.getElementById("contentBox2");
+		 var titleH3=doc.getElementById("titleH3");
+		 var uititle=doc.getElementById("ui-title");
+		 var muipagecontent=doc.getElementById("mui-page-content");
+		 var xs=doc.getElementById("xs");
+//		 muipagecontent.style.opacity=0;
+		 $('.mui-scroll-wrapper').scroll();
+		 $.plusReady(function() {
+			 plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+			 var ws=plus.webview.currentWebview();
+			 var dataArr={
+			 	 wait:true,
+			 	 id:ws.sId
+			 }
+			 xs.addEventListener("tap",function(){
+			 	if(!app.has_login()){
+			    		$.openWindow({
+							id: 'login.html',
+						    url:'login.html',
+							show: {
+								autoShow:true,
+								aniShow:'slide-in-bottom',
+								duration:350
+							},
+							waiting: {
+								autoShow: true
+							}
+						});
+						app.setisBrak(true);
+	    	        }else{
+					 	$.openWindow({
+							"id":'business-apply.html',
+						    "url":'business-apply.html',
+							show: {
+							    aniShow: 'pop-in',
+							    duration:300
+							},
+							extras:{
+								type_N:ws.title=="商业招租"?"1":"2",
+								sId:ws.sId
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}
+			 })
+			 uititle.innerText=ws.title;
+			 titleH3.innerText=ws.title;
+			 var pos=null;
+			 var Waiting=plus.nativeUI.showWaiting();
+			 J.dataAjax(CONFING.Interface.storeDetails,dataArr,function(data){
+			 	var dataA=data.data;
+			 	//详情参数
+			 	for(var a=0;a<dataA.length;a++){
+			 		imgArr=dataA[a].img_list.split(',');
+			 		contentBox2.innerHTML=dataA[a].supporting_service;
+			 		pos=dataA[a].firstname+dataA[a].secondname+dataA[a].thirdname;
+			 		chtmlP+='<p class="p"><span>所在位置：</span>'+pos+'</p>';
+		 			chtmlP+='<p class="p"><span>面积：</span>'+dataA[a].area+'㎡</p>';
+		 		    chtmlP+='<p class="p"><span>状态：</span>'+(dataA[a].is_merchants==1?"出租中":"已出租")+'</p>';
+	 	        }
+			 	//详情多图展示
+			    var length=imgArr.length;
+	             numberP.innerText=length;
+		 		siderImg+='<div class="mui-slider-item mui-slider-item-duplicate"><div class="mui-zoom"><img src="'+CONFING.httpUrl+imgArr[length-1]+'" /></div></div>';
+		 		for(var i=0;i<length;i++){
+			 		  siderImg+='<div class="mui-slider-item"><div class="mui-zoom"><img src="'+CONFING.httpUrl+imgArr[i]+'" data-preview-src="" data-preview-group="1" /></div></div>';
+			 	}
+		 		siderImg+='<div class="mui-slider-item mui-slider-item-duplicate"><div class="mui-zoom"><img src="'+CONFING.httpUrl+imgArr[0]+'"  /></div></div>';
+	            sliderimg.innerHTML=siderImg;
+	            imgLazyloadApi.addElements(); 
+	            contentBox1.innerHTML=chtmlP; //配套设施
+	            $("#slider").slider();
+	            $.previewImage();
+	            muipagecontent.style.opacity=1;
+	            setTimeout(function() {Waiting.close()},350)
+	            
+	        });
+		 });
+		 	            	
+	}(mui, document));
+	</script>
+</body>
+</html>

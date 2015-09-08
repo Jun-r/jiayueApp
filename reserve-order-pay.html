@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>嘉悦中心收银台</title>
+	<link href="css/app.css" rel="stylesheet" />
+	<style type="text/css">
+	   .ui-page,html,body{
+	    	height:100%;
+	    }
+		img.imglazy{
+			background:#eee url('images/noPic.png') no-repeat center center;
+			background-size:62px 14px;
+		}
+			#header{
+				position: fixed;
+				top:0;
+				left:0;
+				right:0;
+			}
+			.mui-page-content {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top:44px;
+				bottom: 0;
+				width: 100%;
+			}
+			.btnfrom{
+				width:60%;
+				margin:20px auto;
+				height:40px;
+				line-height:40px;
+				text-align:center;
+				font-size:15px;
+				background:#393767;
+				border-radius:3px;
+				-webkit-border-radius:3px;
+				color:#fff;
+				display:block;
+			}
+			.btnfrom:active{
+				background:#29284c;
+				color:#fff;
+			}
+			
+			.payTime{
+				color:#666;
+				font-size:14px;
+				height:40px;
+				line-height:40px;
+				padding:0 15px;
+				color:#666;
+				background:#eee;
+			}
+			.payTime:before{
+				font-size:14px;
+				margin-right:4px;
+				color:#666;
+			}
+			.payTime span{
+				margin-left:10px;
+				color:#595785;
+			}
+			#mui-page-content .title{
+				height:40px;
+				line-height:40px;
+				padding:0 15px;
+				color:#595785;
+				border-top:.05em solid #ddd;
+				font-size:14px;
+			}
+			#mui-page-content .title:before{
+				font-size:14px;
+				margin-right:4px;
+				color:#595785;
+				position:relative;
+				top:-1px
+			}
+			#mui-page-content .icon-info:before{
+				font-size:16px
+			}
+			#mui-page-content .phone:before{
+				font-size:15px;
+				position:relative;
+				left:1px
+			}
+			#mui-page-content .payinfo,#mui-page-content .payjs{
+				background:#f5f5f5;
+				padding:10px 30px;
+			}
+			#mui-page-content .info .p{
+				overflow:hidden;
+				font-size:13px;
+				line-height:25px;
+				color:#333;
+			}
+			#mui-page-content .info .p p{
+				overflow:hidden;
+			}
+			#mui-page-content .info .p p span{
+				display:block;
+				font-size:13px;
+				color:#333;
+			}
+			#mui-page-content .info .p .x{
+				float:left;
+				color:#666;
+			}
+			#mui-page-content .info .p .red,.payOrderInfo p .red{
+				color:#d42f2f;
+			}
+			#mui-page-content .info .p a .icon-push-right{
+				font-style: normal;
+				position:absolute;
+				top:10px;
+				right:15px;
+				color:#999;
+			}
+			#mui-page-content .info .p a .icon-push-right:after{
+				font-size:12px;
+				position:relative;
+				top:-1px;
+				margin-left:1px
+			}
+			.payOrderInfo{
+				padding:7px 15px;
+				border-bottom:.05em solid #ddd;
+			}
+			.payOrderInfo p{
+				font-size:13px;
+				color:#333;
+				line-height: 25px;
+			}
+			#mui-page-content  .total{
+				padding:0 15px;
+				border-bottom:.05em solid #ddd;
+			}
+			#mui-page-content  .total .p{
+				font-size:14px;
+				line-height:40px;
+				color:#666;
+			}
+			#mui-page-content  .total .p .red{
+				font-size:16px;
+				margin-left:2px;
+			}
+			.payOrderlist .button{
+				padding:10px 15px 10px 60px;
+				overflow:hidden;
+				background:#f5f5f5;
+				margin-bottom:5px;
+				background-size:32px 32px;
+				background-repeat: no-repeat;
+				background-position:15px center;
+				position:relative;
+			}
+			.payOrderlist .alipay{
+				background-image:url(images/zfb.png);
+				background-repeat: no-repeat;
+				background-position:15px center;
+			}
+			.payOrderlist .wxpay{
+				background-image:url(images/wx.png);
+			}
+			.payOrderlist .button span{
+				display:block;
+				font-size:13px;
+				color:#333;
+				
+			}
+			.payOrderlist .button p{
+				line-height:18px;
+				color:#999;
+				font-size:12px
+			}
+			.payOrderlist .button:after{
+				display:none;
+			}
+			.payOrderlist .active:after{
+				display:block;
+				color:#41b33d;
+				position:absolute;
+				bottom:0;
+				right:0;
+			}
+	</style>
+</head>
+<body style="background:#fff;">
+  <div class="ui-page" id="ui-page">
+    <section class="show" style="padding-bottom:1px;">
+    	 <header class="ui-bar jy-bar" id="header" style="z-index: 1111111">
+			<a href="javascript:;" class="icon-back icon"></a>
+			<div class="ui-title">嘉悦中心收银台</div>
+			<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		 </header>
+		 <div class="mui-page-content" id="mui-page-content">
+	    	 <div class="mui-scroll-wrapper">
+				 <div class="mui-scroll">
+			    	<div class="payTime icon icon-paytime">支付剩余时间<span id="payTime">正在加载中....</span></div>
+			    	<div class="payOrderInfo">
+			    		<p>订单名称：<span id="postCode"></span></p>
+						<p>订单编号：<span id="orderNum"></span></p>
+						<p>订单总价：<span class="red total-n"></span>元</p>
+			    	</div>
+			    	<div class="title icon icon-pay">选择支付方式</div>
+			    	<div class="payOrderlist" id="payOrderlist">
+			    		
+			    	</div>
+			    	<div class="total info">
+			    		<div class="p">你需要支付：<span class="red total-n"></span><span>元</span></div>
+			    	</div>
+			    	<a href="javascript:;" class="btnfrom" id='goPay'>确认支付</a>
+				 </div>
+			 </div>
+		 </div>
+    </section>
+  </div>
+  <script type="text/javascript" src="js/mui.min.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" charset="utf-8">
+	(function($, doc) {
+		 $.init({
+		    	swipeBack: false,
+	      		statusBarBackground:'#393767'
+         });    
+		 $.plusReady(function() {
+		 	 var payDate='';
+	         var orderNum=doc.getElementById("orderNum");
+	         var uititle=doc.getElementById("ui-title");
+	         var postCode=doc.getElementById("postCode");
+			 var muipagecontent=doc.getElementById("mui-page-content");
+			 var total=muipagecontent.querySelectorAll(".total-n");
+			 var orderId=null;
+	         window.addEventListener("payDate",function(event){
+	   	    	 payDate=event.detail.data;
+	   	    	 orderId=payDate['orderId'];
+	   	    	 var now=new Date();
+		     	 var endDate = payDate.endDatetime;
+				 var leftTime=endDate-now.getTime();
+				 var maxtime = parseInt(leftTime/1000)+1386;
+		         var CountDown=function(){
+					 if(maxtime>=0){  
+						 var minutes = Math.floor(maxtime/60);  
+						 var seconds = Math.floor(maxtime%60);  
+						 var time = "00小时"+(minutes==0?"0"+minutes:minutes)+"分"+(seconds<10?"0"+seconds:seconds)+"秒";  
+						 doc.getElementById('payTime').innerHTML=time; 
+						 --maxtime;
+						 if(maxtime<0){
+							 clearInterval(timer);
+						     doc.getElementById('payTime').innerHTML="00小时00分00秒"; 
+							 plus.nativeUI.alert("订单超时,没有付款!",function(){
+							 	$.openWindow({
+								    id:'index.html',
+									url: 'index.html',
+									show: {
+									    aniShow: 'pop-in',
+									    duration:300
+									},
+									waiting: {
+										autoShow: false
+									}
+								  });
+							 },"温馨提示","确定");
+						 }  
+					 } 
+				 };
+		         timer = setInterval(function(){
+		         	CountDown()
+		         },1000);
+		         for(var i=0;i<total.length;i++){
+		            total[i].innerText=payDate.total;	
+		         }
+		         postCode.innerText=payDate.posCode;
+		         orderNum.innerText=payDate.orderNum;
+	   	      })
+			 plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+			 var ws=plus.webview.currentWebview();
+			 var stateDate=app.getStateDate();
+			 var userid=stateDate['id'];
+			 var pays={};
+				// 获取支付通道
+				plus.payment.getChannels(function(channels){
+					var content=document.getElementById('payOrderlist');
+					var txt="支付通道信息：";
+					for(var i in channels){
+						var channel=channels[i];
+						pays[channel.id]=channel;
+						txt += "id:"+channel.id+", ";
+						txt += "description:"+channel.description+", ";
+						txt += "serviceReady:"+channel.serviceReady+"； ";
+						var paydiv=document.createElement('div');
+						var html="<span>"+channel.description+"支付</span>";
+						if(channel.description=='支付宝'){
+							html+="<p>推荐有支付宝账号的用户使用</p>"
+						}else{
+							html+="<p>推荐安装微信5.0及以上版本</p>"
+						}
+						paydiv.setAttribute('class','icon-button-pay icon button '+(channel.description=='支付宝'?"alipay":"wxpay"));
+						//paydiv.setAttribute('onclick','pay(this.id)');
+						paydiv.id=channel.id;
+						paydiv.innerHTML=html;
+						content.appendChild(paydiv);
+						checkServices(channel);
+					}
+				},function(e){
+					plus.nativeUI.toast("获取支付通道失败："+e.message);
+				});
+				// 检测是否安装支付服务
+				function checkServices(pc){
+					if(!pc.serviceReady){
+						var txt=null;
+						switch(pc.id){
+							case "alipay":
+							txt="检测到系统未安装“支付宝快捷支付服务”，无法完成支付操作，是否立即安装？";
+							break;
+							default:
+							txt="系统未安装“"+pc.description+"”服务，无法完成支付，是否立即安装？";
+							break;
+						}
+						plus.nativeUI.confirm(txt,function(e){
+							if(e.index==0){
+								pc.installService();
+							}
+						},pc.description);
+					}
+				}
+				
+				var w=null;
+				var PAYSERVER=CONFING.Interface.payApp;
+				// 支付
+				function pay(id){
+					if(w){return;}//检查是否请求订单中
+					var url=PAYSERVER;
+					if(id=='alipay'||id=='wxpay'){
+				//		if(id=='wxpay'){
+				//			url+='wxpayv3';
+				//		}else{
+							url+="?payid="+id;
+				//		}
+					}else{
+						plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
+						return;
+					}
+//					url+='&&total=';
+                    url+='&user_id='+userid+'&appid='+plus.runtime.appid+'&order_id='+orderId+'&pay_way=1';
+//                  console.log(url)
+					w=plus.nativeUI.showWaiting();
+					// 请求支付订单
+//					var amount = document.getElementById('total').value;
+					var xhr=new XMLHttpRequest();
+					xhr.onreadystatechange=function(){
+						switch(xhr.readyState){
+							case 4:
+							w.close();w=null;
+							if(xhr.status==200){
+//								plus.nativeUI.toast("----- 请求订单成功 -----");
+//								plus.nativeUI.toast( xhr.responseText );
+								var order='service="mobile.securitypay.pay"&partner="2088802401450149"&_input_charset="utf-8"&out_trade_no="20150902185051"&subject="支付宝支付"&payment_type="1"&seller_id="pinyi108@qq.com"&total_fee="1"&body="用于测试支付宝快捷支付测试！"&it_b_pay="1d"&notify_url="http%3A%2F%2F218.77.183.189%3A8090%2Fmerry%2Fnotify_url.jsp"&show_url="http%3A%2F%2Fwww.tianjiandao.com"&sign="a8%2BpwDCrIF7X%2B%2FjlH9f294bGwM9CrH%2FMR2qCR0MBQbSwwZfF1WaklzlQXyFMZEQ9JCph4dsYc8ltisxSHHsXVMt6S3R577Y4gzl8uBqnWxF9jfk7Jr%2FY%2B54I6KSwP%2FSDKwQSPCs3rjtRFUTmFM%2B%2F6WuZI44Xj1CYa7ghEc02OEw%3D"&sign_type="RSA"';
+								console.log(order)
+								plus.payment.request(pays[id],order,function(result){
+									console.log("成功")
+									plus.nativeUI.alert("支付成功：感谢你的支持，我们会继续努力完善产品。",function(){
+										back();
+									},"捐赠");
+								},function(e){
+									console.log("支付失败")
+//									plus.nativeUI.toast("----- 支付失败 -----");
+									plus.nativeUI.toast("["+e.code+"]："+e.message);
+								});
+							}else{
+								plus.nativeUI.toast("----- 请求订单失败 -----");
+								plus.nativeUI.toast( xhr.status );
+								plus.nativeUI.alert("获取订单信息失败！",null,"捐赠");
+							}
+							break;
+							default:
+							break;
+						}
+					}
+					xhr.open('GET',url);
+//					plus.nativeUI.toast("请求支付订单："+url);
+					xhr.send();
+				}
+				var plist=doc.getElementById("payOrderlist");
+				var payId=null;
+				$("#payOrderlist").on("tap",".button",function(){
+					var button=this;
+					for(var i=0;i<plist.children.length;i++){
+						if(button==plist.children[i]){
+							plist.children[i].classList.add('active');
+						}else{
+							plist.children[i].classList.remove('active');
+						}
+					}
+					payId=button.getAttribute("id");
+				})
+				doc.getElementById("goPay").addEventListener("tap",function(){
+				    pay(payId);
+				})
+		 });
+		 	            	
+	}(mui, document));
+	</script>
+</body>
+</html>

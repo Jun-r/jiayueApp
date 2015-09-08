@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>会员中心-活动详情</title>
+    <link href="css/app.css" rel="stylesheet"/>
+    <link href="css/mui.listpicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mui.poppicker.css" />
+	<script src="js/mui.min.js"></script>
+	 <style type="text/css">
+	    .ui-page,html,body{
+	    	height:100%;
+	    }
+	    .vip-list ul{
+	        padding-bottom:14px;
+	        overflow:hidden;
+	     		
+	    }
+        .vip-list li{
+    		overflow:hidden;
+    		color:#666;
+    		padding:0 12px;
+    		background:#fff;
+    		border-bottom:.05em solid #ddd;
+    		position:relative;
+    	}
+    	.vip-list li span{
+    		font-size:14px;
+    		line-height:40px;
+    	}
+    	.vip-list li span.p{
+    		display:block;
+    		margin-top:5px;
+    		line-height:25px;
+    		color:#333;
+    	}
+    	.vip-list li p{
+    		width:100%;
+    		font-size:14px;
+    		line-height:25px;
+    		padding-bottom:10px;
+    	}
+    	.vip-list li .f-l{
+    		float:left;
+    	}
+    	.vip-list li .f-r{
+    		float:right;
+    	}
+    	.vip-list li.t{
+    		margin:10px 0 0 0;
+    	 }
+		.mui-pages {
+			top: 44px;
+			height: auto;
+		 }
+		 .vip-list li:last-child{
+		 	border-bottom:none;
+		 }
+		.content{
+			height: 100%;
+		}
+		
+		.content .mui-scroll-wrapper{
+			top:44px;
+		}
+		</style>
+</head>
+<body>
+	<div class="ui-page" id="ui-page">
+	 	 <header class="ui-bar jy-bar" id="header">
+	    	<a href="javascript:;" class="icon-back icon" id="back"></a>
+	    	<div class="ui-title">活动详情</div>
+	    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+	    </header>
+	    <section class="content">
+	      <div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="vip-list">
+					<ul id="list">
+						<div class="mui-loading" style="margin-top:50%;">
+							<div class="mui-spinner">
+							</div>
+						 </div>
+					</ul>
+				</div>
+			</div>
+		 </div>
+		</section>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script type="text/javascript" src="js/city.data-3.js" ></script>
+   <script type="text/javascript">
+   (function($, doc) {
+   	    $.init({
+      		statusBarBackground:'#393767'
+      	});
+      	 //初始化单页的区域滚动
+		$('.mui-scroll-wrapper').scroll();
+		console.log("1")
+   	    $.plusReady(function() {
+   	 	        plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+   			    var stateDate = app.getStateDate();
+   			    var list=doc.getElementById("list");
+   			    var currentWs=plus.webview.currentWebview();
+			    J.dataAjax(CONFING.Interface.myApplyDetail,{wait:true,id:currentWs.sId,type_N:currentWs.tId},function(data){
+		  			    var conlist=data.data;
+			  		    var address=J.cityGetText(cityData3,conlist['address']);
+						var html='<li><span class="f-l">申请人</span><span class="f-r">'+conlist['username']+'</span></li>'
+						    +'<li><span class="f-l">申请时间</span><span class="f-r">'+conlist['apply_time']+'</span></li>'
+						    +'<li><span class="f-l">手机</span><span class="f-r">'+conlist['phone']+'</span></li>'
+						    +'<li><span class="f-l">邮箱</span><span class="f-r">'+conlist['email']+'</span></li>'
+						    +'<li class="t"><span class="f-l">项目名称</span><span class="f-r">'+conlist['company_name']+'</span></li>'
+						    +'<li><span class="f-l">企业注册号</span><span class="f-r">'+conlist['registration_number']+'</span></li>'
+						    +'<li><span class="f-l">行业</span><span class="f-r">'+conlist['industry']+'</span></li>'
+						    +'<li><span class="f-l">城市</span><span class="f-r">'+address+'</span></li>'
+						    	
+			  		    list.innerHTML=html;
+	  			})
+        });
+   }(mui, document));
+   </script>
+</body>
+</html>

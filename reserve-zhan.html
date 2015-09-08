@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>预定</title>
+	<link href="css/app.css" rel="stylesheet" />
+	<style type="text/css">
+	   .ui-page,html,body{
+	    	height:100%;
+	    }
+	    .ui-page{
+	    	padding-top:0px;
+	    }
+		.jy-list{
+			height:100%;
+			width:100%;
+		}
+		.jy-tab-list{
+			height:auto;
+			position:relative;
+			background:#fff;
+			z-index:1000;
+		}
+		.jy-tab-list ul.tab{
+			background-color:#eee
+		}
+		.jy-tab-list ul{
+			height:44px;
+			position:relative;
+			overflow:hidden;
+		}
+		.jy-tab-list ul.tab .active{
+			width:33.33%;
+			height:2px;
+			content:'';
+			background:#595785;
+			display:block;
+			position:absolute;
+			bottom:0;
+			left:0;
+			-webkit-transition: -webkit-transform 300ms ease;
+			transition: transform 300ms ease;
+		}
+		.jy-tab-list li{
+			height:44px;
+			width:33.3%;
+			line-height:44px;
+			float:left;
+		}
+		 .jy-tab-list .screening{
+		 	border-bottom:.05em solid #ddd;
+		 }
+		.jy-tab-list li a{
+			height:44px;
+			text-align:center;
+			display:block;
+			font-size:14px;
+		}
+		.jy-tab-list .tab li a{
+		    color:#595785;
+		}
+	    .jy-tab-list .screening li,.jy-tab-list .screening li a{
+			font-size:12px;
+			color:#666;
+			text-align:center;
+		}
+		 .jy-tab-list .screening li a.icon:after{
+		 	font-size:12px;
+		 	margin-left:5px
+		 }
+		 .mui-page-content {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top:44px;
+			bottom: 0;
+			width: 100%;
+		}
+		.c4{
+			color:#d42f2f;
+		}
+		.p-list{
+			padding:0 10px;
+			overflow:hidden;
+		}
+		.p-list li{
+			overflow:hidden;
+			border-top:.05em solid #ddd;
+		}
+		.p-list li:first-child{
+			border-top:none
+		}
+		.p-list li a{
+			padding:10px 0 12px 0;
+			overflow:hidden;
+			display: block;
+		}
+		.p-list li .img{
+			width:115px;
+			height:86px;
+			float:left;
+			margin-right:10px;
+		}
+		.p-list li .img img{
+			width:115px;
+			height:86px;
+		}
+		.p-list li .info{
+			overflow:hidden;
+		}
+		.p-list li .info p{
+			font-size:12px;
+			color:#666;
+		}
+		.noDatalist{
+			font-size:14px;
+			color:#666;
+			line-height:40px;
+			text-align:center;
+		}
+		img.imglazy{
+			background:#eee url('images/noPic.png') no-repeat center center;
+			background-size:62px 14px;
+		}
+		.mui-linkage>.mui-right-two,.mui-linkage>.mui-right-three{
+			width:33.33%;
+		}
+		.mui-linkage>.mui-right-three{
+			left:66.66%;
+			border-left:.05em solid #ddd;
+		}
+	</style>
+</head>
+<body style="background:#fff;">
+  <section class="jy-list">
+    	 <div class="jy-tab-list">
+    	 	<ul class="screening">
+    	 		<li><a href="javascript:;" class="icon-arrow-d icon openMenu" data-arr='priceArr' id="lou">选择所在楼栋</a></li>
+    	 		<li><a href="javascript:;" class="icon-arrow-desc icon-down" id="priceDesc">价格</a></li>
+    	 		<li><a href="javascript:;" class="icon-arrow-desc icon-down">展厅面积</a></li>
+    	 	</ul>
+    	 </div>
+    	 <div class="mui-page-content">
+			<div class="mui-scroll-wrapper" id="pullrefresh">
+				<div class="mui-scroll">
+					<div class="p-list" id="plist">
+						<ul class="mui-table-view">
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--菜单滑动公用区域-->
+		    <div class="menuSlide" id="menuSlide"  style="display:none;">
+		      <div class="mui-backdrop"></div>
+		      <div class="mui-linkage mui-slide mui-slide-bottom">
+			      <div class="mui-scroll-wrapper mui-left-one">
+					 <div class="mui-scroll">
+				    	<ul id="menuContent">
+						</ul>
+					 </div>
+				 </div>
+				 <div class="mui-scroll-wrapper mui-right-two">
+					 <div class="mui-scroll">
+				    	<ul id="submenuContent">
+						</ul>
+					 </div>
+				 </div>
+				 <div class="mui-scroll-wrapper mui-right-three">
+					 <div class="mui-scroll">
+				    	<ul id="submenuContents">
+						</ul>
+					 </div>
+				 </div>
+				</div>
+			</div>
+		</div>
+  </section>
+  <script type="text/javascript" src="js/mui.min.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/mui.lazyload.js"></script>
+  <script type="text/javascript" src="js/mui.lazyload.img.js"></script>
+  <script type="text/javascript" charset="utf-8">
+	(function($, doc) {
+		//下拉刷新
+		 var count = 1;
+		 var priceId=-1;     //排序id
+		 var areaid=-1;      //面积排序id
+		 var isClick=true;
+		 var imgLazyloadApi=$(document).imageLazyload({
+				placeholder:'../images/60x60.gif'
+			});
+		 var pullUpRefresh=function(firstid,secondid,call){
+		 	if(typeof firstid =='function'){
+		 		secondid='';
+		 		call=firstid;
+		 	}
+		 	if(firstid || secondid || call)pullrefresh.style.opacity=0;
+		 	var dataArr={
+		 		wait:true,
+		 		price:priceId,
+		 		area:areaid,
+		 		first_id: parseInt(firstid) || '',
+		 		second_id:parseInt(secondid) || '',
+		 		curPage:count
+		 	 }
+		 	 J.dataAjax(CONFING.Interface.exhList,dataArr,function(data){
+		 	  if(data.type==2 || !data){
+	 	     	    $('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+	 	     	    if(firstid || secondid || call)pullrefresh.style.opacity=1;
+		 	  }else{
+			 	  var page=data.totalPage,
+			 	     infoArr=data.showRoomList;
+			 	         pageSize=data.pageSize;
+					 	 setTimeout(function() {
+					 	 	 var isPage=infoArr?++count>(page+1):true;
+					 		   $('#pullrefresh').pullRefresh().endPullupToRefresh((isPage));
+					 		    var table = doc.body.querySelector('.mui-table-view');
+								for (var i = 0; i <infoArr.length; i++) {
+									var imgArr=infoArr[i].img_list.split(',');
+									var html='<a href="javascript:;" class="listShow" data-id="'+infoArr[i].id+'">'
+									    +'<div class="img"><img class="imglazy" data-lazyload="'+CONFING.httpUrl+imgArr[0]+'?version='+Math.random()*1000+'"/></div>'
+									   +'<div class="info">'
+										+'	<p>位置：'+infoArr[i].firstname+infoArr[i].secondname+infoArr[i].thirdname+'</p>'
+										+'	<p>面积：'+infoArr[i].area+'㎡</p>'
+										+'	<p>价格：<span class="c4">￥'+infoArr[i].price+'/天</span></p>'
+										+'</div>'
+									    + '</a>';
+									var li = doc.createElement('li');
+									li.className = 'mui-table-view-cell';
+									li.innerHTML =html;
+									table.appendChild(li);
+								}
+								if(firstid || secondid || call)pullrefresh.style.opacity=1;
+								imgLazyloadApi.addElements();
+					 	  }, 500);
+					}
+		 	       call && call();
+			 })
+		  }
+		  $.init({
+		    	swipeBack: false,
+		    	gestureConfig:{
+					doubletap:true
+				},
+	      		statusBarBackground:'#393767',
+	      		pullRefresh: {
+						container: '#pullrefresh',
+						up: {
+							contentrefresh: '正在加载...',
+							callback: pullUpRefresh
+						}
+					}
+	      	 });
+		  var setMenuList=function(arr,id){
+		 		var menuContent=doc.getElementById(id);
+		 		var submenuContents=doc.getElementById("submenuContents");
+		 		//console.log(J.sDug(arr.length))
+		 		var arrHtml='';
+		 		if(!arr){
+		 			menuContent.innerHTML='';
+		 			submenuContents.innerHTML='';
+		 			return;
+		 		}
+		 		for(var i=0;i<arr.length;i++){
+		 			    if(i==0){
+		 			    	arrHtml+='<li><a href="javascript:;" class="'+id+'_a" id="'+id+'_sub" data-id="'+arr[i].id+'">'+arr[i].category_name+'</li>'
+		 			    }else{
+		 			    	arrHtml+='<li><a href="javascript:;" class="'+id+'_a" data-id="'+arr[i].id+'">'+arr[i].category_name+'</li>'
+		 			    }
+		 		}
+		 		menuContent.innerHTML=arrHtml;
+		 		if(id=='menuContent' || id=='submenuContent'){
+			 		var subN = doc.getElementById(id+'_sub');
+					if(subN)$.trigger(subN, 'tap');
+				}
+		 	}
+		    var menuSlide=doc.getElementById("menuSlide");
+		    var priceDesc=doc.getElementById("priceDesc");
+		    var pullrefresh=doc.getElementById("plist");
+		    var table = doc.body.querySelector('.mui-table-view');
+			var sildeMenu= new J.toggleSlideMenu(menuSlide);
+			J.ClassTab("openMenu",function(_this){
+			    sildeMenu.init();
+			})
+			$('#menuSlide .mui-scroll-wrapper').scroll();
+		   $.plusReady(function() {
+			 plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+			   if ($.os.plus) {
+						setTimeout(function() {
+							$('#pullrefresh').pullRefresh().pullupLoading();
+						}, 100);
+				} else {
+					$.ready(function() {
+						$('#pullrefresh').pullRefresh().pullupLoading();
+					});
+				}
+			 var ws=plus.webview.currentWebview();
+			 ws.addEventListener("hide",function(){
+			 	sildeMenu.close();
+			 })
+			 //楼层联动查询
+			 var publicQuery=function(dataUrl,id,aid){
+			 	var dataArr={
+			 		wait:true,
+			 		id:aid || ''
+			 	 }
+			 	J.dataAjax(dataUrl,dataArr,function(data){
+			 		var arr=data.posList;
+			 		setMenuList(arr,id);
+			 	})
+			 }
+			 publicQuery(CONFING.Interface.exhWhe,"menuContent");
+			 var pid=0,ptext='';
+			 var lou=doc.getElementById("lou");
+			 var menuContent=doc.getElementById("menuContent");
+			 var oneT=menuContent.children;
+			 $("#menuContent").on("tap",".menuContent_a",function(){
+			 	    ptext=this.innerText;
+			 	    pid=this.getAttribute("data-id");
+			 	    var partli=this.parentNode;
+			 	    var li=menuContent.getElementsByTagName("li");
+			 	    for(var i=0;i<li.length;i++){
+			 	    	if(li[i]==partli){
+					 	    partli.className="active";
+					 	 }else{
+					 	 	oneT[i].className='';
+					 	 }
+			 	    }
+					publicQuery(CONFING.Interface.exhWheSecond,"submenuContent",pid);
+			 })
+			  //二级楼栋
+			 $("#submenuContent").on("tap",".submenuContent_a",function(){
+			 	atid=this.getAttribute("data-id");
+			 	ttext=this.innerText;
+			 	publicQuery(CONFING.Interface.exhWheThird,"submenuContents",atid);
+			 })
+			  //三级楼栋
+			 $("#submenuContents").on("tap",".submenuContents_a",function(){
+			 	var aid=this.getAttribute("data-id");
+			 	count=1;
+			 	var text=this.innerText;
+			 	pullrefresh.style.opacity=0;
+			 	table.innerHTML='';
+			 	var Waiting=plus.nativeUI.showWaiting();
+			 	sildeMenu.close();
+			 	pullUpRefresh(pid,aid,function(){
+			 		lou.innerText=ptext+" "+text;
+			 		 setTimeout(function() {Waiting.close()},500);
+			 	})
+			 })
+			 $(".screening").on("tap",".icon-arrow-desc",function(){
+			 	  count=1;
+			 	  var id=this.getAttribute("id");
+			 	  pullrefresh.style.opacity=0;
+			 	  if(isClick){
+			 	  	if(id=='priceDesc'){
+			 	  		priceId=2;
+			 	  		areaid=-1;
+			 	  	}else{
+			 	  	    areaid=2;
+			 	  	    priceId=-1;
+			 	  	}
+			 	  	this.classList.add('icon-up');
+			 	  	this.classList.remove('icon-down');
+			 	  	isClick=false;
+			 	  }else{
+			 	  	id=='priceDesc'?priceId=1:areaid=1;
+			 	  	this.classList.add('icon-down');
+			 	  	this.classList.remove('icon-up');
+			 	  	isClick=true;
+			 	  }
+			 	  table.innerHTML='';
+			 	  var Waiting=plus.nativeUI.showWaiting();
+			 	  pullUpRefresh(function(){
+			 	  	 setTimeout(function() {Waiting.close()},500)
+			 	  });
+			 })
+		 });
+	      	 var showUrl=CONFING.Interface.exhDetails;
+			 $(".mui-table-view").on("tap",".listShow",function(){
+			 	 var showId=this.getAttribute("data-id");
+			 	 $.openWindow({
+					id: 'reserve-show.html',
+				    url:'reserve-show.html',
+				    extras:{
+				      sId:showId,
+				      uRl:showUrl,
+				      title:"展厅"
+				    },
+					show: {
+						aniShow:'pop-in',
+						duration:350
+					},
+					waiting: {
+						autoShow: true
+					}
+				});
+			 })
+	}(mui, document));
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>个人资料</title>
+    <link href="css/app.css" rel="stylesheet"/>
+    <link href="css/mui.listpicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mui.poppicker.css" />
+	<script src="js/mui.min.js"></script>
+	 <style type="text/css">
+	    .ui-page,html,body{
+	    	height:100%;
+	    }
+         .vip-list li a{
+         	color: #666;
+         	padding:5px 25px 5px 15px;
+         	display:block;
+         	overflow:hidden;
+         }
+    	.vip-list li a .f-l{
+    		float:left;
+    	}
+    	.vip-list li .f-r{
+    		float:right;
+    	}
+    	.vip-list li .f-r img{
+    		float:left;
+    		-webkit-border-radius:50%;
+    		border-radius:50%;
+    	}
+    	.vip-list li{
+    		line-height:30px;
+    		overflow:hidden;
+    		background:#fff;
+    		color:#666;
+    		font-size:14px;
+    		position:relative;
+    		margin:10px 0 0 0;
+    	}
+    	.vip-list li a:after{
+    		float:right;
+    		font-size:12px;
+    		color:#D9D8D8;
+    		position:absolute;
+    		right:8px;
+    		top:5px;
+    	}
+    	.vip-list li a.exit{
+    		text-align:center;
+    		font-size:16px;
+    		background:#FF5053;
+    		color:#fff;
+    		margin:0 10px
+    	}
+    	.vip-list li.certification{
+    		padding:5px 15px 0 15px;
+    		background:none;
+    	}
+    	.mui-table-view-radio li{
+    		padding:5px 15px;
+    	}
+    	.vip-list li.certification a,.from-btn{
+    		 padding:0 10px;
+    		 background:#fff;
+    		 display:block;
+    		 height:40px;
+    		 line-height:40px;
+    		 color:#fff;
+    		 font-size:16px;
+    		 border-radius:3px;
+    		 -webkit-border-radius:3px;
+    		 text-align:center;
+    		background:#393767;
+    	}
+    	.from-btn{
+    		margin:15px 10px;
+    	}
+    	.vip-list li .icon-radio-push:before{
+    		 display:none;
+    	}
+    	.vip-list li.mui-selected .icon-radio-push:before{
+    		display:block;
+    		position:absolute;
+    		right:15px;
+    		top:5px;
+    		color:#393767;
+    	}
+
+		.mui-views,.mui-view,.mui-pages,.mui-page,.mui-page-content {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #efeff4;
+		}
+		.mui-pages {
+			top: 44px;
+			height: auto;
+		}
+		.mui-scroll-wrapper,.mui-scroll {
+			background-color: #efeff4;
+		}
+		.mui-page.mui-transitioning {
+			-webkit-transition: -webkit-transform 300ms ease;
+			transition: transform 300ms ease;
+		}
+		.mui-page-left {
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+		.mui-ios .mui-page-left {
+			-webkit-transform: translate3d(-20%, 0, 0);
+			transform: translate3d(-20%, 0, 0);
+		}
+		
+		.mui-navbar-inner.mui-transitioning,
+		.mui-navbar-inner .mui-transitioning {
+			-webkit-transition: opacity 300ms ease, -webkit-transform 300ms ease;
+			transition: opacity 300ms ease, transform 300ms ease;
+		}
+		.ui-title{
+			background:#393767;
+		}
+		.mui-page{
+			display:none;
+		}
+		.mui-pages .mui-page {
+			display: block;
+		}
+		.mui-table-view-cell .mui-active{
+			background:#E7E7E8;
+		}
+		.vip-list li .input{
+			background:none;
+			width:100%;
+			border:none;
+			height:40px;
+			text-indent:15px;
+		}
+		</style>
+</head>
+<body>
+	
+	<div class="ui-page" id="ui-page">
+		
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar ui-bar jy-bar">
+				</div>
+				<div class="mui-pages" id="appBox">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="setting" class="mui-page">
+			<!--页面标题栏开始-->
+			<div class="mui-navbar-inner">
+				<a href="javascript:;" class="icon-back icon"></a>
+		    	<div class="ui-title">个人资料</div>
+		    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+			</div>
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="vip-list">
+							<ul>
+								<li id="head"><a href="javascript:;" class="icon-push-right icon avatar"><span class="f-l">头像</span><span class="f-r"><img src="temp/vip.png"  id="avatar_src" width="30" height="30" /></span></a></li>
+			                    <li class="mui-table-view-cell"><a href="#mailbox" class="icon-push-right icon"><span class="f-l">邮箱</span><span class="f-r" id="email"></span></a></li>
+			                    <li class="mui-table-view-cell"><a href="#gender" class="icon-push-right icon"><span class="f-l">性别</span><span class="f-r" id="sex"></span></a></li>
+			                    <li class="mui-table-view-cell"><a href="javascript:;" id="showCity" class="icon-push-right icon"><span class="f-l">地区</span><span class="f-r" id="cityResult"></span></a></li>
+			                    <li class="certification"><a href="certification.html" class="btn ui-link">企业认证</a></li>
+			                    <li class="certification"><a href="partner.html" class="btn ui-link">伙伴认证</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+		<!--单页面结束-->
+		<!--性别修改-->
+		<div id="gender" class="mui-page">
+			 <!--页面标题栏开始-->
+			<div class="mui-navbar-inner">
+			</div>
+			<!--页面标题栏结束-->
+			<div class="mui-page-content">
+				<ul class="mui-table-view mui-table-view-radio vip-list">
+					<li class="mui-table-view-cell" id="sexnan">
+						<span class="f-l icon-radio-push icon">男</span>
+					</li>
+					<li class="mui-table-view-cell" id="sexnv">
+						<span class="f-l icon-radio-push icon">女</span>
+					</li>
+				</ul>
+				<a href="javascript:;" class="from-btn" id="sex_submit">提交</a>
+			</div>
+		</div>
+		<!--性别修改结束-->
+		<!--邮箱修改-->
+		<div id="mailbox" class="mui-page" >
+			 <!--页面标题栏开始-->
+			<div class="mui-navbar-inner">
+			</div>
+			<!--页面标题栏结束-->
+			<div class="mui-page-content">
+				<ul class="vip-list">
+					<li>
+						<input type="text" id="email_from"  class="input" placeholder="请你修改你的邮箱"/>
+					</li>
+				</ul>
+				<a href="javascript:;" class="from-btn" id="email_submit">提交</a>
+			</div>
+		</div>
+		<!--邮箱修改结束-->
+   </div>
+   
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/mui.view.js"></script>
+    <script src="js/mui.listpicker.js"></script>
+	<script src="js/mui.poppicker.js"></script>
+	<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+   <script type="text/javascript">
+   (function($, doc) {
+   	    $.init({
+      		statusBarBackground:'#393767'
+      	});
+      	 //初始化单页view
+		var viewApi = $('#app').view({
+			defaultPage: '#setting'
+		});
+		 //初始化单页的区域滚动
+		 $('.mui-scroll-wrapper').scroll();
+   	    $.plusReady(function() {
+   	 	    plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+   	 	      var stateDate = app.getStateDate();
+		  	  var avatar=doc.getElementById("avatar_src");
+			  var sex=doc.getElementById("sex");
+			  var email=doc.getElementById("email");
+			  var email_from=doc.getElementById("email_from")
+			  var address=doc.getElementById("cityResult");
+			  var sexnan=doc.getElementById("sexnan");
+			  var sexnv=doc.getElementById("sexnv");
+			  var sex_submit=doc.getElementById("sex_submit");
+			  var email_submit=doc.getElementById("email_submit");
+			  var addressText=J.cityGetText(cityData3,stateDate['address']);         //获取省市区值
+			  email.innerText=stateDate['emial'] || '';                              //会员等级
+			  address.innerText=addressText;                                         //地址
+			  sex.innerText=stateDate['sex']==1?"男":"女";                           //性别
+			  avatar.src= CONFING.httpUrl+stateDate['head_img_path'] || '';          //会员图片
+			  var dataArr={};
+				  dataArr.user_id=stateDate['id'];
+				  dataArr.user_name=stateDate['user_name'];
+				  dataArr.emial=stateDate['emial'];
+				  dataArr.head_img_path=stateDate['head_img_path'];
+				  dataArr.address=stateDate['address'];
+				  dataArr.sex=stateDate['sex'];
+			  //处理view的提交返回
+		      var sexlist=stateDate['sex']==1?sexnan:sexnv;
+		          sexlist.className='mui-table-view-cell mui-selected';
+		      var view = viewApi.view;
+		      //处理view的后退与webview后退
+				var oldBack = $.back;
+				$.back = function() {
+					if (viewApi.canBack()) { //如果view可以后退，则执行view的后退
+						viewApi.back();
+					} else { //执行webview后退
+						oldBack();
+					    setTimeout(function(){
+						   plus.navigator.setStatusBarBackground(J.bcolor);
+						   plus.navigator.setStatusBarStyle(J.bstyle);
+						},100)
+					}
+				};
+				//邮箱修改
+				  email_submit.addEventListener("tap",function(){
+				 	var emialV=email_from.value;
+				 	    if(!emialV){
+				 	    	plus.nativeUI.toast("邮箱不能为空");
+				 	    	return;
+				 	    }
+					    dataArr.emial=emialV;
+						J.dataAjax(CONFING.Interface.updateuserinfo,dataArr,function(data){
+							stateDate['emial']=emialV;
+							app.setStateDate(stateDate);
+							if(data.type=='0'){
+								plus.nativeUI.toast(data.msg);
+							}else{
+								plus.nativeUI.alert(data.msg,function(){
+									viewApi.back();
+								});
+							}
+						})
+				    })
+				  //性别修改
+				   sex_submit.addEventListener("tap",function(){
+				   	     var hadClass=sexnan.getAttribute('class');
+					 	   var sexNum=hadClass.length == 32?1:2;
+						    dataArr.sex=sexNum;
+							J.dataAjax(CONFING.Interface.updateuserinfo,dataArr,function(data){
+								stateDate['sex']=sexNum;
+								app.setStateDate(stateDate);
+								if(data.type=='0'){
+									plus.nativeUI.toast(data.msg);	
+								}else{
+									plus.nativeUI.alert(data.msg,function(){
+										viewApi.back();
+									});
+								}
+							})
+				    })
+				//监听页面切换事件方案1,通过view元素监听所有页面切换事件，目前提供pageBeforeShow|pageShow|pageBeforeBack|pageBack四种事件(before事件为动画开始前触发)
+				view.addEventListener('pageShow', function(e) {
+					  email.innerText=stateDate['emial'] || '';
+					  sex.innerText=stateDate['sex']==1?"男":"女";
+					  address.innerText=addressText; 
+					  app.setStateDate(stateDate);
+				});
+		       //更换头像
+				$("#head").on("tap", ".avatar", function(e) {
+					var a = [{
+						title: "拍照"
+					}, {
+						title: "相册选择"
+					}];
+					plus.nativeUI.actionSheet({
+						cancel: "取消",
+						buttons: a
+					}, function(b) {
+						switch (b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage();
+								break;
+							case 2:
+								galleryImgs();
+								break;
+							default:
+								break
+						}
+					})
+				});
+				//图片转为base64;
+			   function convertImgToBase64(path){
+				      var img = new Image();
+				      plus.zip.compressImage({
+							src:path,
+							dst:path,
+							quality:20,
+					        overwrite:true,
+					        clip:{top:"20px",left:"0px",width:window.screen.availWidth,height:window.screen.availWidth},
+					        width:window.screen.availWidth
+						},
+						function(imgObj) {
+							img.src = imgObj.target;
+					        img.onload = function () {
+					            var that = this;
+					            //生成canvas
+					            var canvas = document.createElement('canvas');
+					            var ctx = canvas.getContext('2d');
+					            canvas.height = window.screen.availWidth;
+							    canvas.width = window.screen.availWidth;
+						        ctx.drawImage(that, 0, 0, imgObj.width, imgObj.height);
+					            var base64 = canvas.toDataURL('image/jpeg', 1);   
+					            var result=base64.split(",");
+					                var dataArr={
+					                	user_id:stateDate['id'],
+					                	data:result[1],
+					                	type:"post",
+					                	fileType:'jpg'
+					                }
+					               console.log(result[1])
+					                J.dataAjax(CONFING.Interface.appImgUpload,dataArr,function(data){
+					                	avatar.src = CONFING.httpUrl+data.data;
+					                	stateDate['head_img_path']=data.data;
+					                	plus.nativeUI.alert(data.msg,function(){
+					                		var main=plus.webview.getWebviewById("main.html");
+					                		main.evalJS("var stateDate=app.getStateDate();document.getElementById('avatar_src').src= CONFING.httpUrl+stateDate['head_img_path']")
+					                	})
+					                	app.setStateDate(stateDate); //设置本地头像
+					                })
+					       }
+						},function(error) {
+							plus.nativeUI.alert("Compress error!");
+					});
+			   }
+				//拍照
+				function getImage() {
+				    var cmr = plus.camera.getCamera();
+				    cmr.captureImage( function (p) {
+				        plus.io.resolveLocalFileSystemURL( p, function ( entry ) {    
+				            var localurl = entry.toLocalURL();
+				            convertImgToBase64(localurl)
+				        });
+				    });
+				}
+				//相册选取
+				function galleryImgs(){
+					 plus.navigator.setStatusBarStyle('UIStatusBarStyleDefault');
+				    plus.gallery.pick( function(path){
+				    	plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+				    	convertImgToBase64(path)
+				    }, function ( e ) {
+				    	plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+				        //outSet( "取消选择图片" );
+				    },{filter:"image"});
+				}
+				
+				 //省市区联动
+				$.ready(function() {
+					var cityPicker3 = new $.PopPicker({
+						layer: 3
+					}); 
+					cityPicker3.setData(cityData3);
+					var showCityPickerButton = doc.getElementById('showCity');
+					var cityResult3 = doc.getElementById('cityResult');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							var itemText=items[0].text+""+items[1].text+" "+items[2].text;
+							var itemValue=items[0].value+","+items[1].value+","+items[2].value;
+							dataArr.address=itemValue;
+							//重新设置本地地区数据
+							J.dataAjax(CONFING.Interface.updateuserinfo,dataArr,function(data){
+								stateDate['address']=itemValue;
+								app.setStateDate(stateDate);
+								if(data.type=='0'){
+									plus.nativeUI.toast(data.msg);	
+								}else{
+									plus.nativeUI.alert(data.msg);
+							        cityResult3.innerText =itemText;
+								}
+							})
+						});
+					}, false);
+				 });
+      });
+   }(mui, document));
+  
+   </script>
+</body>
+</html>

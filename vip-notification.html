@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>系统通知-会员中心</title>
+    <link href="css/app.css" rel="stylesheet"/>
+	<script src="js/mui.min.js"></script>
+	<style type="text/css">
+	    .ui-page,html,body,.vip-application{
+	      	height: 100%;
+	      	padding-top:0px;
+	    }
+	    body,.ui-page{
+	    	background:#eee;
+	    }
+	    .ui-page{
+	      	padding-top:44px;
+	    }
+	     .vip-application{
+	     	position:relative;
+	     }
+	    .vip-application .mui-table-view{
+	      margin:10px 10px 10px
+	    }
+	   
+	    .mui-table-view{
+	    	background:none;
+	    }
+	    .mui-table-view .mui-table-view-cell{
+	    	margin-bottom:10px;
+	    }
+	    .mui-table-view .mui-table-view-cell a{
+	    	padding:10px 19px;
+	    	border-radius:4px;
+	    	position:relative;
+	    	-webkit-border-radius:4px;
+	    	display:block;
+	    	background:#fff;
+	    }
+	    .mui-table-view .mui-table-view-cell .info{
+	    	padding-right:100px;
+	    }
+	    .mui-table-view .mui-table-view-cell .info span{
+	    	display:block;
+	    	line-height:24px;
+	    	font-size:13px;
+	    	color:#333;
+	    }
+	    
+    	.mui-page-content{
+    		height:100%;
+    		position:relative;
+    	}
+    	.mui-page{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 44px;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+        li.mui-table-view-cell .mui-active{
+    		background:#e5e3e3;
+    	}
+    	.menuSlide{
+    		top:44px;
+    	}
+    	.mui-slide.mui-slide-right{
+    		width:100%;
+    	}
+    	#menuContent{padding:0 14px 10px;}
+    	#menuContent .title{line-height:20px;margin-top:10px;text-align:center;font-size:15px;color:#333;}
+    	#menuContent .title span{display:block;font-size:12px;line-height:22px;color:#999;margin-top:2px;}
+    	#menuContent .content{line-height:25px;font-size:13px;color:#666;margin-top:5px;}
+    	#menuContent .mui-loading{margin-top:15px;}
+    </style>
+</head>
+<body>
+  <div class="ui-page" id="ui-page">
+   	 <header class="ui-bar jy-bar" id="header">
+    	<a href="javascript:;" class="icon-back icon" id="back"></a>
+    	<div class="ui-title">系统通知</div>
+    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+    </header>
+    <section class="vip-application">
+    	<div class="mui-scroll-wrapper" id="pullrefresh">
+			<div class="mui-scroll">
+		    	<ul class="mui-table-view">
+				</ul>
+			</div>
+		</div>
+    </section>
+    <!--菜单滑动公用区域-->
+    <div class="menuSlide" id="menuSlide"  style="display:none;">
+      <div class="mui-backdrop"></div>
+      <div class="mui-slide mui-slide-right">
+	      <div class="mui-scroll-wrapper">
+			 <div class="mui-scroll" id="menuContent">
+			 	 <div class="mui-loading">
+					<div class="mui-spinner">
+					</div>
+				 </div>
+			 </div>
+		 </div>
+		</div>
+    </div>
+  </div>
+   <script src="js/config.js"></script>
+   <script src="js/app.js"></script>
+   <script type="text/javascript">
+   (function($, doc) {
+   	  $.plusReady(function() {
+   	     var count = 1;
+   	         stateDate=app.getStateDate(),
+   	         userid=stateDate['id'];
+	   	 var menuContent=doc.getElementById("menuContent");
+	     var menuSlide=doc.getElementById("menuSlide");
+		 var sildeMenu= new J.toggleSlideMenu(menuSlide);
+   	     var pullrefresh=doc.getElementById("pullrefresh");
+   	     var back=doc.getElementById("back")
+		 var pullUpRefresh=function(){
+		 	var dataArr={
+		 		wait:true,
+		 		user_id:userid,
+		 		curPage:count
+		 	 }
+		 	 J.dataAjax(CONFING.Interface.userMessage,dataArr,function(data){
+		 	  if(data.type==2 || !data){
+					$('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+		 	  }else{
+			 	  var page=data.totalPage,
+			 	     infoArr=data.data;
+				 	 setTimeout(function() {
+				 	 	 var isPage=infoArr?++count>(page+1):true;
+				 		   $('#pullrefresh').pullRefresh().endPullupToRefresh((isPage));
+				 		    var table = doc.body.querySelector('.mui-table-view');
+							for (var i = 0; i <infoArr.length; i++) {
+								var html='<a href="javascript:;" class="listShow" data-id="'+infoArr[i].id+'">'
+								        +'<div class="info">'
+							            +'<span>'+infoArr[i].title+'</span>'
+							            +'<span>'+infoArr[i].createdate+'</span>'
+						                +'</div>'
+								    + '</a>';
+								var li = doc.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.innerHTML =html;
+								table.appendChild(li);
+							}
+							pullrefresh.style.opacity=1;
+				 	  }, 500);
+			}
+		   })
+		  }
+	      	$.ready(function() {
+		      	//初始化单页的区域滚动
+				var scroll=$('.mui-scroll-wrapper').scroll();
+	      		plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+	      		if ($.os.plus) {
+						setTimeout(function() {
+							$('#pullrefresh').pullRefresh().pullupLoading();
+						}, 100);
+				} else {
+					   $('#pullrefresh').pullRefresh().pullupLoading();
+				}
+				$.init({
+		      		statusBarBackground:'#393767',
+		      		pullRefresh: {
+						container: '#pullrefresh',
+						up: {
+							contentrefresh: '正在加载...',
+							callback: pullUpRefresh
+						}
+					}
+		      	});
+		      	$(".mui-table-view").on("tap",'.listShow',function(){
+		      		var id=this.getAttribute("data-id");
+		      		sildeMenu.open(function(){
+		      			J.dataAjax(CONFING.Interface.userMessageD,{wait:true,user_id:userid,message_id:id},function(data){
+			      		 	  var arr=data.data;
+			      		 	  var html='<div class="title">'+arr['title']+'<span>发布时间：'+arr['createdate']+'</span></div>'
+					 	            +'<div class="content">'+arr['content']+'</div>';
+				      		  menuContent.innerHTML=html;
+			      		 });
+			      		 back.classList.add("action-back");
+			      		 back.classList.remove("icon-back");
+		      		});
+		      	})
+		      	$("#header").on("tap",'.action-back',function(){
+		      		var _this=this;
+		      		 sildeMenu.close(function(){
+		      		     var loading='<div class="mui-loading"><div class="mui-spinner"></div></div>';
+		      		      menuContent.innerHTML=loading;
+		      		     _this.classList.add("icon-back");
+		      		     _this.classList.remove("action-back");
+		      		 });
+		      	})
+		    })
+		});
+   }(mui, document));
+   </script>
+</body>
+</html>

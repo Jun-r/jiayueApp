@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>活力园区-系统通知详情</title>
+		<link href="css/app.css" rel="stylesheet" />
+		<style type="text/css">
+		.ui-page,html,body{
+	    	height:100%;
+	    	overflow:hidden;
+	    }
+	   .mui-scroll-wrapper{
+	   	   top:44px;
+	   	   bottom:0;
+	   	   background:#f5f5f5;
+	    }
+	    .aimg{
+	    	text-align:center;
+	    	font-size:0;
+	    }
+	    .aimg img{
+	    	vertical-align:bottom
+	    }
+	    .mui-scroll-wrapper .con{
+	    	padding:5px 12px;
+	    	line-height:22px;
+	    	font-size:13px;
+	    	color:#666;
+	    }
+	    .from{
+	    	position:absolute;
+	    	bottom:0;
+	    	left:0;
+	    	height:175px;
+	    	right:0;
+	    	background:#fff;
+	    }
+	    .from .apply-r{
+	    	height:50px;
+	    	line-height:50px;
+	    	padding:0 12px;
+	    	font-size:13px;
+	    	border-top:.05em solid #ddd;
+	    	border-bottom:.05em solid #ddd
+	    }
+	    .title{
+	    	height:40px;
+	    	line-height:40px;
+	    	text-align:center;
+	    	font-size:16px;
+	    	color:#333;
+	    	background:#fff;
+	    }
+	    .from .apply-r em{
+	    	font-style:normal;
+	    	color:#d42f2f;
+	    	font-size:18px;
+	    	padding:0 3px;
+	    }
+	    .apply-btn{
+	    	text-align: center;
+	    }
+	    .apply-btn a.submit{
+				width: 250px;
+				height: 40px;
+				line-height: 40px;
+				background: #393767;
+				color: #fff;
+				margin:40px 0;
+				display: inline-block;
+				border-radius: 5px;
+		}
+		.apply-btn a.submit:active{
+			background:#2c2a54;
+		}
+		</style>
+	</head>
+	<body>
+		  <div class="ui-page" id="ui-page">
+		    <header class="ui-bar jy-bar" id="header">
+		    	<a href="javascript:;" class="icon-back icon"></a>
+		    	<div class="ui-title">通知详情</div>
+		    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		    </header>
+	        <div class="mui-scroll-wrapper">
+	    			<div class="mui-scroll">
+		    		    <div class="aimg"><img src="" id="aimg" /></div>
+		    		    <div class="title" id="title"></div>
+		    		    <div class="con" id="con">
+		    				<div class="mui-loading" style="margin-top:10px;">
+								<div class="mui-spinner">
+								</div>
+							 </div>
+					    </div>
+	    			</div>
+	    		</div>
+		    </div>
+		  <script type="text/javascript" src="js/mui.min.js"></script>
+		  <script type="text/javascript" src="js/config.js"></script>
+		  <script type="text/javascript" src="js/app.js"></script>
+		  <script type="text/javascript">
+		  		(function($,doc){
+		  			 var D=new J.setImg();
+		  			 $.init({
+			      		statusBarBackground:'#393767'
+			      	 });
+			      	 $(".mui-scroll-wrapper").scroll();
+			      	 var con=doc.getElementById("con");
+			      	 var apply_num=doc.getElementById("apply_num");
+			      	 var aimg=doc.getElementById("aimg");
+			      	 var title=doc.getElementById("title");
+			        $.plusReady(function() {
+	   	 	            plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+	   	 	            var ws=plus.webview.currentWebview();
+	   	 	            J.dataAjax(CONFING.Interface.noticeDetails,{wait:true,id:ws.sId},function(data){
+	   	 	            	var conlist=data.noticeMap;
+	   	 	            	for(var k in conlist){
+		   	 	            	con.innerHTML=conlist[k].content;
+		   	 	            	title.innerHTML=conlist[k].title;
+		   	 	            	aimg.src=CONFING.httpUrl+conlist[k].img;
+	   	 	            	}
+	   	 	            })
+					 });
+		  		})(mui,document);
+		  </script>
+	</body>
+</html>

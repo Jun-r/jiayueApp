@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>活力园区</title>
+		<link href="css/app.css" rel="stylesheet" />
+		<style type="text/css">
+		.ui-page,html,body{
+	    	height:100%;
+	    	overflow:hidden;
+	    }
+	    .mui-ios .mui-table-view-cell{
+	    	-webkit-transform-style:preserve-3d;
+	    	transform-style:preserve-3d
+	    }
+		.mui-slider{
+			right: 0;
+			bottom: 0;
+			top: 89px;
+			left: 0;
+			background: #f5f5f5;
+			position: absolute;
+			width:100%;
+			overflow:hidden;
+		}
+		
+			.mui-scroll-wrapper{
+				background: #eee;
+			}
+			.tab-nav{
+				height: 45px;
+				position:absolute;
+				top:44px;
+				left:0;
+				right:0;
+			}
+			.tab-nav .a{
+				float: left;
+				height: 45px;
+				padding:0 20px;
+				text-align: center;
+				line-height: 45px;
+				color: #595785;
+				font-size: 15px;
+				box-sizing: border-box;
+				border-bottom:.05em solid #ddd;
+			}
+			.mui-slider-indicator{
+				bottom: auto;
+				height: 45px;
+			}
+			.mui-slider-group{
+				position: absolute;
+				top: 0;
+				bottom:0;
+				width: 100%;
+				white-space: nowrap;
+				font-size: 0;
+			}
+			.mui-slider-group .mui-slider-item{
+				display: inline-block;
+				width: 100%;
+				position: relative;
+				font-size: 17px;
+				vertical-align: top;
+				height: 100%;
+			}
+			.mui-slider-group .mui-slider-item .mui-scroll-wrapper{
+				background: none;
+			}
+			.mui-slider-item .title{
+				padding: 0 12px;
+				color: #595785;
+				font-size: 14px;
+				height:44px;
+				line-height:44px;
+				background:#fff;
+			}
+			.mui-slider-item .icon:before{margin-right:5px;}
+			.mui-slider-item .con{
+				padding:6px 12px;
+				font-size:13px;
+				color:#666;
+				background:#f5f5f5;
+				white-space: normal;
+				line-height:25px;
+				border-bottom:.05em solid #ddd;
+			}
+			.mui-slider-item .con li span{float:left;}
+			.mui-slider-item .con li p{overflow:hidden;}
+			.mui-slider-item .conimg img{
+				max-width:100%;
+				height:auto;
+				vertical-align:bottom;
+			}
+			.mui-slider-item .jbox{
+				position:absolute;
+				top:0;
+				left:0;
+				bottom:0;
+			}
+			.mui-slider-item .content{
+				white-space: normal;
+			}
+			.mui-slider-item .desc,.mui-slider-item .content .mui-loading{
+				margin-top:20px
+			}
+			
+			#navActive{
+				height:2px;
+				background:#595785;
+				display:block;
+				position:absolute;
+				bottom:0;
+				left:0;
+				-webkit-transition: -webkit-transform 300ms ease;
+				transition: transform 300ms ease;
+				z-index:9;
+			}
+			.mui-none{
+				visibility:hidden;
+			}
+			.mui-pull-bottom-tips{
+				height:38px;
+				text-align:center;
+				position:relative;
+				line-height:38px;
+			}
+			.mui-pull-bottom-tips .mui-spinner,.mui-pull-bottom-tips .mui-pull-loading{
+				display:inline-block;
+				vertical-align:middle;
+				margin-right:0px;
+				margin-left:5px;
+				font-size:14px;
+				color:#666;
+			}
+		.p-list{
+			overflow:hidden;
+		}
+		.p-list li{
+			overflow:hidden;
+		}
+		.p-list li:first-child{
+			border-top:none
+		}
+		.p-list li a{
+			overflow:hidden;
+			display: block;
+			padding:12px;
+			border-bottom:.05em solid #ddd;
+		}
+		.p-list li .img{
+			float:left;
+			margin-right:10px;
+		}
+		.mui-slider .mui-slider-group .mui-slider-item .p-list li .img img{
+			width:115px;
+			height:86px;
+			float:left;
+		}
+		.p-list li.mui-table-view-cell .mui-active{
+    		background:#e2dfdf;
+    	}
+		.p-list li .info{
+			overflow:hidden;
+		}
+		.p-list li .info .d{
+			font-size:13px;
+			overflow:hidden;
+			color:#333;
+		}
+		.p-list li .info .d span{
+			color:#666;
+			width:65px;
+			float:left;
+		}
+		.p-list li .info .d p{
+			overflow:hidden;
+			padding:2px 0;
+			line-height:16px;
+		}
+		.p-list li .info .d p em{
+			color:#d42f2f;
+			font-style: normal;
+		}
+		.c-list{
+			/*padding:0 12px;*/
+		}
+		.c-list li{
+			overflow:hidden;
+		}
+		.c-list li a{
+			padding:0 12px 6px 12px;
+			display:block;
+			position:relative;
+			overflow:hidden;
+			height:152px;
+			background:#fff;
+			border-bottom:.05em solid #ddd;
+		}
+		
+		.img_list{
+			overflow:hidden;
+			height:95px;
+			background:#fff;
+			position:relative;
+		}
+		
+		.img_list .mui-zoom-list{
+			display:table-cell;
+			vertical-align:middle;
+			text-align: center;
+			padding-right:12px;
+		}
+		.img_list .mui-zoom-list:last-child{
+			padding-right:0;
+		}
+		.img_list .mui-zoom-list img{
+			display:table-cell;
+			vertical-align:middle;
+		     width:auto;
+			 height: auto;
+			max-width: 100%;
+				max-height: 100%;
+		}
+		.c-list li a img{
+			width:100%;
+			float:left;
+			height:auto;
+		}
+		.c-list li a .pos{
+			color:#fff;
+			position:absolute;
+			bottom:5px;
+			right:10px;
+			font-size:13px;
+			line-height:18px;
+			text-align:right;
+		}
+		.c-list li a .pos em{
+			font-style:normal;
+			display:block;
+			font-size:11px;
+		}
+		.n-list{
+		}
+		.n-list li{
+			width:100%;
+			float:left;
+			margin-top:12px;
+			height:40px
+		}
+		.n-list li a{
+			height:40px;
+			line-height:40px;
+			background:#fff;
+			font-size:13px;
+			display:block;
+			color:#666;
+			padding:0 10px;
+		}
+		.n-list li a .f-l{
+			float:left;
+		}
+		.n-list  li.mui-table-view-cell .mui-active{
+    		background:#e5e3e3;
+    	}
+		.n-list li a .f-r{
+			float:right;
+		}
+		.mui-fullscreen {
+				position: fixed;
+				z-index: 1112000;
+				top:0;
+			    bottom:0;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			
+			.mui-preview-header {
+				height: 44px;
+				bottom: 20px;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4px;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 18px;
+			}
+			.mui-preview-image {
+				display: none;
+			}
+			.mui-preview-image.mui-preview-in {
+				display: block;
+			}
+			.mui-preview-image.mui-transitioning {
+				background: none;
+			}
+			.mui-preview-image.mui-transitioning .mui-preview-header,
+			.mui-preview-image.mui-transitioning .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-preview-image .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+		</style>
+	</head>
+	<body style="background: #fff">
+		  <div class="ui-page" id="ui-page">
+		    <header class="ui-bar jy-bar" id="header">
+		    	<a href="javascript:;" class="icon-back icon"></a>
+		    	<div class="ui-title">活力园区</div>
+		    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		    </header>
+		  <div class="tab-nav" id="tab-nav">
+	        <div class="mui-scroll-wrapper">
+		        <nav class="mui-scroll" id="nav">
+		        	<a href="#itemmobile1" class="a mui-control-item" index="1">园区概况</a>
+		        	<a href="#itemmobile2" class="a mui-control-item" index="2">园区活动</a>
+		        	<a href="#itemmobile3" class="a mui-control-item" index="3">活动风采</a>
+		        	<a href="#itemmobile4" class="a mui-control-item" index="4">通知公告</a>
+		        	<a href="#itemmobile5" class="a mui-control-item" index="5">联系我们</a>
+		        	<span id="navActive"></span>
+				</nav>
+			  </div>
+		  </div>
+		  <div id="slider" class="mui-slider">
+			<div class="mui-slider-group">
+				<div id="itemmobile1" class="mui-slider-item mui-control-content">
+			      <div class="jbox mui-scroll-wrapper">
+			       <div class="mui-scroll" id="ParkIntroduction">
+			       	  <div class="mui-loading" style="margin-top:20px;">
+						<div class="mui-spinner">
+						</div>
+					 </div>
+				   </div>
+				 </div>
+			    </div>
+			    <div id="itemmobile2" class="mui-slider-item mui-control-content mui-slider-pullrefresh" data-isPullrefresh='true'>
+			      <div class="jbox mui-scroll-wrapper" id="p-list">
+			       <div class="mui-scroll">
+				    	<div class="content">
+					    </div>
+				   </div>
+				 </div>
+			    </div>
+			    <div id="itemmobile3" class="mui-slider-item mui-control-content mui-slider-pullrefresh" data-isPullrefresh='true'>
+			      <div class="jbox mui-scroll-wrapper" id="c-list">
+			       <div class="mui-scroll">
+				    	<div class="content">
+					    </div>
+				   </div>
+				 </div>
+			    </div>
+			    <div id="itemmobile4" class="mui-slider-item mui-control-content mui-slider-pullrefresh" data-isPullrefresh='true'>
+			      <div class="jbox mui-scroll-wrapper" id="n-list">
+			       <div class="mui-scroll">
+				    	<div class="content">
+					    </div>
+				   </div>
+				 </div>
+			    </div>
+			    <div id="itemmobile5" class="mui-slider-item mui-control-content">
+			      <div class="jbox mui-scroll-wrapper" style="background:#fff;">
+			       <div class="mui-scroll" id="Contactus">
+				    	<div class="mui-loading" style="margin-top:20px;">
+							<div class="mui-spinner">
+							</div>
+						 </div>
+				   </div>
+				 </div>
+			    </div>
+			</div>
+		  </div>
+		  <script type="text/javascript" src="js/mui.min.js"></script>
+		  <script type="text/javascript" src="js/config.js"></script>
+		  <script type="text/javascript" src="js/app.js"></script>
+		  <script type="text/javascript" src="js/mui.zoom.js"></script>
+          <script type="text/javascript" src="js/mui.previewimage.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.material.js"></script>
+		  <script type="text/javascript">
+		  		(function($,doc){
+		  			 var isCurBox=true;
+		  			 var count1=1;
+		  			 var count2=1;
+		  			 var count3=1;
+		  			 var D=new J.setImg();
+		  			 $.init({
+			      		statusBarBackground:'#393767'
+			      	});
+			      	 //联系我们
+					  var Contactus=function(){
+					  	J.dataAjax(CONFING.Interface.contact,{wait:true},function(data){
+			  				var maplist=data.contactMap,html='';
+			  				for(var k in maplist){
+			  				   html+='<div class="mui-table-view"><div class="title icon icon-contact">联系方式</div>'
+				    	           +'<div class="con">'
+				    	           +'<ul>'
+						    			+'<li><span>地址：</span><p>'+maplist[k].address+'</p></li>'
+						    			+'<li><span>电话：</span><p>'+maplist[k].telephone+'</p></li>'
+						    			+'<li><span>传真：</span><p>'+maplist[k].fax+'</p></li>'
+						    	    	+'<li><span>邮编：</span><p>'+maplist[k].email+'</p></li>'
+		                              +'</ul>'
+		                           +'</div>'
+					               +'<div class="title icon icon-bus">公共交通</div>'
+				    	           +'<div class="con">'
+				    		         +'<ul>'
+						    			+'<li><span>公交：</span><p>'+maplist[k].bus+'</p></li>'
+						    			+'<li><span>地铁：</span><p>'+maplist[k].subway+'</p></li>'
+		                              +'</ul>'
+								    +'</div>'
+								    +'<div class="title icon icon-zj">自驾</div>'
+							    	+'<div class="con">'
+							    	 +'<ul>'
+						    			+'<li><span>路线：</span><p>'+maplist[k].value5+'</p></li>'
+		                              +'</ul>'
+								    +'</div>'
+								    +'</div>'
+						   }
+			  			   var Contactus=doc.getElementById("Contactus");
+			  				Contactus.innerHTML=html;
+			  			})
+					  }
+					    var navActive,a,tabnav,resultW=[],W=0;
+	   	 	            var nav = doc.getElementById("nav");
+	   	 	            var tabnav=doc.getElementById("tab-nav");
+	   	 	            var navWidth=nav.parentNode.offsetWidth;
+	   	 	            var Park=doc.getElementById("ParkIntroduction");
+ 	                	navActive=doc.getElementById("navActive");
+			  			a = nav.querySelectorAll(".a");
+			  			var type=a[0].getAttribute("data-type");
+			  			var width = a[0].offsetWidth;
+			  			for(var e = 0; e < a.length; e++) {
+						     resultW.push(a[e].offsetWidth);
+						      W+=resultW[e];
+						}
+			  			J.dataAjax(CONFING.Interface.gardenIntroduce,{wait:true},function(data){
+			  				var datalist=data.parkMap,html='';
+			  				for(var k in datalist){
+			  				   html+='<div class="title">园区简介</div>'
+				    	           +'<div class="con">'+datalist[k].description+'</div>'
+					               +'<div class="title">位置信息</div>'
+				    	           +'<div class="con">'
+				    		       +'<ul>'
+						    			+'<li><span>行政区域：</span><p>'+datalist[k].stration+'</p></li>'
+						    			+'<li><span>楼盘位置：</span><p>'+datalist[k].floor+'</p></li>'
+						    			+'<li><span>交通位置：</span><p>'+datalist[k].traffic+'</p></li>'
+		                            +'</ul>'
+								    +'</div>'
+								    +'<div class="title">配套设施</div>'
+							    	+'<div class="con">'+datalist[k].facilities+'</div>'
+								    +'<div class="title">园区图片</div>'
+							    	+'<div class="conimg">'
+							    	+'	 <img src="'+CONFING.httpUrl+datalist[k].img_list+'" />'
+								    +'</div>';
+						   }
+			  				Park.innerHTML=html;
+			  			})
+			  			nav.style.width = W+"px";
+			  		    navActive.style.width=a[0].offsetWidth+"px";
+			  		    maxScrollX = W - navWidth;
+			  	    	var slid=$("#slider").slider();
+			  	    	//滚动条滑动
+			  	    	Tscroll=$(".tab-nav .mui-scroll-wrapper").scroll({
+				      		scrollY: false,
+							scrollX: true,
+							indicators: false,
+							snap: '.mui-control-item'
+				      	});
+			        $.plusReady(function() {
+	   	 	            plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+				      	var getCur=function(index){
+			  		    	  var offsetL=a[index].offsetLeft;
+			  		    	  navActive.style.cssText="width:"+resultW[index]+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
+						      var X=Math.max(Math.min(0, -offsetL + (navWidth / 2)), -maxScrollX);
+						      Tscroll.scrollTo(X,0,300);
+			  		    }
+			  		
+			  			  //阻尼系数
+					var deceleration = mui.os.ios?0.003:0.0009;
+					$('.mui-scroll-wrapper').scroll({
+						indicators: true, //是否显示滚动条
+						deceleration:deceleration
+					});
+					 $.ready(function() {
+						//循环初始化所有下拉刷新，上拉加载。
+						$.each(document.querySelectorAll('.mui-slider-pullrefresh .mui-scroll'), function(index, pullRefreshEl) {
+							$(pullRefreshEl).pullToRefresh({
+								up: {
+									contentrefresh: '正在加载...',
+									callback: function() {
+										var self = this,html='';
+										setTimeout(function() {
+											if(index==0){
+												dynamicPark('p-list',self);
+											}else if(index==1){
+												activitystyle('c-list',self);
+											}else if(index=2){
+												SystemNotification('n-list',self);
+											}
+										}, 500);
+									}
+								}
+							});
+						});
+					 });
+					 var getData=function(iSclass,index,id){
+					 	var isPullRefresh=doc.getElementById("itemmobile"+(index+1)).getAttribute("data-isPullrefresh");
+						if(!iSclass && eval(isPullRefresh)){
+				  		        if ($.os.plus) {
+						            setTimeout(function() {
+										$(id).pullToRefresh().pullUpLoading();
+									}, 100);
+								} else {
+									$.ready(function() {
+										$(id).pullToRefresh().pullUpLoading();
+									});
+								}
+						 }else{
+						 	Contactus();
+						 }
+			  		      
+					}
+					 //活动园区
+					 var dynamicPark = function(UlClass,self) {
+							var ul = doc.createElement('ul');
+				            ul.className = UlClass+' mui-table-view';
+				            var eltId=doc.getElementById(UlClass);
+				            eltId.querySelector(".content").appendChild(ul);
+							var ul = eltId.querySelector('.mui-table-view');
+							var li,ulHtml;
+						    J.dataAjax(CONFING.Interface.gardenList,{wait:true,curPage:count1},function(data){
+					  			  var conlist=data.gardenList;
+				  			  	  var page=data.totalPage;
+					  			  var isPage=conlist?++count1>(page+1):true;
+					  			  self.endPullUpToRefresh(isPage);
+					  			  if(conlist){
+						  			   for (var i = 0; i < conlist.length; i++) {
+										li = doc.createElement('li');
+										li.className = 'mui-table-view-cell';
+										var random=parseInt(Math.random()*1000);
+										var html='<a href="javascript:;" data-id="'+conlist[i]['id']+'" class="dShow">'
+											    +'<div class="img">'
+											    +'	<img class="imglazy" id="imgLazy'+random+'" />'
+											    +'</div>'
+											    +'<div class="info">'
+												+'	<div class="d"><span>活动名称：</span><p>'+conlist[i]['activity_name']+'</p></div>'
+												+'	<div class="d"><span>举办时间：</span><p>'+conlist[i]['hold_time']+'</p></div>'
+												+'	<div class="d"><span>已申请：</span><p><em class="red">'+(conlist[i]['is_status']==0?"已结束":conlist[i]['apply_num']+'人')+'</em></p></div>'
+												+'</div>'
+											    +'</a>';
+										li.innerHTML = html;
+										ul.appendChild(li);
+										var imgLazy=doc.getElementById("imgLazy"+random);
+										D.isImgBoj(imgLazy,CONFING.httpUrl+conlist[i]['img']);
+										isCurBox=false;
+										
+									}
+					  			}
+				  			})
+						};
+						//活动风采
+					var activitystyle=function(UlClass,self){
+						var ul = doc.createElement('ul');
+				            ul.className = UlClass+' mui-table-view';
+				            var eltId=doc.getElementById(UlClass);
+				            eltId.querySelector(".content").appendChild(ul);
+							var ul = eltId.querySelector('.mui-table-view');
+							var li,ulHtml;
+						    J.dataAjax(CONFING.Interface.activityList,{wait:true,curPage:count2},function(data){
+					  			  var conlist=data.activityList;
+				  			  	  var page=data.totalPage;
+					  			  var isPage=conlist?++count2>(page+1):true;
+					  			  self.endPullUpToRefresh(isPage);
+					  			  if(conlist){
+						  			   for (var i = 0; i < conlist.length; i++) {
+						  			   	 var imgList=conlist[i]['img_list'].split(",");
+						  			   	 var html='';
+										li = doc.createElement('li');
+										li.className = 'mui-table-view-cell';
+										var random=parseInt(Math.random()*1000);
+										 html+='<a href="javascript:;" data-id="'+conlist[i]['id']+'">';
+										 html+='<div class="title">'+conlist[i]['activity_name']+'</div>';
+										 html+='<div class="img_list" id="mui-slider'+(i+1)+'">';
+										 html+='<div class="mui-scroll-wrapper">';
+										 html+='<div class="mui-scroll" style="width:'+imgList.length*((window.screen.availWidth/2)-6)+'px">';
+										 for(var a=0;a<imgList.length;a++){
+									 		  html+='<div class="mui-zoom-list" style="width:'+((window.screen.availWidth/2)-6)+'px"><img id="imglazy'+random+'" src="'+CONFING.httpUrl+imgList[a]+'" class="mui-media-object imglazy" data-preview-src="" data-preview-group="1" /></div>';
+								 		 }
+									     html+='</div>';
+									     html+='</div>';
+										 html+='</div>';
+									     html+='</a>';
+										li.innerHTML = html;
+										ul.appendChild(li);
+										$("#mui-slider"+(i+1)+" .mui-scroll-wrapper").scroll({
+											scrollY: false,
+											scrollX: true,
+											indicators: false,
+											bounce:false
+										});
+									    //不能使用缓存图片到本地
+//										var imgLazy=doc.getElementById("imgLazy"+random);
+//										D.isImgBoj(imgLazy,CONFING.httpUrl+conlist[i]['img'])
+                                        $.previewImage();
+										isCurBox=false;
+									}
+					  			}
+				  			});
+					    }
+						//系统通知
+					  var SystemNotification=function(UlClass,self){
+					  	var ul = doc.createElement('ul');
+				            ul.className = UlClass+' mui-table-view';
+				            var eltId=doc.getElementById(UlClass);
+				            eltId.querySelector(".content").appendChild(ul);
+							var ul = eltId.querySelector('.mui-table-view');
+							var li,ulHtml;
+						    J.dataAjax(CONFING.Interface.noticeList,{wait:true,curPage:count3},function(data){
+					  			  var conlist=data.noticeList;
+				  			  	  var page=data.totalPage;
+					  			  var isPage=conlist?++count3>(page+1):true;
+					  			  self.endPullUpToRefresh(isPage);
+					  			  if(conlist){
+						  			   for (var i = 0; i < conlist.length; i++) {
+										li = doc.createElement('li');
+										li.className = 'mui-table-view-cell';
+										var html='<a href="javascript:;" data-id="'+conlist[i]['id']+'" class="sShow">'
+												+'	<span class="f-l">'+conlist[i]['title']+'</span><span class="f-r">'+conlist[i]['add_time']+'</span>'
+											    +'</a>';
+										li.innerHTML = html;
+										ul.appendChild(li);
+										isCurBox=false;
+										
+									}
+					  			}
+				  			})
+					  }
+					  $("#nav").on("tap",".a",function(e){
+							var index=parseInt(this.getAttribute("index"));
+							var curIndex=index-1;
+							var id="#itemmobile"+index+" .mui-scroll";
+							var getOBJ=doc.getElementById("itemmobile"+(curIndex+1));
+							var iSclass=getOBJ.querySelector('.mui-table-view');
+							getData(iSclass,curIndex,id);
+		  		    	    getCur(index-1);
+		  		    	    slid._gotoItem(curIndex,300);
+						})
+					   //活动风采详情
+					     $("#p-list").on("tap",".dShow",function(e){
+					     	var showId=this.getAttribute("data-id");
+						 	 $.openWindow({
+								id: 'activitys-show.html',
+							    url:'activitys-show.html',
+							    extras:{
+							      sId:showId,
+							    },
+								show: {
+									aniShow:'pop-in',
+									duration:350
+								},
+								waiting: {
+									autoShow: true
+								}
+							});
+					     })
+					     //活动风采详情
+					     $("#n-list").on("tap",".sShow",function(e){
+					     	var showId=this.getAttribute("data-id");
+						 	 $.openWindow({
+								id: 'notification-show.html',
+							    url:'notification-show.html',
+							    extras:{
+							      sId:showId,
+							    },
+								show: {
+									aniShow:'pop-in',
+									duration:350
+								},
+								waiting: {
+									autoShow: true
+								}
+							});
+					     })
+					   //滑动切换   备注：还有点问题，不知道为什么老是滑到最后一个有跳到第一个
+					     doc.getElementById("slider").addEventListener("slide",function(e){
+			  		    	  var index=e.detail.slideNumber; 
+						 	  var offsetL=index*a[0].offsetWidth;
+						 	  var id="#itemmobile"+(index+1)+" .mui-scroll";
+						 	  var getOBJ=doc.getElementById("itemmobile"+(index+1));
+						 	  var iSclass=getOBJ.querySelector('.mui-table-view');
+						 	  getCur(index);
+						 	  navActive.style.cssText="width:"+a[0].offsetWidth+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
+				  		      getData(iSclass,index,id);
+			  			 });
+					 });
+		  		})(mui,document);
+		  </script>
+	</body>
+</html>

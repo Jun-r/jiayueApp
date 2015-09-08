@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>预定</title>
+	<link href="css/app.css" rel="stylesheet" />
+	<style type="text/css">
+	   .ui-page,html,body{
+	    	height:100%;
+	    }
+		#header{
+			position: fixed;
+			top:0;
+			left:0;
+			right:0;
+		}
+		#mui-page-content .mui-scroll-wrapper{
+			top:44px
+		}
+		.p-list{
+			padding:0 12px;
+			overflow:hidden;
+		}
+		.p-list li{
+			overflow:hidden;
+			border-bottom:.05em solid #ddd;
+			padding:12px 0;
+		}
+		.p-list li:first-child{
+			border-top:none
+		}
+		
+		.p-list li .img{
+			float:left;
+			margin-right:10px;
+		}
+		.p-list li .img img{
+			width:115px;
+			height:85px;
+			float:left;
+		}
+		.p-list li .info{
+			overflow:hidden;
+		}
+		.p-list li .info p{
+			font-size:13px;
+			color:#666;
+		}
+		.p-list li .info p span{
+			color:#333;
+		}
+			.mui-none{
+				display:none;
+			}
+			
+			.mui-pull-bottom-tips{
+				height:40px;
+				text-align:center;
+				line-height:40px;
+				padding-bottom:10px;
+			}
+			.mui-pull-bottom-tips .mui-spinner,.mui-pull-bottom-tips .mui-pull-loading{
+				display:inline-block;
+				vertical-align:middle;
+				margin-right:0px;
+				margin-left:5px;
+				font-size:14px;
+				color:#666;
+			}
+	</style>
+</head>
+<body style="background:#fff;">
+  <div class="ui-page" id="ui-page">
+    <section class="show" style="padding-bottom:1px;">
+    	 <header class="ui-bar jy-bar" id="header" style="z-index: 1111111">
+			<a href="javascript:;" class="icon-back icon"></a>
+			<div class="ui-title">创客成果</div>
+			<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		 </header>
+		 <div class="mui-page-content" id="mui-page-content">
+	    	 <div class="mui-scroll-wrapper" id="p-list">
+				 <div class="mui-scroll mp-show">
+				    <div class="con">
+			    	</div>
+				 </div>
+			 </div>
+		 </div>
+    </section>
+  </div>
+  <script type="text/javascript" src="js/mui.min.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/mui.pullToRefresh.js"></script>
+  <script type="text/javascript" src="js/mui.pullToRefresh.material.js"></script>
+  <script type="text/javascript" charset="utf-8">
+	(function($, doc) {
+		 $.init({
+		    	swipeBack: false,
+	      		statusBarBackground:'#393767'
+	     });
+	     var D=new J.setImg();
+         var siderImg='',imgArr=[],chtmlP='';
+		 var contentc=doc.getElementById("content-c");
+		 var contentpic=doc.getElementById("content-pic");
+		 var muipagecontent=doc.getElementById("mui-page-content");
+		 $('.mui-scroll-wrapper').scroll();
+		 $.plusReady(function() {
+		 	 var count=1;
+			 plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+			 var ws=plus.webview.currentWebview();
+			 $("#mui-page-content .mui-scroll").pullToRefresh({
+				up: {
+					contentrefresh: '正在加载...',
+					callback: function() {
+						var self = this,html='';
+						setTimeout(function() {
+								creativeEnterprise('p-list',self);
+						}, 1000);
+					}
+				}
+			});
+//			 var Waiting=plus.nativeUI.showWaiting();
+			 //创意企业
+			var creativeEnterprise = function(UlClass,self) {
+				var ul = doc.createElement('ul');
+	            ul.className = UlClass+' mui-table-view';
+	            var eltId=doc.getElementById(UlClass);
+	            eltId.querySelector(".con").appendChild(ul);
+				var ul = eltId.querySelector('.mui-table-view');
+				var li,ulHtml;
+			    J.dataAjax(CONFING.Interface.resultDetails,{wait:true,incubation_id:ws.sId,curPage:count},function(data){
+		  			  var conlist=data.resultDetailList;
+	  			  	  var page=data.totalPage;
+		  			  var isPage=conlist && conlist.length>10?++count>(page+1):true;
+		  			  self.endPullUpToRefresh(isPage);
+		  			  if(conlist){
+			  			   for (var i = 0; i < conlist.length; i++) {
+							li = doc.createElement('li');
+							var random=parseInt(Math.random()*1000);
+							li.className = 'mui-table-view-cell';
+							var html='<a href="javascript:;" class="listShow">'
+								    +'<div class="img">'
+								    +'	<img class="imglazy imglazy'+random+'" src=""/>'
+								    +'</div>'
+								    +'<div class="info">'
+									+'	<p><span>产品介绍:</span>'+conlist[i]['info']+'</p>'
+									+'</div>'
+								    +'</a>';
+							li.innerHTML = html;
+							ul.appendChild(li);
+							var imgLazy=doc.getElementById("imgLazy"+random);
+							D.isImgBoj(imgLazy,CONFING.httpUrl+conlist[i]['img'])
+//							Waiting.close();
+						}
+		  			}
+	  			})
+			};
+			if ($.os.plus) {
+		          setTimeout(function() {
+						$("#mui-page-content .mui-scroll").pullToRefresh().pullUpLoading();
+					}, 100);
+			} else {
+				$.ready(function() {
+					$("#mui-page-content .mui-scroll").pullToRefresh().pullUpLoading();
+				});
+			}
+		 });
+		 	            	
+	}(mui, document));
+	</script>
+</body>
+</html>

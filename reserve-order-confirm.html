@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>预定</title>
+	<link href="css/app.css" rel="stylesheet" />
+	<style type="text/css">
+	   .ui-page,html,body{
+	    	height:100%;
+	    }
+		img.imglazy{
+			background:#eee url('images/noPic.png') no-repeat center center;
+			background-size:62px 14px;
+		}
+			#header{
+				position: fixed;
+				top:0;
+				left:0;
+				right:0;
+			}
+			.mui-page-content {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top:44px;
+				bottom: 0;
+				width: 100%;
+			}
+			.btnfrom{
+				width:60%;
+				margin:20px auto;
+				height:40px;
+				line-height:40px;
+				text-align:center;
+				font-size:15px;
+				background:#393767;
+				border-radius:3px;
+				-webkit-border-radius:3px;
+				color:#fff;
+				display:block;
+			}
+			.btnfrom:active{
+				background:#29284c;
+				color:#fff;
+			}
+			
+			.payTime{
+				color:#666;
+				font-size:14px;
+				height:40px;
+				line-height:40px;
+				padding:0 15px;
+				color:#666;
+				background:#eee;
+			}
+			.payTime:before{
+				font-size:14px;
+				margin-right:4px;
+				color:#666;
+			}
+			.payTime span{
+				margin-left:10px;
+				color:#595785;
+			}
+			#mui-page-content .title{
+				height:40px;
+				line-height:40px;
+				padding:0 15px;
+				color:#595785;
+				border-top:.05em solid #ddd;
+				font-size:14px;
+			}
+			#mui-page-content .title:before{
+				font-size:14px;
+				margin-right:4px;
+				color:#595785;
+				position:relative;
+				top:-1px
+			}
+			#mui-page-content .icon-info:before{
+				font-size:16px
+			}
+			#mui-page-content .phone:before{
+				font-size:15px;
+				position:relative;
+				left:1px
+			}
+			#mui-page-content .payinfo,#mui-page-content .payjs{
+				background:#f5f5f5;
+				padding:10px 30px;
+			}
+			#mui-page-content .info .p{
+				overflow:hidden;
+				font-size:13px;
+				line-height:25px;
+				color:#333;
+			}
+			#mui-page-content .info .p p{
+				overflow:hidden;
+			}
+			#mui-page-content .info .p p span{
+				display:block;
+				font-size:13px;
+				color:#333;
+			}
+			#mui-page-content .info .p .red em{
+				font-style: normal;
+				font-size:16px
+			}
+			#mui-page-content .info .p .x{
+				float:left;
+				color:#666;
+			}
+			#mui-page-content .info .p .red{
+				color:#d42f2f;
+			}
+			
+			#mui-page-content .info .p a .icon-push-right{
+				font-style: normal;
+				position:absolute;
+				top:10px;
+				right:15px;
+				color:#999;
+			}
+			#mui-page-content .info .p a .icon-push-right:after{
+				font-size:12px;
+				position:relative;
+				top:-1px;
+				margin-left:1px
+			}
+	</style>
+</head>
+<body style="background:#fff;">
+  <div class="ui-page" id="ui-page">
+    <section class="show" style="padding-bottom:1px;">
+    	 <header class="ui-bar jy-bar" id="header" style="z-index: 1111111">
+			<a href="javascript:;" class="icon-back icon"></a>
+			<div class="ui-title"><span id="ui-title"></span>预订确认</div>
+			<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		 </header>
+		 <div class="mui-page-content" id="mui-page-content">
+	    	 <div class="mui-scroll-wrapper">
+				 <div class="mui-scroll">
+			    	<div class="payTime icon icon-paytime">支付剩余时间<span id="payTime">正在加载中....</span></div>
+			    	<div class="title icon icon-info"><span id="time-info"></span>信息</div>
+			    	<div class="payinfo info" id="payinfo">
+			    		
+			    	</div>
+			    	<div class="title icon icon-js">结算信息</div>
+			    	<div class="payjs info">
+			    		<div class="p"><span class="x">总价：</span><span class="red"><em id="realMoney"></em>元</span></div>
+			    	</div>
+			    	<div class="title icon phone">你绑定的手机号码</div>
+			    	<div class="payjs info" style="position:relative;">
+			    		<div class="p"><a href="#"><span class="x">134****6309</span><em class="icon-push-right icon">修改</em></a></div>
+			    	</div>
+			    	<a href="javascript:;" class="btnfrom" id="goPay">去支付</a>
+				 </div>
+			 </div>
+		 </div>
+    </section>
+  </div>
+  <script type="text/javascript" src="js/mui.min.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" charset="utf-8">
+	(function($, doc) {
+		 $.init({
+		    	swipeBack: false,
+	      		statusBarBackground:'#393767'
+	     });    
+		 $('.mui-scroll-wrapper').scroll();
+		 
+		 $.plusReady(function() {
+			 plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+//			 $.back = function() {
+//			 	$.doAction('backs');
+//				var wobj = plus.webview.getWebviewById("reserve-hui-yd.html");
+//					setTimeout(function(){wobj.reload(true);},320);
+//			 };
+			 var ws=plus.webview.currentWebview();
+			 var time=ws.addtime;
+			 var submitData=ws.submitData;
+			 var str=time.replace(/-/g,"/");
+			 var now=new Date();
+	     	 var endDate = new Date(str);
+			 var leftTime=endDate.getTime()-now.getTime();
+			 var maxtime = parseInt(leftTime/1000)+1401;
+	         var CountDown=function(){
+				 if(maxtime>=0){  
+					 var minutes = Math.floor(maxtime/60);  
+					 var seconds = Math.floor(maxtime%60);  
+					 var time = "00小时"+(minutes==0?"0"+minutes:minutes)+"分"+(seconds<10?"0"+seconds:seconds)+"秒";  
+					 document.getElementById('payTime').innerHTML=time; 
+					 --maxtime;
+					 if(maxtime<0){
+						 clearInterval(timer);
+					     document.getElementById('payTime').innerHTML="00小时00分00秒"; 
+						 plus.nativeUI.alert("订单超时,没有付款!",function(){
+						 	$.openWindow({
+							    id:'index.html',
+								url: 'index.html',
+								show: {
+								    aniShow: 'pop-in',
+								    duration:300
+								},
+								waiting: {
+									autoShow: false
+								}
+							  });
+						 },"温馨提示","确定");
+						 setTimeout(function(){
+								 var main=plus.webview.currentWebview();
+							     	 plus.webview.close(main,"none",0);
+							     	 
+						 },300)
+					 }  
+				 } 
+			 };
+	         timer = setInterval(function(){
+	         	CountDown()
+	         },1000);
+	         var siderImg='',imgArr=[],chtmlP='';
+	         var realMoney=doc.getElementById("realMoney");
+			 var uititle=doc.getElementById("ui-title");
+			 var timeInfo=doc.getElementById("time-info");
+			 var payinfo=doc.getElementById("payinfo");
+			 uititle.innerText=ws.title;
+			 timeInfo.innerText=ws.title;
+			 var muipagecontent=doc.getElementById("mui-page-content");
+			   var mainPage=$.preload({
+					"id": 'reserve-order-pay.html',
+					"url": 'reserve-order-pay.html'
+				});
+				realMoney.innerText=ws.realmoney;
+				var html='<div class="p"><span class="x">地址：</span>'+ws.pos+'</div>';
+					html+='<div class="p">';
+				    html+='<span class="x">预订时间：</span>';
+					html+='<p>';
+					for(var i=0;i<submitData.length;i++){
+						html+='<span>'+submitData[i]['start_time']+' - '+submitData[i]['end_time']+'</span>';
+					}
+				    html+='</p>';
+					html+='</div>';
+					html+='<div class="p"><span class="x">预订时长：</span>'+submitData.length+'个小时</div>';
+						
+				payinfo.innerHTML=html;		
+				doc.getElementById("goPay").addEventListener("tap",function(){
+					  $.fire(mainPage,'payDate',{data:{posCode:ws.pos,endDatetime:endDate.getTime(),orderNum:ws.ordercode,total:ws.realmoney,orderId:ws.orderId}});
+					  $.openWindow({
+					    id: 'reserve-order-pay.html',
+						url: 'reserve-order-pay.html',
+						show: {
+							    aniShow: 'pop-in',
+							     duration:300
+							},
+							waiting: {
+								autoShow: false
+							}
+					  });
+				 })
+		 });
+		 	            	
+	}(mui, document));
+	</script>
+</body>
+</html>

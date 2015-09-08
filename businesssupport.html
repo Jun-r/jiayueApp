@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>创意扶持</title>
+		<link href="css/app.css" rel="stylesheet" />
+		<style type="text/css">
+		.ui-page,html,body{
+	    	height:100%;
+	    	overflow:hidden;
+	    }
+			.mui-slider{
+				right: 0;
+				bottom: 0;
+				top: 89px;
+				left: 0;
+				background: #f5f5f5;
+				position: absolute;
+				width:100%;
+				overflow:hidden;
+			}
+			.mui-scroll-wrapper{
+				background: #eee;
+			}
+			.tab-nav{
+				height: 45px;
+				position:absolute;
+				top:44px;
+				left:0;
+				right:0;
+			}
+			.tab-nav .a{
+				float: left;
+				height: 45px;
+				padding:0 20px;
+				text-align: center;
+				line-height: 45px;
+				color: #595785;
+				font-size: 15px;
+				box-sizing: border-box;
+				border-bottom:.05em solid #ddd;
+			}
+			.mui-slider-indicator{
+				bottom: auto;
+				height: 45px;
+			}
+			.mui-slider-group{
+				position: absolute;
+				top: 0;
+				bottom:60px;
+				width: 100%;
+				white-space: nowrap;
+				font-size: 0;
+			}
+			.mui-slider-group .mui-slider-item{
+				display: inline-block;
+				width: 100%;
+				position: relative;
+				font-size: 17px;
+				vertical-align: top;
+				height: 100%;
+			}
+			.mui-slider-group .mui-slider-item .mui-scroll-wrapper{
+				background: none;
+			}
+			.mui-slider-item .title{
+				padding: 10px 12px;
+				color: #999;
+				font-size: 12px;
+			}
+			.mui-slider-item .title .span{
+				font-size: 14px;
+				color: #333;
+				padding: 0 5px;
+			}
+			.mui-slider-item .title .span:after{
+				content: "";
+				display: inline-block;
+				vertical-align: middle;
+				height: 14px;
+				position:relative;
+				margin-left: 5px;
+				background: #333;
+				width: 1px;
+			}
+			.mui-slider-item .box{
+				padding:20px;
+			}
+			.mui-slider-item .jbox{
+				position:absolute;
+				top:0;
+				left:0;
+				bottom:0;
+			}
+			.mui-slider-item .title{
+				color:#333;
+				height:18px;
+				line-height:18px;
+				font-size:15px;
+			}
+			.mui-slider-item .desc{
+			   background: #f5f5f5;
+			   padding:0 12px 12px 12px;
+			}
+			.mui-slider-item .desc,.mui-slider-item .con{
+				line-height: 20px;
+				color: #666;
+				white-space: normal;
+				margin-top:0;
+				font-size:13px;
+			}
+			.mui-slider-item .desc,.mui-slider-item .con .mui-loading{
+				margin-top:20px
+			}
+			.mui-slider .btn-box{
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				height: 60px;
+				background: #fff;
+				text-align: center;
+			}
+			.mui-slider .btn-box .btn-apply{
+				width: 250px;
+				height: 40px;
+				line-height: 40px;
+				background: #393767;
+				color: #fff;
+				margin:10px 0;
+				display: inline-block;
+				border-radius: 5px;
+			}
+			#navActive{
+				height:2px;
+				background:#595785;
+				display:block;
+				position:absolute;
+				bottom:0;
+				left:0;
+				-webkit-transition: -webkit-transform 300ms ease;
+				transition: transform 300ms ease;
+				z-index:9;
+			}
+			.mui-none{
+				visibility:hidden;
+			}
+			.mui-pull-bottom-tips{
+				height:35px;
+				text-align:center;
+				position:relative;
+				margin-top:-10px
+				line-height:35px;
+			}
+			.mui-pull-bottom-tips .mui-spinner,.mui-pull-bottom-tips .mui-pull-loading{
+				display:inline-block;
+				vertical-align:middle;
+				margin-right:0px;
+				margin-left:5px;
+				font-size:14px;
+				color:#666;
+			}
+		.p-list{
+			border-top:.05em solid #ddd;
+			padding:0 12px;
+			overflow:hidden;
+		}
+		.p-list li{
+			overflow:hidden;
+			border-top:.05em solid #ddd;
+		}
+		.p-list li:first-child{
+			border-top:none
+		}
+		.p-list li a{
+			padding:12px 0;
+			overflow:hidden;
+			display: block;
+		}
+		.p-list li .img{
+			float:left;
+			margin-right:10px;
+		}
+		.p-list li .img img{
+			width:84px;
+			height:84px;
+			float:left;
+			border:.05em solid #ddd;
+		}
+		.p-list li .info{
+			overflow:hidden;
+		}
+		.p-list li .info p{
+			font-size:12px;
+			color:#666;
+		}
+		.p-list li .info p.t{
+			color:#333;
+			font-size:14px
+		}
+		.p-list li .info p.d{
+			color:#999;
+		}
+		.c-list{
+			padding:0 12px;
+		}
+		.c-list li{
+			overflow:hidden;
+			padding-bottom:10px;
+		}
+		.c-list li a{
+			padding:12px 0 0 0;
+			display:block;
+			position:relative;
+			overflow:hidden;
+		}
+		.mui-slider-item .con img{
+				width:100%;
+				height:auto;
+			}
+		.c-list li a img{
+			width:100%;
+			float:left;
+			height:auto;
+		}
+		.c-list li a .pos{
+			color:#fff;
+			position:absolute;
+			bottom:5px;
+			right:10px;
+			font-size:13px;
+			line-height:18px;
+			text-align:right;
+		}
+		.c-list li a .pos em{
+			font-style:normal;
+			display:block;
+			font-size:11px;
+		}
+		</style>
+	</head>
+	<body style="background: #fff">
+		  <div class="ui-page" id="ui-page">
+		    <header class="ui-bar jy-bar" id="header">
+		    	<a href="javascript:;" class="icon-back icon"></a>
+		    	<div class="ui-title">创意扶持</div>
+		    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		    </header>
+		  <div class="tab-nav" id="tab-nav">
+	        <div class="mui-scroll-wrapper">
+		        <nav class="mui-scroll" id="nav">
+				</nav>
+			  </div>
+		  </div>
+		  <div id="slider" class="mui-slider">
+			<div class="mui-slider-group">
+			</div>
+				<div class="btn-box">
+					<a href="javascript:;" class="btn-apply" id="btnApply">申请服务</a>
+				</div>
+		  </div>
+		  <script type="text/javascript" src="js/mui.min.js"></script>
+		  <script type="text/javascript" src="js/config.js"></script>
+		  <script type="text/javascript" src="js/data.json.js" ></script>
+		  <script type="text/javascript" src="js/app.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.material.js"></script>
+		  <script type="text/javascript">
+		  		(function($,doc){
+		  			 $.init({
+			      		statusBarBackground:'#393767'
+			      	});
+			        $.plusReady(function() {
+	   	 	            plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+	   	 	            var navActive,a,tabnav,resultW=[],W=0;
+	   	 	            var nav = doc.getElementById("nav");
+	   	 	            var ws=plus.webview.currentWebview();
+	   	 	            var tabnav=doc.getElementById("tab-nav");
+	   	 	            var navWidth=nav.parentNode.offsetWidth;
+	   	 	            var btnApply=doc.getElementById("btnApply");
+	   	 	            var getAjaxDada=function(type,index){
+			  		    	J.dataAjax(CONFING.Interface.companyHelp,{wait:true,typeN:type},function(data){
+						  	   var datalist=data.dataList,html='';
+						  	     for(var i=0;i<datalist.length;i++){
+						  	     	html+='<div class="title">'+datalist[i]['title']+'</div>'
+						  	     	     +'<div class="desc">'+datalist[i]['description']+'</div>';
+						  	     }
+						  	     var itemmobile=doc.getElementById("itemmobile"+index).querySelector('.con');
+						  	     itemmobile.innerHTML=html;
+					  	    })
+			  		    	btnApply.setAttribute("data-type",type); 
+			  		    }
+	 	                J.dataAjax(CONFING.Interface.companyHelpType,{wait:false},function(data){
+	 	                 	var dataType=data.data;
+	 	                 	var typeHtml='',html='';
+	 	                 	for(var i=0;i<dataType.length;i++){
+	 	                 		 typeHtml+='<a href="#itemmobile'+(i+1)+'" class="a mui-control-item" index="'+(i+1)+'" data-type="'+dataType[i]['id']+'">'+dataType[i]['type_name']+'</a>'
+	 	                 	}
+	 	                 	typeHtml+='<span id="navActive"></span>';
+	 	                 	nav.innerHTML=typeHtml;
+	 	                 	navActive=doc.getElementById("navActive");
+					  			a = nav.querySelectorAll(".a");
+					  			var type=a[0].getAttribute("data-type");
+					  			var width = a[0].offsetWidth;
+					  			for(var e = 0; e < a.length; e++) {
+								     resultW.push(a[e].offsetWidth);
+								      W+=resultW[e];
+								}
+					  			nav.style.width = W+"px";
+					  		    navActive.style.width=a[0].offsetWidth+"px";
+					  		    maxScrollX = W - navWidth;
+						  		for(var i=0;i<a.length;i++){
+					  	    		  html+='<div id="itemmobile'+(i+1)+'" class="mui-slider-item mui-control-content">'
+											+'<div class="jbox mui-scroll-wrapper">'
+											+'   <div class="mui-scroll">'
+											+'   	<div class="con">'
+											+'			<div class="mui-loading">'
+											+'				<div class="mui-spinner">'
+											+'				</div>'
+											+'			 </div>'
+											+'	    </div>'
+											+'   </div>'
+											+' </div>'
+										    +'</div>';
+					  	    	}
+					  	    	doc.getElementById("slider").querySelector(".mui-slider-group").innerHTML=html;
+					  	    	getAjaxDada(type,1);
+					  	    	$("#itemmobile1 .mui-scroll-wrapper").scroll();
+					  	    	var slid=$("#slider").slider();
+					  	    	for(var b=0;b<a.length;b++){
+									a[b].addEventListener("tap",function(e){
+										var index=parseInt(this.getAttribute("index"));
+										var isContent=doc.getElementById("itemmobile"+index).querySelector(".desc");
+										var type=this.getAttribute("data-type");
+					  		    	    getCur(index-1);
+					  		    	    if(!isContent)getAjaxDada(type,index);
+					  		    	    slid._gotoItem(index-1,300);
+									})
+								}
+					  	    	//滚动条滑动
+					  	    	Tscroll=$(".tab-nav .mui-scroll-wrapper").scroll({
+						      		scrollY: false,
+									scrollX: true,
+									indicators: false,
+									snap: '.mui-control-item'
+						      	});
+						      	if(ws.type){
+						      		  var index=ws.inDex;
+						      		  $.trigger(a[index],'tap');
+						      	}
+				  	     });
+			  		    var getCur=function(index){
+			  		    	  var offsetL=a[index].offsetLeft;
+			  		    	  navActive.style.cssText="width:"+resultW[index]+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
+						      var X=Math.max(Math.min(0, -offsetL + (navWidth / 2)), -maxScrollX);
+						      Tscroll.scrollTo(X,0,300);
+			  		    }
+			  		    doc.getElementById("slider").addEventListener("slide",function(e){
+			  		    	  e.stopPropagation();
+			  		    	  var index=e.detail.slideNumber;
+			  		    	  var isContent=doc.getElementById("itemmobile"+(index+1)).querySelector(".desc");
+						 	  getCur(index);
+						 	  var type=a[index].getAttribute("data-type");
+						 	  if(!isContent){
+						 	  	getAjaxDada(type,index+1);
+						 	  	$("#itemmobile"+(index+1)+" .mui-scroll-wrapper").scroll();
+						 	  }
+			  			 });
+			  			 btnApply.addEventListener("tap",function(){
+			  			 	var typeN=this.getAttribute("data-type");
+			  			 	 if(!app.has_login()){
+									$.openWindow({
+										id: 'login.html',
+									    url:'login.html',
+										show: {
+											autoShow:true,
+											aniShow:'pop-in',
+											duration:350
+										},
+										waiting: {
+											autoShow: true
+										}
+									});
+									app.setisBrak(true)
+							 }else{
+									$.openWindow({
+										id: 'Apply.html',
+									    url:'Apply.html',
+										show: {
+											aniShow:'slide-in-bottom',
+											duration:350
+										},
+										 extras:{
+									      type:typeN
+									    },
+										waiting: {
+											autoShow: true
+										}
+									});
+							}
+			  			 })
+					 })
+		  		})(mui,document);
+		  </script>
+	</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<link rel="stylesheet" href="css/mui.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/app.css" type="text/css" charset="utf-8"/>
+		<style type="text/css">
+			#bcid {
+				width: 100%;
+				position: absolute;
+				top: 44px;
+				bottom: 0;
+				text-align: center;
+			}
+			.tip {
+				color: #FFFFFF;
+				font-weight: bold;
+				margin-top:45%;
+				text-shadow: 0px -1px #103E5C;
+				font-size:18px;
+			}
+			.ui-bar{
+				width: 100%;
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+				color: #FFF;
+				padding: 0 10px 0 3px;
+				background:#424048;
+			}
+			.fbt {
+				height: 100%;
+				line-height: 44px;
+			}
+			.scanPicture{
+				float:right;
+				width:40px;
+				font-size:16px
+			}
+			.icon-back{
+				float:left;
+				width:30px;
+			}
+			
+		</style>
+	</head>
+	<body style="background:#000;">
+		<header class="ui-bar">
+			<div class="fbt icon-back icon" id="back"></div>
+			<div class="ui-title">二维码</div>
+		    <div class="fbt scanPicture" id="scanPicture">相册</div>
+		</header>
+		<div id="bcid">
+			<p class="tip">正在载入中...</p>
+		</div>
+	</body>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+	(function($, doc) {
+  	    $.plusReady(function() {
+			  plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+			  var scan;
+			   function onmarked(type,result,file){
+				    switch(type){
+				    	case plus.barcode.QR:
+				    	type = "QR";
+				    	break;
+				    	case plus.barcode.EAN13:
+				    	type = "EAN13";
+				    	break;
+				    	case plus.barcode.EAN8:
+				    	type = "EAN8";
+				    	break;
+				    	default:
+				    	type = "其它";
+				    	break;
+				    }
+				    result = result.replace(/\n/g, '');
+				    plus.nativeUI.alert(type +','+ result +','+file);
+				    plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent')
+				    $.back();
+				    
+				}
+			    // 从相册中选择二维码图片 
+				function scanPicture() {
+				  plus.gallery.pick(function(path){
+					    plus.barcode.scan(path,onmarked,function(error){
+							plus.nativeUI.alert( "无法识别此图片" );
+						});
+				  },function(err){
+				      plus.nativeUI.alert("Failed: "+error.message);
+				  });
+				}
+			        scan=new plus.barcode.Barcode('bcid');
+				    scan.onmarked=onmarked;
+				    scan.start({conserve:true,filename:"_doc/barcode/"});
+	                var scanPic=document.getElementById("scanPicture");				
+					 scanPic.addEventListener("tap",function(){
+						plus.navigator.setStatusBarStyle('UIStatusBarStyleDefault')
+						scanPicture();
+					 })
+	
+		 });
+			var backs=document.getElementById("back");
+			backs.addEventListener("tap",function(){
+				plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent')
+				$.back()
+			})
+		
+	}(mui, document));
+</script>
+</html>

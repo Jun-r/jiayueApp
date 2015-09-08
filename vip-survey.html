@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>满意度调查-会员中心</title>
+    <link href="css/app.css" rel="stylesheet"/>
+	<script src="js/mui.min.js"></script>
+	<style type="text/css">
+	    .ui-page,html,body,.vip-application{
+	      	height: 100%;
+	      	padding-top:0px;
+	    }
+	    body,.ui-page{
+	    	background:#eee;
+	    }
+	    .ui-page{
+	      	padding-top:44px;
+	    }
+	     .vip-application{
+	     	position:relative;
+	     }
+	    .vip-application .mui-table-view{
+	      margin:10px 10px 10px
+	    }
+	   
+	    .mui-table-view{
+	    	background:none;
+	    }
+	    .mui-table-view .mui-table-view-cell{
+	    	margin-bottom:10px;
+	    }
+	    .mui-table-view .mui-table-view-cell a{
+	    	padding:10px 19px;
+	    	border-radius:4px;
+	    	position:relative;
+	    	-webkit-border-radius:4px;
+	    	display:block;
+	    	background:#fff;
+	    }
+	    .mui-table-view .mui-table-view-cell .info span{
+	    	display:block;
+	    	line-height:24px;
+	    	font-size:13px;
+	    	color:#333;
+	    }
+	    
+    	.mui-page-content{
+    		height:100%;
+    		position:relative;
+    	}
+    	.mui-page{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 44px;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+        li.mui-table-view-cell .mui-active{
+    		background:#e5e3e3;
+    	}
+    	 .all-start {
+				display:inline-block;
+				height:25px;
+				margin-left:8px;
+		  }
+		  .all-start a{
+		  	float:left;
+		  	display:inline-block;
+			overflow:hidden;
+			width:25px;
+			text-align:center;
+			line-height:25px
+		  }
+		 .all-start a:before{
+			content:'\e620';
+			width:25px;
+			height:25px;
+			color:#e7c13c;
+			font-size:20px;
+		}
+		.all-start a.cur:before {
+			content:'\e61f';
+			color:#f8af00
+		 }
+		 .survey .textarea{
+		 	padding:15px;
+		 }
+		  .survey .textarea textarea{
+		  	color:#333;
+		  	width:100%;
+		  	border:none;
+		  	background:none;
+		  	height:130px;
+		  	font-size:14px;
+		  	resize:none;
+		  }
+		  textarea[placeholder]{
+			  font-size:14px;
+		  }
+		  input[placeholder]{
+		  	  color:#ccc !important;
+		  	  font-size:15px;
+		  	  text-indent:3px;
+		  }
+		   .survey .list{
+		   	border-top:.05em solid #ddd;
+		   	padding:8px 15px;
+		   	overflow:hidden;
+		   }
+		   .survey .list .x{
+		   	float:left;
+		   	color:#333;
+		   	line-height: 25px;
+		   	font-size:14px
+		   }
+		   .survey .list .c{
+		   	color:#999;
+		   }
+		     .survey .list p{
+		   	overflow:hidden;
+		   }
+		    .survey .list input{
+		    	background:none;
+		    	border:none;
+		    	color:#333;
+		    	width:100%;
+		    	padding:4px 0;
+		    	font-size:14px;
+		    }
+		   
+		    .btnfrom{
+				width:80%;
+				margin:10px auto;
+				height:40px;
+				line-height:40px;
+				text-align:center;
+				font-size:15px;
+				background:#393767;
+				border-radius:3px;
+				-webkit-border-radius:3px;
+				color:#fff;
+				display:block;
+			}
+			.btnfrom:active{
+				background:#29284c;
+				color:#fff;
+			}
+    </style>
+</head>
+<body>
+  <div class="ui-page" id="ui-page">
+   	 <header class="ui-bar jy-bar" id="header">
+    	<a href="javascript:;" class="icon-back icon" id="back"></a>
+    	<div class="ui-title">满意度调查</div>
+    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+    </header>
+    <section class="survey">
+    	<div class="textarea">
+    	   <textarea placeholder="写下你的满意度感言..." id="textarea"></textarea>
+    	</div>
+    	<div class="list">
+    		<span class="x">评分:</span>
+    		<span class="all-start" id="start">
+	            <a rel="1" class="icon"></a>
+	            <a rel="2" class="icon"></a>
+	            <a rel="3" class="icon"></a>
+	            <a rel="4" class="icon"></a>
+	            <a rel="5" class="icon"></a>
+	        </span>
+		</div>
+		<div class="list"><span class="x">联系人：</span><p><input type="text" id="name" /></p></div>
+		<div class="list"><span class="x">联系方式<span class="c">( 邮箱、QQ等 )</span>：</span><p><input type="text" id="iPhone" value="18569416846" /></p></div>
+        <div class="list"><a href="javascript:;" class="btnfrom" id="submit">提交</a></div>
+    </section>
+  </div>
+   <script src="js/config.js"></script>
+   <script src="js/app.js"></script>
+   <script type="text/javascript">
+   (function($, doc) {
+   	    $.init({
+      		statusBarBackground:'#393767'
+      	});
+      	$.plusReady(function() {
+      		plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+      		var stateDate=app.getStateDate();
+      		var start=doc.getElementById("start");
+      		var submit=doc.getElementById("submit");
+      		var textarea=doc.getElementById("textarea");
+      		var iPhone=doc.getElementById("iPhone");
+      		var name=doc.getElementById("name");
+      		var startChildren=start.children;
+      		var ws=plus.webview.currentWebview();
+      		name.value=stateDate['user_name'];
+//    		iPhone.value=stateDate['user_name'];
+			$("#start").on("tap","a",function(){
+					var q = this.getAttribute("rel");
+					start.setAttribute('data-start',q)
+				    for(i=0;i<startChildren.length;i++){
+				    	startChildren[i].classList.remove('cur');
+				    	if(i<q){
+				    	 startChildren[i].classList.add('cur');
+				    	}
+				    }
+			})
+			submit.addEventListener("tap",function(){
+				 var dataArr={
+				 	type:"post",
+				 	content:textarea.value,
+				 	score:start.getAttribute("data-start"),
+				 	iPhone:iPhone.value,
+				 	feedback_name:name.value
+				 }
+				  J.dataAjax(CONFING.Interface.survey,dataArr,function(data){
+				  	 if(data.type=='1'){
+		    	 	 	 plus.nativeUI.alert(data.msg);
+		    	 	 	 ws.reload(true);//重新加载当前窗口html
+		    	 	 }else{
+		    	 	 	 plus.nativeUI.toast(data.msg);
+		    	 	 }
+				  })
+			})
+		});
+   }(mui, document));
+   </script>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商管中心</title>
+		<link href="css/app.css" rel="stylesheet" />
+		<style type="text/css">
+		.ui-page,html,body{
+	    	height:100%;
+	    	overflow:hidden;
+	    }
+	    .mui-ios .mui-table-view-cell{
+	    	-webkit-transform-style:preserve-3d;
+	    	transform-style:preserve-3d
+	    }
+		.mui-slider{
+			right: 0;
+			bottom: 0;
+			top: 89px;
+			left: 0;
+			background: #fff;
+			position: absolute;
+			width:100%;
+			overflow:hidden;
+		}
+		
+			.mui-scroll-wrapper{
+				background: #eee;
+			}
+			.tab-nav{
+				height: 45px;
+				position:absolute;
+				top:44px;
+				left:0;
+				right:0;
+			}
+			.tab-nav .a{
+				float: left;
+				height: 45px;
+				padding:0 20px;
+				text-align: center;
+				line-height: 45px;
+				color: #595785;
+				font-size: 15px;
+				box-sizing: border-box;
+				border-bottom:.05em solid #ddd;
+			}
+			.mui-slider-indicator{
+				bottom: auto;
+				height: 45px;
+			}
+			.mui-slider-group{
+				position: absolute;
+				top: 0;
+				bottom:0;
+				width: 100%;
+				white-space: nowrap;
+				font-size: 0;
+			}
+			
+			.mui-slider-group .mui-slider-item{
+				display: inline-block;
+				width: 100%;
+				position: relative;
+				font-size: 17px;
+				vertical-align: top;
+				height: 100%;
+			}
+			.mui-slider-group .mui-slider-item .mui-scroll-wrapper{
+				background: none;
+			}
+			.mui-slider-item .title{
+				padding: 0 12px;
+				color: #595785;
+				font-size: 14px;
+				height:44px;
+				line-height:44px;
+				background:#fff;
+			}
+			.mui-slider-item .icon:before{margin-right:5px;}
+			
+			.mui-slider-item .jbox{
+				position:absolute;
+				top:44px;
+				left:0;
+				bottom:0;
+			}
+			.mui-slider-item .content{
+				white-space: normal;
+			}
+			.mui-slider-item .desc{
+			   background: #f5f5f5;
+			   padding:12px;
+			}
+			.mui-slider-item .desc,.mui-slider-item .con{
+				line-height: 20px;
+				color: #666;
+				white-space: normal;
+				font-size:13px;
+			}
+			.mui-slider-item .content .mui-loading{
+				margin-top:20px
+			}
+			
+			#navActive{
+				height:2px;
+				background:#595785;
+				display:block;
+				position:absolute;
+				bottom:0;
+				left:0;
+				-webkit-transition: -webkit-transform 300ms ease;
+				transition: transform 300ms ease;
+				z-index:9;
+			}
+			.mui-none{
+				visibility:hidden;
+			}
+			.mui-pull-bottom-tips{
+				height:38px;
+				text-align:center;
+				position:relative;
+				line-height:38px;
+			}
+			.mui-pull-bottom-tips .mui-spinner,.mui-pull-bottom-tips .mui-pull-loading{
+				display:inline-block;
+				vertical-align:middle;
+				margin-right:0px;
+				margin-left:5px;
+				font-size:14px;
+				color:#666;
+			}
+		#simg{
+			width:100%;
+			height:auto;
+		}
+		.p-list{
+			padding:0 10px;
+		}
+		.p-list li{
+			overflow:hidden;
+			border-top:.05em solid #ddd;
+		}
+		.p-list li:first-child{
+			border-top:none
+		}
+		.p-list li a{
+			padding:10px 0 12px 0;
+			overflow:hidden;
+			display: block;
+		}
+		.p-list li .img{
+			width:115px;
+			height:86px;
+			float:left;
+			margin-right:10px;
+		}
+		.p-list li .img img{
+			width:115px;
+			height:86px;
+		}
+		.p-list li .info{
+			overflow:hidden;
+		}
+		.p-list li .info p{
+			font-size:12px;
+			color:#666;
+		}
+		.jy-tab-list{
+			height:auto;
+			background:#fff;
+			position:absolute;
+			top:0;
+			left:0;
+			right:0;
+			z-index:10;
+			-webkit-transform: translate3d(0,-40px,0);
+	        transform: translate3d(0,-40px, 0);
+		    -webkit-transition: -webkit-transform 300ms ease;
+	        transition: transform 300ms ease;
+		}
+		.jy-tab-list.cur{
+		   -webkit-transform: translate3d(0,0,0);
+	        transform: translate3d(0,0, 0);
+		}
+		.jy-tab-list ul.tab{
+			background-color:#eee
+		}
+		.jy-tab-list ul{
+			height:40px;
+			position:relative;
+			overflow:hidden;
+		}
+		.jy-tab-list ul.tab .active{
+			width:33.33%;
+			height:2px;
+			content:'';
+			background:#595785;
+			display:block;
+			position:absolute;
+			bottom:0;
+			left:0;
+			-webkit-transition: -webkit-transform 300ms ease;
+			transition: transform 300ms ease;
+		}
+		.jy-tab-list li{
+			height:40px;
+			width:50%;
+			line-height:40px;
+			float:left;
+		}
+		 .jy-tab-list .screening{
+		 	border-bottom:.05em solid #ddd;
+		 }
+		.jy-tab-list li a{
+			height:40px;
+			text-align:center;
+			display:block;
+			font-size:14px;
+		}
+		.jy-tab-list .tab li a{
+		    color:#595785;
+		}
+	    .jy-tab-list .screening li,.jy-tab-list .screening li a{
+			font-size:12px;
+			color:#666;
+			text-align:center;
+		}
+		 .jy-tab-list .screening li a.icon:after{
+		 	font-size:12px;
+		 	margin-left:5px
+		 }
+		 .menuSlide{
+		 	top:44px;
+		 }
+		 li.mui-table-view-cell .mui-active{
+    		background:#f3f3f3;
+    	 }
+    	 .con_i{
+    	 	background:#4cbe48;
+    	 	white-space: normal;
+    	 	font-size:13px;
+    	 	color:#666;
+    	 	
+    	 }
+    	 .con_i .cc{
+    	 	padding:10px;
+    	 	background:#fff;
+    	 }
+    	 .con_i p{
+    	 	line-height:22px;
+    	 	text-indent:26px;
+    	 }
+    	 .btnBox{
+    	 	text-align:center;
+    	 	padding:10px 0;
+    	 }
+    	 .btnBox a{
+    	 	display:inline-block;
+    	 	height:40px;
+    	 	line-height:40px;
+    	 	color:#fff;
+    	 	text-align:center;
+    	 	border-radius:3px;
+    	 	-webkit-border-radius:3px;
+    	 	width:75%;
+    	 	margin:10px 0 0 0;
+    	 	font-size:15px;
+    	 }
+    	 .btnBox a.s_btn{
+    	 	background:#4cbe48;
+    	 }
+    	 .btnBox a.s_btn:active{
+    	 	background:#3fae3b;
+    	 }
+    	 .btnBox a.x_btn{
+    	 	background:#dfb521;
+    	 }
+    	 .btnBox a.x_btn:active{
+    	 	background:#cfa71b;
+    	 }
+    	 #itemmobile1 .mui-scroll-wrapper,#itemmobile5 .mui-scroll-wrapper{
+    	 	bottom:60px;
+    	 }
+    	 .mui-slider-item .btn-box{
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				height: 60px;
+				background: #fff;
+				text-align: center;
+			}
+			.mui-slider-item .btn-box .btn-apply{
+				width: 250px;
+				height: 40px;
+				line-height: 40px;
+				background: #393767;
+				color: #fff;
+				margin:10px 0;
+				display: inline-block;
+				border-radius: 5px;
+			}
+			.mui-slider-item .btn-box .btn-apply:active{
+			    background:#2a294f;	
+			}
+			.ul-from{
+				background:#f5f5f5;
+			}
+			.ul-from .title{
+				height:40px;
+				line-height:40px;
+				text-align:center;
+				color:#666;
+				background:#f5f5f5;
+				font-size:16px;
+				border-bottom:.05em solid #ccc;
+			}
+			.ul-from ul{
+				
+			}
+			.ul-from li{
+				line-height:40px;
+				overflow:hidden;
+				border-bottom:.05em solid #ccc;
+			}
+			.ul-from li span{
+				float:left;
+				font-size:14px;
+				width:85px;
+				text-align:center;
+			}
+			.ul-from li p{
+				overflow:hidden;
+			}
+			.ul-from li p .i{
+				border:none;
+				background:transparent;
+				padding:12px 0;
+				width:100%;
+				float:left;
+			}
+			.textarea{
+				border:none;
+				background:transparent;
+				width:100%;
+				float:left;
+				line-height: 30px;
+				margin-top:5px;
+				height:80px;
+			}
+			#itemmobile4 .mui-scroll-wrapper{
+				background:#f5f5f5;
+			}
+			.s_list li{
+				background:#fff;
+				white-space: normal;
+				padding:10px 15px;
+				margin-top:10px;
+			}
+			.s_list li:first-child{
+				margin-top:0;
+			}
+			.s_list li .s_title{
+				height:30px;
+				line-height:30px;
+			}
+			.s_list li .s_title .f-l{
+				color:#333;
+				font-size:15px;
+			}
+			.s_list li .s_title .f-r{
+				font-size:13px;
+				float:right;
+				color:#595785;
+			}
+			.s_list li .p_info{
+				font-size:13px;
+				color:#666;
+				line-height:20px;
+			}
+			.s_list li .btn{
+				margin:15px 0 5px 0;
+				text-align:center;
+			}
+			.s_list li .btn a{
+				display:inline-block;
+				width:50%;
+				text-align:center;
+				color:#fff;
+				font-size:14px;
+				line-height:32px;
+				border-radius:3px;
+    	 	    -webkit-border-radius:3px;
+    	 	    background:#4cbe48;
+			}
+			.s_list li .btn a:active{
+				background:#44ad40;
+			}
+			#itemmobile5 .con{
+				padding:10px 15px;
+				font-size:13px;
+			}
+		</style>
+	</head>
+	<body style="background: #fff">
+	  <div class="ui-page" id="ui-page">
+		    <header class="ui-bar jy-bar" id="header">
+		    	<a href="javascript:;" class="icon-back icon"></a>
+		    	<div class="ui-title">商管中心</div>
+		    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		    </header>
+		  <div class="tab-nav" id="tab-nav">
+	        <div class="mui-scroll-wrapper">
+		        <nav class="mui-scroll" id="nav">
+		        	<a href="#itemmobile1" class="a mui-control-item" index="1">合作平台</a>
+		        	<a href="#itemmobile2" class="a mui-control-item" index="2">商业招商</a>
+		        	<a href="#itemmobile3" class="a mui-control-item" index="3">办公租赁</a>
+		        	<a href="#itemmobile4" class="a mui-control-item" index="4">运营平台</a>
+		        	<a href="#itemmobile5" class="a mui-control-item" index="5">我要出租</a>
+		        	<span id="navActive"></span>
+				</nav>
+			  </div>
+		  </div>
+		  <div id="slider" class="mui-slider">
+		  	<div class="jy-tab-list" id="tablist" type="1">
+	    	 	<ul class="screening">
+	    	 		<li><a href="javascript:;" class="icon-arrow-d icon openMenu" data-descId='rDesc'>选择状态</a></li>
+	    	 		<li><a href="javascript:;" class="icon-arrow-d icon openMenu" data-descId='aDesc'>选择面积</a></li>
+	    	 	</ul>
+	    	 </div>
+			 <div class="mui-slider-group">
+			 	<div id="itemmobile1" class="mui-slider-item mui-control-content">
+			 		 <div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+						    	 <div class="con_i">
+						    	 	<div class="cc">
+							    	 	<div class="c">企业融资服务介绍是专为融资者设立的关于企业股权融资、企业借贷融资和企业租赁融资的高端资本运营服务产品，企业融资服务介绍主要是为基金需求方寻找资金提供方的专业服务，帮助项目融资者获得实体和虚拟资本的支援，是资本运营的重要组成部分。</div>
+							    	 	<div class="btnBox">
+							    	 		<a href="javascript:;" class="s_btn">不是会员，马上注册 >></a>
+							    	 		<a href="javascript:;" class="x_btn">我是会员，完善资料 >></a>
+							    	 	</div>
+						    	 	</div>
+						    	 	<div class="ul-from">
+						    	 		<div class="title">提交客户信息</div>
+						    	 		<ul>
+						    	 			<li><span>客户姓名：</span><p><input type="text" class="i" placeholder="请输入姓名" /></p></li>
+						    	 			<li><span>客户电话：</span><p><input type="text" class="i" placeholder="请输入客户电话" /></p></li>
+						    	 			<li><span>租金预算：</span><p><input type="text" class="i" placeholder="请输入租金预算" /></p></li>
+						    	 			<li><span>可作用途：</span><p><input type="text" class="i" placeholder="请输入可作用途" /></p></li>
+						    	 			<li><span>备注信息：</span><p><textarea class="textarea" placeholder="请输入备注信息"></textarea></p></li>
+						    	 		</ul>
+						    	 	</div>
+						    	 </div>
+					        </div>
+					</div>
+					<div class="btn-box">
+						<a href="javascript:;" class="btn-apply">提交</a>
+					</div>
+				</div>
+				<div id="itemmobile2" class="mui-slider-item mui-control-content mui-slider-pullrefresh" data-isPullrefresh='true'>
+					<div class="jbox mui-scroll-wrapper" id="p-list">
+							<div class="mui-scroll" type="1">
+						    	 <div class="con">
+						    	 	 
+						    	 </div>
+							</div>
+					</div>
+				</div>
+				<div id="itemmobile3" class="mui-slider-item mui-control-content mui-slider-pullrefresh" data-isPullrefresh='true'>
+					<div class="jbox mui-scroll-wrapper" id="c-list">
+							<div class="mui-scroll" type="2">
+						    	 <div class="con p-list">
+						    	 	 
+						    	 </div>
+							</div>
+					</div>
+				</div>
+				<div id="itemmobile4" class="mui-slider-item mui-control-content">
+					<div class="mui-scroll-wrapper" id="s_list">
+						<div class="mui-scroll">
+							<div class="con">
+								<div class="mui-loading" style="margin-top:10px;">
+									<div class="mui-spinner">
+									</div>
+								 </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="itemmobile5" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper" id="r-list">
+						   <div class="mui-scroll">
+								<div class="con">
+									<div class="mui-loading" style="margin-top:10px;">
+										<div class="mui-spinner">
+										</div>
+								   </div>
+								</div>
+						 	</div>
+						</div>
+					<div class="btn-box">
+						<a href="javascript:;" id="btnApply" class="btn-apply">申请出租</a>
+					</div>
+			    </div>
+			 </div>
+			</div>
+			 <!--菜单滑动公用区域-->
+		    <div class="menuSlide" id="menuSlide"  style="display:none;">
+		      <div class="mui-backdrop"></div>
+		      <div class="mui-linkage mui-slide mui-slide-right">
+			    	<ul id="menuContent">
+					</ul>
+			  </div>
+			</div>
+		  </div>
+		  <script type="text/javascript" src="js/mui.min.js"></script>
+		  <script type="text/javascript" src="js/config.js"></script>
+		  <script type="text/javascript" src="js/app.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.material.js"></script>
+		   <script type="text/javascript" src="js/mui.lazyload.js"></script>
+          <script type="text/javascript" src="js/mui.lazyload.img.js"></script>
+		  <script type="text/javascript">
+		  		(function($,doc){
+		  			 var isCurBox=true;
+		  			 var count=1;
+					 var tId=1;
+		  			 var D=new J.setImg();
+		  			 $.init({
+			      		statusBarBackground:'#393767'
+			      	 });
+			      	 $('#itemmobile1 .mui-scroll-wrapper').scroll();
+			      	 var imgLazyloadApi=$(doc).imageLazyload({
+							placeholder:'../images/60x60.gif'
+						 });
+					    var navActive,a,tabnav,resultW=[],W=0;
+	   	 	            var nav = doc.getElementById("nav");
+	   	 	            var btnApply=doc.getElementById("btnApply");
+	   	 	            var tabnav=doc.getElementById("tab-nav");
+	   	 	            var navWidth=nav.parentNode.offsetWidth;
+	   	 	            var tablist=doc.getElementById("tablist");
+ 	                	navActive=doc.getElementById("navActive");
+			  			a = nav.querySelectorAll(".a");
+			  			var type=a[0].getAttribute("data-type");
+			  			var width = a[0].offsetWidth;
+			  			for(var e = 0; e < a.length; e++) {
+						     resultW.push(a[e].offsetWidth);
+						      W+=resultW[e];
+						}
+			  			
+			  			nav.style.width = W+"px";
+			  		    navActive.style.width=a[0].offsetWidth+"px";
+			  		    maxScrollX = W - navWidth;
+			  	    	var slid=$("#slider").slider();
+			  	    	//滚动条滑动
+			  	    	Tscroll=$(".tab-nav .mui-scroll-wrapper").scroll({
+				      		scrollY: false,
+							scrollX: true,
+							indicators: false,
+							snap: '.mui-control-item'
+				      	});
+			        $.plusReady(function() {
+	   	 	            plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+				      	var getCur=function(index){
+			  		    	  var offsetL=a[index].offsetLeft;
+			  		    	  navActive.style.cssText="width:"+resultW[index]+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
+						      var X=Math.max(Math.min(0, -offsetL + (navWidth / 2)), -maxScrollX);
+						      Tscroll.scrollTo(X,0,300);
+			  		    }
+			  		
+			  	    //阻尼系数
+					var deceleration = mui.os.ios?0.003:0.0009;
+					$('.mui-scroll-wrapper').scroll({
+						indicators: true, //是否显示滚动条
+						deceleration:deceleration
+					});
+					 $.ready(function() {
+						//循环初始化所有下拉刷新，上拉加载。
+						$.each(document.querySelectorAll('.mui-slider-pullrefresh .mui-scroll'), function(index, pullRefreshEl) {
+							$(pullRefreshEl).pullToRefresh({
+								up: {
+									contentrefresh: '正在加载...',
+									callback: function() {
+										var self = this,html='';
+										setTimeout(function() {
+											var typeId=pullRefreshEl.getAttribute("type");
+											if(index==0){
+												commercialLeasing('p-list',self,typeId);
+											}else if(index==1){
+												commercialLeasing('c-list',self,typeId);
+											}
+										}, 500);
+									}
+								}
+							});
+						});
+					 });
+					 var platform= function() {
+				  			J.dataAjax(CONFING.Interface.czsqInit,{wait:true},function(data){
+				  				var conMap=data.map;
+				  				document.getElementById("r-list").querySelector(".con").innerHTML=conMap['value5'];
+				  			})
+				  			btnApply.addEventListener("tap",function(){
+			  			 	 if(!app.has_login()){
+									$.openWindow({
+										id: 'login.html',
+									    url:'login.html',
+										show: {
+											autoShow:true,
+											aniShow:'slide-in-bottom',
+											duration:350
+										},
+										waiting: {
+											autoShow: true
+										}
+									});
+									app.setisBrak(true)
+							 }else{
+									$.openWindow({
+										id: 'business-rental.html',
+									    url:'business-rental.html',
+										show: {
+											aniShow:'slide-in-bottom',
+											duration:350
+										},
+										waiting: {
+											autoShow: true
+										}
+									});
+							}
+			  			 })
+					 };
+					 var getData=function(iSclass,index,id){
+					 	index= index || 0;
+					 	id= id || "#itemmobile1 .mui-scroll";
+					 	var itemmobile=doc.getElementById("itemmobile"+(index+1));
+					 	var isPullRefresh=itemmobile.getAttribute("data-isPullrefresh");
+					 	if(index==1 || index==2){
+					 		tablist.classList.add("cur");
+					 	}else{
+					 		tablist.classList.remove("cur");
+					 	}
+						if(!iSclass && eval(isPullRefresh)){
+							count=1;
+		  		      	    tablist.setAttribute("type",index);
+			  		        if ($.os.plus) {
+					            setTimeout(function() {
+									$(id).pullToRefresh().pullUpLoading();
+								}, 100);
+							} else {
+								$.ready(function() {
+									$(id).pullToRefresh().pullUpLoading();
+								});
+							}
+						 }else if(index==3){
+						 	 operatingPlatform();
+						 }else if(index==4){
+						 	 platform();
+						 }
+						 
+					}
+					//商业招租
+					var commercialLeasing = function(UlClass,self,typeId,merchants,order) {
+							var uls = doc.createElement('ul');
+				            uls.className = UlClass+' mui-table-view';
+				            var eltId=doc.getElementById(UlClass);
+				            eltId.querySelector(".con").appendChild(uls);
+							var ul = eltId.querySelector('.mui-table-view');
+							var li,ulHtml;
+							var dataArr={
+							    wait:true,
+							    curPage:count,
+							    type_N:typeId,
+							    is_merchants:merchants || '-1',
+							    area_order:order || '-1'
+							 }
+							if(merchants || order){
+								eltId.querySelector(".con").style.opacity=0;
+							}
+						    J.dataAjax(CONFING.Interface.bBAWheApp,dataArr,function(data){
+					  			  var conlist=data.data;
+				  			  	  var page=data.totalPage;
+					  			  var isPage=conlist?++count>(page+1):true;
+//					  			  console.log(J.sDug(UlClass));
+					  			  self.endPullUpToRefresh(isPage);
+					  			  if(conlist){
+						  			   for (var i = 0; i < conlist.length; i++) {
+										li = doc.createElement('li');
+										li.className = 'mui-table-view-cell';
+										var html='<a href="javascript:;" class="listShow" data-id="'+conlist[i].id+'">'
+									    +'<div class="img"><img class="imglazy" data-lazyload="'+CONFING.httpUrl+conlist[i].img_list+'?version='+Math.random()*1000+'"/></div>'
+									    +'<div class="info">'
+										+'	<p>位置：'+conlist[i].firstname+conlist[i].secondname+conlist[i].thirdname+'</p>'
+										+'	<p>面积：'+conlist[i].area+'㎡</p>'
+										+'	<p>用途：'+conlist[i].application+'</p>'
+										+'	<p>状态：'+(conlist[i].is_merchants==1?"出租中":"已出租")+'</p>'
+										+'</div>'
+									    + '</a>';
+										li.innerHTML = html;
+										ul.appendChild(li);
+										imgLazyloadApi.addElements();
+										if(merchants || order){
+											 setTimeout(function() {
+												eltId.querySelector(".con").style.opacity=1;
+											}, 200);
+					  			  	   }
+										isCurBox=false;
+									}
+					  			}
+				  			})
+					  };
+					  //运营平台
+					  var operatingPlatform=function(){
+					  	var html='<ul class="s_list">';
+					  	J.dataAjax(CONFING.Interface.yyptAppList,{},function(data){
+					  			  var conlist=data.typeList;
+					  			  if(conlist){
+						  			   for (var i = 0; i < conlist.length; i++) {
+						  			   	html+='<li>';
+										html+='<div class="s_title"><span class="f-l">'+conlist[i].type_name+'</span><a href="javascript:;" data-index="'+(i+1)+'" data-type="'+conlist[i].id+'" class="f-r showbtn">查看详情</a></div>';
+									    html+='<div class="p_info">'+conlist[i].info+'</div>';
+									    html+='<div class="btn"><a href="javascript:;" data-type="'+conlist[i].id+'"  class="btn_a">立即申请</a></div>';
+									    html+='</li>';
+									   }
+						  			   html+='</ul>';
+						  			   doc.getElementById("s_list").querySelector('.con').innerHTML=html;
+					  			  }
+				  			})
+					  	    $("#s_list").on("tap",".showbtn",function(){
+					  	    	var index=this.getAttribute("data-index");
+					  	    	var typeN=this.getAttribute("data-type");
+					  	   	       $.openWindow({
+										id: 'businesssupport.html',
+									    url:'businesssupport.html',
+										show: {
+											aniShow:'pop-in',
+											duration:350
+										},
+										extras:{
+									      type:typeN,
+									      inDex:index
+									    },
+										waiting: {
+										  autoShow: true
+										}
+									});
+					  	    });
+						  	$("#s_list").on("tap",".btn_a",function(){
+				  			 	var typeN=this.getAttribute("data-type");
+				  			 	 if(!app.has_login()){
+										$.openWindow({
+											id: 'login.html',
+										    url:'login.html',
+											show: {
+												autoShow:true,
+												aniShow:'slide-in-bottom',
+												duration:350
+											},
+											waiting: {
+												autoShow: true
+											}
+										});
+										app.setisBrak(true);
+								 }else{
+										$.openWindow({
+											id: 'Apply.html',
+										    url:'Apply.html',
+											show: {
+												aniShow:'slide-in-bottom',
+												duration:350
+											},
+											 extras:{
+										      type:typeN
+										    },
+											waiting: {
+												autoShow: true
+											}
+										});
+								}
+				  			 })
+					  }
+					  $("#nav").on("tap",".a",function(e){
+							var index=parseInt(this.getAttribute("index"));
+							var curIndex=index-1;
+							tId=index;
+							var id="#itemmobile"+index+" .mui-scroll";
+							var getOBJ=doc.getElementById("itemmobile"+(curIndex+1));
+							var iSclass=getOBJ.querySelector('.mui-table-view');
+							getData(iSclass,curIndex,id);
+		  		    	    getCur(index-1);
+		  		    	    slid._gotoItem(curIndex,300);
+					  })
+					  //商业招租状态查询
+						var RentalDesc=[{'text':'出租中','desc':'1'},{'text':'已出租','desc':'2'}];
+						var AreaDesc=[{'text':'从低到高','desc':'1'},{'text':'从高到低','desc':'2'}];
+						var getMenuList=function(id){
+							 var html='<ul>';
+							 var arr=id=='rDesc'?RentalDesc:AreaDesc;
+							 for(var i=0;i<arr.length;i++){
+							   	 html+='<li class="mui-table-view-cell"><a href="javascript:;" data-desc="'+arr[i]['desc']+'" class="tap-active">'+arr[i]['text']+'</a></li>';
+							 }
+						     html+='</ul>';
+						     menuContent.innerHTML=html;
+						}
+						var menuSlide=doc.getElementById("menuSlide");
+						var sildeMenu= new J.toggleSlideMenu(menuSlide);
+						J.ClassTab("openMenu",function(_this){
+						    var descId=_this.getAttribute("data-descId");
+						    menuContent.setAttribute("data-descId",descId);
+							getMenuList(descId);
+							sildeMenu.open();
+						})
+						$("#menuContent").on("tap",".tap-active",function(){
+							var self;
+							var descid=this.getAttribute("data-desc");
+							var mid=menuContent.getAttribute("data-descId");
+							if(mid=='rDesc'){
+								var merchants=descid;
+							}else{
+								var order=descid;
+							}
+						    count=1;
+						    if(tId==1){
+						    	doc.getElementById("itemmobile1").querySelector('.con').innerHTML='';
+						    	self=$("#itemmobile1 .mui-scroll").pullToRefresh();
+						    	commercialLeasing('p-list',self,tId,merchants,order);
+						    }else{
+						    	doc.getElementById("itemmobile2").querySelector('.con').innerHTML='';
+						    	self=$("#itemmobile2 .mui-scroll").pullToRefresh();
+						    	commercialLeasing('c-list',self,tId,merchants,order);
+						     }
+							sildeMenu.close();
+						})
+					   //商业招租详情
+					     $("#p-list").on("tap",".listShow",function(e){
+					     	var showId=this.getAttribute("data-id");
+						 	 $.openWindow({
+								id: 'business-show.html',
+							    url:'business-show.html',
+							    extras:{
+							      sId:showId,
+							      title:'商业招租',
+							    },
+								show: {
+									aniShow:'pop-in',
+									duration:350
+								},
+								waiting: {
+									autoShow: true
+								}
+							});
+					     })
+					     //办公租赁详情
+					     $("#c-list").on("tap",".listShow",function(e){
+					     	var showId=this.getAttribute("data-id");
+						 	 $.openWindow({
+								id: 'business-show.html',
+							    url:'business-show.html',
+							    extras:{
+							      sId:showId,
+							      title:'办公租赁',
+							    },
+								show: {
+									aniShow:'pop-in',
+									duration:350
+								},
+								waiting: {
+									autoShow: true
+								}
+							});
+					     })
+					   //滑动切换   备注：还有点问题，不知道为什么老是滑到最后一个有跳到第一个
+					     doc.getElementById("slider").addEventListener("slide",function(e){
+			  		    	  var index=e.detail.slideNumber; 
+						 	  var offsetL=index*a[0].offsetWidth;
+						 	  var id="#itemmobile"+(index+1)+" .mui-scroll";
+						 	  var getOBJ=doc.getElementById("itemmobile"+(index+1));
+						 	  var iSclass=getOBJ.querySelector('.mui-table-view');
+						 	  getCur(index);
+						 	  tId=(index+1);
+						 	  navActive.style.cssText="width:"+a[0].offsetWidth+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
+				  		      getData(iSclass,index,id);
+			  			 });
+					 });
+		  		})(mui,document);
+		  </script>
+	</body>
+</html>

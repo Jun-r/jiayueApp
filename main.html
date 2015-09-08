@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>会员中心</title>
+    <link href="css/app.css" rel="stylesheet"/>
+	<script src="js/mui.min.js"></script>
+	<script src="js/config.js"></script>
+	<style type="text/css">
+      .ui-page,html,body{
+      	height: 100%;
+      	padding-top:0px;
+      }
+      .ui-page{
+      	padding-top:44px;
+      }
+    	.vip-top{
+    		width:100%;
+    		height:100px;
+    		padding:20px 15px;
+    		overflow:hidden;
+    		background-image: url(images/vip-top.jpg);
+    		background-size:contain;
+    	}
+    	.vip-top .vip-img{
+    		width:60px;
+    		height:60px;
+    		float:left;
+    		margin-right:20px;
+    	}
+    	.vip-top .vip-img img{
+    		width:60px;
+    		height:60px;
+    	    border-radius:50%;
+    	    -webkit-border-radius:50%;
+    	}
+    	.vip-top .vip-info{
+    		overflow:hidden;
+    		padding-top:7px;
+    	}
+    	.vip-top .vip-info .name{
+    		color:#fff;
+    		font-size:14px;
+    	}
+    	.vip-top .vip-info .name span{
+    		font-size:13px;
+    		margin-left:3px;
+    	}
+    	.vip-top .vip-info .level{
+    		color:#fff;
+    		font-size:12px;
+    	}
+    	.vip-list li{
+    		margin:10px 0 0 0;
+    	}
+    	.vip-list li a{
+    		display:block;
+    		padding:0 15px;
+    		height:40px;
+    		line-height:40px;
+    		background:#fff;
+    		color:#666;
+    		font-size:14px
+    	}
+    	.vip-list li a:before{
+    		margin-right:15px;
+    	}
+    	.vip-list li a.exit{
+    		text-align:center;
+    		font-size:16px;
+    		background:#FF5053;
+    		color:#fff;
+    		margin:0 10px
+    	}
+    	.mui-page-content{
+    		height:100%;
+    		position:relative;
+    	}
+    	.mui-page{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 44px;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+    	.vip-list li.mui-table-view-cell .mui-active{
+    		background:#e2dfdf;
+    	}
+    </style>
+</head>
+<body>
+  <div class="ui-page" id="ui-page" style="background:#f5f5f5;">
+   	 <header class="ui-bar jy-bar" id="header">
+    	<a href="javascript:;" class="icon-back icon" id="back"></a>
+    	<div class="ui-title">个人中心</div>
+    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+    </header>
+      <div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+			    <div class="vip-content" id="vip-content">
+			    	<div class="vip-top">
+						<div class="vip-img" id="head">
+							<a class="headImg">
+							    <img src="" id="avatar_src" />
+							</a>
+						</div>
+						<div class="vip-info">
+							<p class="name"><span id="account">加载中...</span></p>
+							<p class="level">等级:<span id="level">加载...</span></p>
+						</div>
+					</div>
+					<div class="vip-list">
+						<ul>
+							<li class="mui-table-view-cell"><a href="information.html" class="ui-link icon-vip-data icon" id="info">个人资料</a></li>
+							<li class="mui-table-view-cell"><a href="vip-reservation.html" class="ui-link icon-vip-reservation icon">我的预订</a></li>
+							<li class="mui-table-view-cell"><a href="vip-application.html" class="ui-link icon-vip-application icon">我的申请</a></li>
+							<li class="mui-table-view-cell"><a href="vip-activities.html" class="ui-link icon-vip-activities icon">我的活动</a></li>
+							<li class="mui-table-view-cell"><a href="vip-survey.html" class="ui-link icon-vip-survey icon">满意度调查</a></li>
+							<li class="mui-table-view-cell"><a href="javascript:;" class="icon-vip-update icon" id="update">版本更新</a></li>
+							<li class="mui-table-view-cell"><a href="vip-notification.html" class="ui-link icon-vip-notification icon">系统通知</a></li>
+							<li class="mui-table-view-cell"><a href="javascript:;" class="exit" id="exit">退出</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+  <script src="js/app.js"></script>
+   <script src="js/mui.view.js"></script>
+   <script type="text/javascript">
+   (function($, doc) {
+   	    $.init({
+      		statusBarBackground:'#393767',
+      		preloadPages:[
+      		{
+		      url:"information.html",
+		      id:"information.html",
+		    }]
+      	});
+      	//初始化单页的区域滚动
+		 $('.mui-scroll-wrapper').scroll();
+      	$.plusReady(function() {
+      		    plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+				$.back = function() {
+					$.openWindow({
+						url: 'index.html',
+						id: 'index.html',
+						show: {
+						    aniShow: 'slide-in-left',
+						    duration:300
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+					setTimeout(function(){
+						 var main=plus.webview.currentWebview();
+					     	 plus.webview.close(main,"none",0);
+					},300)
+					plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+				};
+		   	   var stateDate = app.getStateDate();
+		   	   var state = app.getState();
+		   	   var update=doc.getElementById("update");
+		   	   plus.webview.close("index.html",'none',0);
+		   	   function getdata(data){
+				  var account=doc.getElementById("account");
+				  var level=doc.getElementById("level");
+				  var headimg=doc.getElementById("avatar_src");
+				      account.innerHTML=data['user_name'];                   //会员名的
+				      level.innerHTML=data['grade_name'];                    //会员等级
+				      headimg.src= CONFING.httpUrl+data['head_img_path'];    //会员图片;
+		   	   }
+			   $('.ui-page').on('tap','.exit', function(e) {
+		   	        if($.os.ios){
+		   	        	app.setStateDate({});
+						app.setState({});
+						$.openWindow({
+							url: 'index.html',
+							id: 'index.html',
+							show: {
+							    aniShow: 'fade-in',
+							     duration:300
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+						setTimeout(function(){
+							var ws=plus.webview.all();
+					        for(var i=0;i<ws.length;i++){
+								if(ws[i].id!='index.html' && ws[i].id!='HBuilder'){
+								  plus.webview.close(ws[i].id,'none',0);
+								}
+							}
+						},300)
+						app.getisBrak(false);
+						return;
+					}
+		       })
+		        if(state.token){
+		        	getdata(stateDate);
+		        }else{
+		        	   window.addEventListener("mainId",function(event){
+			   	    	  getdata(event.detail.msg)
+			   	      })
+		        }
+				 //检查更新
+				update.addEventListener('tap', function() {
+					$.getJSON(CONFING.server,{"appid":plus.runtime.appid,"version":plus.runtime.version,"imei":plus.device.imei},function (data) {
+						if(data.status){
+							plus.ui.confirm( data.note, function(i){
+								if ( 0==i ) {
+									plus.runtime.openURL( data.url );
+								}
+							}, data.title, ["立即更新","取　　消"] );
+						}else{
+							mui.toast('已是最新版本~')
+						} 
+					});
+				});
+				        
+			});
+   }(mui, document));
+   </script>
+</body>
+</html>

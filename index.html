@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>嘉悦中心</title>
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/app.css" rel="stylesheet" />
+	<link href="css/restui.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="ui-page home" id="ui-page">
+    <header class="ui-bar jy-home-bar jy-bar" id="header">
+    	<a href="barcode.html" class="icon-barcode ui-link icon"></a>
+    	<div class="ui-title">嘉悦中心</div>
+    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+    </header>
+    <div class="content">
+    	<div id="slider" class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#"><img src="temp/index.jpg"></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="temp/index.jpg"></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="temp/index.jpg"></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="temp/index.jpg"></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="temp/index.jpg"></a>
+				</div>
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#"><img src="temp/index.jpg"></a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<div class="jy-home-grid" id="jy-home-grid">
+			<ul class="mui-table-view mui-grid-view mui-grid-9" id="childenUl">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="reserve-test.html" class="ui-link">
+						<span class="icon-home icon icon-homeYD"></span>
+						<div class="mui-media-body">卡位预订</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="makerspace.html" class="ui-link">
+						<span class="icon-home icon icon-homeKJ"></span>
+						<div class="mui-media-body">创客空间</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="login.html" class="ui-link" isVip='true'>
+						<span class="icon-home icon icon-homeVIP"></span>
+						<div class="mui-media-body">VIP专区</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="business.html" class="ui-link">
+						<span class="icon-home icon icon-homeSGZX"></span>
+						<div class="mui-media-body">商管中心</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="businesssupport.html" class="ui-link">
+						<span class="icon-home icon icon-homeCYFC"></span>
+						<div class="mui-media-body">创业扶持</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="park.html" class="ui-link">
+						<span class="icon-home icon icon-homeHLYQ"></span>
+						<div class="mui-media-body">活力园区</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+    </div>
+  </div>
+<script src="js/mui.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script type="text/javascript" charset="utf-8">
+	(function($, doc) {
+		 $.init({
+      		statusBarBackground:'#424048'
+      	 });
+		 $.plusReady(function() {
+		 	setTimeout(function() {
+				//关闭 splash
+				plus.navigator.closeSplashscreen();
+			}, 600);
+			var screenHeight = plus.screen.resolutionHeight;
+			var slider=doc.getElementById("slider");
+			var jyhomegrid=doc.getElementById("jy-home-grid");
+			var jyhomechilden=doc.getElementById("childenUl");
+			var header=doc.getElementById("header");
+			var sliderHeight= slider.offsetHeight;
+			var headerH=header.offsetHeight;
+			var jyhomechildenH=jyhomechilden.offsetHeight;
+			var margint=((screenHeight-sliderHeight-headerH-22)-jyhomechildenH)/2;
+			if(margint>0)jyhomechilden.style.marginTop=margint+"px";
+			plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent')
+		 });
+		 //图片切换
+		 
+	}(mui, document));
+	</script>
+	
+</body>
+</html>

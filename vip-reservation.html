@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的申请</title>
+		<link href="css/app.css" rel="stylesheet" />
+		<style type="text/css">
+		.ui-page,html,body{
+	    	height:100%;
+	    	overflow:hidden;
+	    }
+	    body,.ui-page{
+	    	background:#eee;
+	    }
+			.mui-slider{
+				right: 0;
+				bottom: 0;
+				top: 44px;
+				left: 0;
+				position: absolute;
+				width:100%;
+				overflow:hidden;
+			}
+		
+			.tab-nav{
+				height: 45px;
+				position:relative;
+				background:#F5F5F5;
+			}
+			.tab-nav .a{
+				float: left;
+				height: 45px;
+				width:33.333%;
+				text-align: center;
+				line-height: 45px;
+				color: #595785;
+				font-size: 15px;
+				box-sizing: border-box;
+			}
+			.mui-slider-indicator{
+				bottom: auto;
+				height: 45px;
+			}
+			.mui-slider-group{
+				position: absolute;
+				top: 45px;
+				bottom: 0;
+				width: 100%;
+				white-space: nowrap;
+				font-size: 0;
+			}
+			.mui-slider-group .mui-slider-item{
+				display: inline-block;
+				width: 100%;
+				position: relative;
+				font-size: 17px;
+				vertical-align: top;
+				height: 100%;
+			}
+			.mui-slider-group .mui-slider-item .mui-scroll-wrapper{
+				background: none;
+			}
+			.mui-slider-item .title{
+				border-bottom:.05em solid #ddd;
+				padding: 10px 12px;
+				color: #999;
+				font-size: 12px;
+			}
+			.mui-slider-item .title .span{
+				font-size: 14px;
+				color: #333;
+				padding: 0 5px;
+			}
+			.mui-slider-item .title .span:after{
+				content: "";
+				display: inline-block;
+				vertical-align: middle;
+				height: 14px;
+				position:relative;
+				margin-left: 5px;
+				background: #333;
+				width: 1px;
+			}
+			.mui-slider-item .box{
+				padding:20px;
+			}
+
+			.mui-slider-item .desc,.mui-slider-item .con{
+				line-height: 20px;
+				color: #666;
+				white-space: normal;
+				font-size:13px;
+			}
+			.mui-slider-item .con{
+				margin:10px 13px 0 13px;
+			}
+			
+			#navActive{
+				height:2px;
+				background:#595785;
+				display:block;
+				position:absolute;
+				bottom:0;
+				left:0;
+				-webkit-transition: -webkit-transform 300ms ease;
+				transition: transform 300ms ease;
+			}
+			.mui-none{
+				display:none;
+			}
+			
+			.mui-pull-bottom-tips{
+				height:30px;
+				text-align:center;
+				line-height:30px;
+				margin-bottom:10px;
+			}
+			.mui-pull-bottom-tips .mui-spinner,.mui-pull-bottom-tips .mui-pull-loading{
+				display:inline-block;
+				vertical-align:middle;
+				margin-right:0px;
+				margin-left:5px;
+				font-size:14px;
+				color:#666;
+			}
+		     .vip-application{
+		     	position:relative;
+		     }
+		   .mui-table-view{
+	    	background:none;
+	    }
+	    .mui-table-view .list{
+	    	padding:10px 19px;
+	    	background:#fff;
+	    	border-radius:4px;
+	    	position:relative;
+	    	-webkit-border-radius:4px;
+	    	margin-bottom:10px;
+	    }
+	    .mui-table-view .list .info{
+	    	padding-right:100px;
+	    }
+	    .mui-table-view .list .info span{
+	    	display:block;
+	    	line-height:24px;
+	    	font-size:13px;
+	    	color:#333;
+	    }
+	    .mui-table-view .list .btn{
+	    	width:70px;
+	    	height:30px;
+	    	line-height:33px;
+	    	border-radius:3px;
+	    	-webkit-border-radius:3px;
+	    	height:35px;
+	    	color:#fff;
+	    	position:absolute;
+	    	top:50%;
+	    	right:20px;
+	    	margin-top:-20px;
+	    	text-align:center;
+	    	font-size:14px;
+	    }
+	    .mui-table-view .list .btn-1{
+	    	background:#41b33d;
+	    }
+	    .mui-table-view .list .btn-1:active{
+	    	background:#34a030;
+	    }
+	    .mui-table-view .list .btn-2{
+	    	background:#e7c13c;
+	    }
+	    .mui-table-view .list .btn-2:active{
+	    	background:#d4b030;
+	    }
+	    .mui-table-view .list .btn-3{
+	    	background:#e7c13c;
+	    }
+	    .mui-table-view .list .btn-3:active{
+	    	background:#d4b030;
+	    }
+		    
+		</style>
+	</head>
+	<body>
+		  <div class="ui-page" id="ui-page">
+		    <header class="ui-bar jy-bar" id="header">
+		    	<a href="javascript:;" class="icon-back icon"></a>
+		    	<div class="ui-title">我的预订</div>
+		    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+		    </header>
+		  </div>
+		  <div id="slider" class="mui-slider">
+		  	<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			    <nav class="mui-scroll tab-nav">
+				  	<a href="#itemmobile1" class="a mui-control-item" index="1" type="1">卡位</a>
+				  	<a href="#itemmobile2" class="a mui-control-item" index="2" type="2">会议室</a>
+				  	<a href="#itemmobile3" class="a mui-control-item" index="3" type="3">展厅</a>
+				  	<span id="navActive"></span>
+				 </nav>
+		    </div>
+			<div class="mui-slider-group" id="p-list">
+				<div id="itemmobile1" class="mui-slider-item mui-control-content mui-slider-pullrefresh">
+					<div class="mui-scroll-wrapper" id="p-list1">
+					   <div class="mui-scroll" type="1">
+						<div class="con">
+						  
+						</div>
+					  </div>
+					</div>
+				</div>
+				<div id="itemmobile2" class="mui-slider-item mui-control-content mui-slider-pullrefresh">
+					<div class="mui-scroll-wrapper" id="p-list2">
+						<div class="mui-scroll" type="2">
+							<div class="con">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="itemmobile3" class="mui-slider-item mui-control-content mui-slider-pullrefresh">
+					<div class="mui-scroll-wrapper" id="p-list3">
+						<div class="mui-scroll" type="3">
+							<div class="con">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		  </div>
+		  <script type="text/javascript" src="js/mui.min.js"></script>
+		  <script type="text/javascript" src="js/config.js"></script>
+		  <script type="text/javascript" src="js/app.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.js"></script>
+		  <script type="text/javascript" src="js/mui.pullToRefresh.material.js"></script>
+		  <script type="text/javascript">
+		  		(function($,doc){
+		  			 var isCurBox=true; 
+		  			 var count=1;
+		  			 $.init({
+			      		statusBarBackground:'#393767'
+			      	});
+			        $.plusReady(function() {
+   	 	               plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+   	 	               var stateDate=app.getStateDate(),
+   	                      userid=stateDate['id'];
+			  			var nav = doc.querySelector(".tab-nav");
+			  			var fc=doc.getElementById("fc");
+			  			var a = nav.querySelectorAll(".a");
+			  			var width = a[0].offsetWidth;
+			  			var ckjs=doc.getElementById("ckjs");
+			  			var simg=doc.getElementById("simg");
+			  			var btnApply=doc.getElementById("btnApply");
+			  			
+			  			nav.style.width = a.length*width+"px";
+			  			var navActive=doc.getElementById("navActive");
+			  			for(var i=0;i<a.length;i++){
+			  				navActive.style.width=a[i].offsetWidth+"px";
+			  				a[i].addEventListener("tap",function(){
+			  					var index=this.getAttribute("index");
+			  					    getData(index-1);
+			  				})
+			  			}
+			  		 var getData=function(index){
+			  		 	  count=1;
+			  		 	  var id="#itemmobile"+(index+1)+" .mui-scroll";
+					 	  var getOBJ=doc.getElementById("itemmobile"+(index+1));
+					 	  var iSclass=getOBJ.querySelector('.mui-table-view');
+						  if(!iSclass){
+				  		        if ($.os.plus) {
+						            setTimeout(function() {
+										$(id).pullToRefresh().pullUpLoading();
+									}, 100);
+								} else {
+									$.ready(function() {
+										$(id).pullToRefresh().pullUpLoading();
+									});
+								}
+						   }
+					}
+		  		  doc.getElementById("slider").addEventListener("slide",function(e){
+				 	  var index=e.detail.slideNumber; 
+				 	  var offsetL=index*a[0].offsetWidth;
+				 	  navActive.style.cssText="width:"+a[0].offsetWidth+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
+		  		      getData(index)
+		  		  });
+					 //阻尼系数
+					var deceleration = mui.os.ios?0.003:0.0009;
+					$('.mui-slider-group .mui-scroll-wrapper').scroll({
+						indicators: true, //是否显示滚动条
+						deceleration:deceleration
+					});
+					 getData(0)
+					 $.ready(function() {
+						//循环初始化所有下拉刷新，上拉加载。
+						$.each(document.querySelectorAll('.mui-slider-pullrefresh .mui-scroll'), function(index, pullRefreshEl){
+							$(pullRefreshEl).pullToRefresh({
+								up: {
+									contentrefresh: '正在加载...',
+									callback: function() {
+										var self = this;
+										setTimeout(function() {
+											var typeid=pullRefreshEl.getAttribute("type");
+											    getajaxData('p-list'+(index+1),self,typeid);
+											    
+										}, 500);
+									}
+								}
+							});
+						});
+						//我的预订
+						var getajaxData = function(UlClass,self,typeid) {
+							var ul = doc.createElement('ul');
+				            ul.className = UlClass+' mui-table-view';
+				            var eltId=doc.getElementById(UlClass);
+				            eltId.querySelector(".con").appendChild(ul);
+							var ul = eltId.querySelector('.mui-table-view');
+							var li,ulHtml;
+						    J.dataAjax(CONFING.Interface.reservation,{user_id:userid,wait:true,curPage:count,type_N:typeid},function(data){
+					  			  var conlist=data.reservaList;
+				  			  	  var page=1;
+					  			  var isPage=conlist?++count>(page+1):true;
+					  			  	self.endPullUpToRefresh(isPage);
+					  			  var uName=null;
+					  			  if(conlist){
+						  			   for (var i = 0; i < conlist.length; i++) {
+										li = doc.createElement('li');
+										li.className = 'list';
+										var html='<div class="info">'
+											+'<span>位置：'+conlist[i].address+'</span>'
+											+'<span>下单时间：'+conlist[i].add_time+'</span>'
+											+'<span>消费金额：<em>'+conlist[i].price+'</em>元</span>'
+											+'<span>预订时长：'+conlist[i].total_date_diff+'小时</span>'
+											+'</div>'
+											+'<a href="javascript:;" class="btn btn-1 goPay">去支付</a>';
+										li.innerHTML = html;
+										ul.appendChild(li);
+										isCurBox=false;
+									}
+						  		    if(ul.clientHeight <  window.screen.availHeight-44)self.hiddenUpTis(isPage);
+					  			}
+				  			})
+						};
+						 
+					   })
+					});
+		  		})(mui,document);
+		  </script>
+	</body>
+</html>
