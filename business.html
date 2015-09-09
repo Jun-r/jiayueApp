@@ -442,21 +442,11 @@
 							    	 		<a href="javascript:;" class="x_btn">我是会员，完善资料 >></a>
 							    	 	</div>
 						    	 	</div>
-						    	 	<div class="ul-from">
-						    	 		<div class="title">提交客户信息</div>
-						    	 		<ul>
-						    	 			<li><span>客户姓名：</span><p><input type="text" class="i" placeholder="请输入姓名" /></p></li>
-						    	 			<li><span>客户电话：</span><p><input type="text" class="i" placeholder="请输入客户电话" /></p></li>
-						    	 			<li><span>租金预算：</span><p><input type="text" class="i" placeholder="请输入租金预算" /></p></li>
-						    	 			<li><span>可作用途：</span><p><input type="text" class="i" placeholder="请输入可作用途" /></p></li>
-						    	 			<li><span>备注信息：</span><p><textarea class="textarea" placeholder="请输入备注信息"></textarea></p></li>
-						    	 		</ul>
+						    	 	<div class="ul-from" id="ulfrom">
+						    	 		
 						    	 	</div>
 						    	 </div>
 					        </div>
-					</div>
-					<div class="btn-box">
-						<a href="javascript:;" class="btn-apply">提交</a>
 					</div>
 				</div>
 				<div id="itemmobile2" class="mui-slider-item mui-control-content mui-slider-pullrefresh" data-isPullrefresh='true'>
@@ -541,6 +531,7 @@
 	   	 	            var tabnav=doc.getElementById("tab-nav");
 	   	 	            var navWidth=nav.parentNode.offsetWidth;
 	   	 	            var tablist=doc.getElementById("tablist");
+	   	 	            var ulfrom=doc.getElementById("ul-from");
  	                	navActive=doc.getElementById("navActive");
 			  			a = nav.querySelectorAll(".a");
 			  			var type=a[0].getAttribute("data-type");
@@ -569,7 +560,19 @@
 						      var X=Math.max(Math.min(0, -offsetL + (navWidth / 2)), -maxScrollX);
 						      Tscroll.scrollTo(X,0,300);
 			  		    }
-			  		
+			  		//判断窗户提交信息
+		      		var yhtml='<div class="title">提交客户信息</div>'
+		    	 		+'<ul>'
+		    	 		+'	<li><span>客户姓名：</span><p><input type="text" class="i" placeholder="请输入姓名" /></p></li>'
+		    	 		+'	<li><span>客户电话：</span><p><input type="text" class="i" placeholder="请输入客户电话" /></p></li>'
+		    	 		+'	<li><span>租金预算：</span><p><input type="text" class="i" placeholder="请输入租金预算" /></p></li>'
+		    	 		+'	<li><span>可作用途：</span><p><input type="text" class="i" placeholder="请输入可作用途" /></p></li>'
+		    	 		+'	<li><span>备注信息：</span><p><textarea class="textarea" placeholder="请输入备注信息"></textarea></p></li>'
+		    	 		+'</ul>'
+		    	 		+'<div class="btn-box">'
+						+'	<a href="javascript:;" class="btn-apply">提交</a>'
+						+'</div>';
+						if(app.has_login())ulfrom.innerHTML=html;
 			  	    //阻尼系数
 					var deceleration = mui.os.ios?0.003:0.0009;
 					$('.mui-scroll-wrapper').scroll({

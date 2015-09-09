@@ -326,12 +326,12 @@
 				this.element.removeEventListener('dragup', this);
 				window.removeEventListener('scroll', this);
 			} else {
+				this.pullUpspinner.classList.remove(CLASS_HIDDEN);
 				this.pullUpTipsIcon.innerHTML = this.options.up.contentrefresh;
 			}
 			this.loading = false;
 		},
 		hiddenUpTis:function(finished){
-			console.log(finished)
 			if (finished) {
 				this.finished = true;
 				this.pullUpTipsIcon.innerHTML = this.options.up.contentnomore;
