@@ -280,15 +280,11 @@
     	 .btnBox a.x_btn:active{
     	 	background:#cfa71b;
     	 }
-    	 #itemmobile1 .mui-scroll-wrapper,#itemmobile5 .mui-scroll-wrapper{
+    	 #itemmobile5 .mui-scroll-wrapper{
     	 	bottom:60px;
     	 }
     	 .mui-slider-item .btn-box{
-				position: absolute;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				height: 60px;
+				
 				background: #fff;
 				text-align: center;
 			}
@@ -298,6 +294,7 @@
 				line-height: 40px;
 				background: #393767;
 				color: #fff;
+				font-size:16px;
 				margin:10px 0;
 				display: inline-block;
 				border-radius: 5px;
@@ -436,10 +433,8 @@
 							<div class="mui-scroll">
 						    	 <div class="con_i">
 						    	 	<div class="cc">
-							    	 	<div class="c">企业融资服务介绍是专为融资者设立的关于企业股权融资、企业借贷融资和企业租赁融资的高端资本运营服务产品，企业融资服务介绍主要是为基金需求方寻找资金提供方的专业服务，帮助项目融资者获得实体和虚拟资本的支援，是资本运营的重要组成部分。</div>
-							    	 	<div class="btnBox">
-							    	 		<a href="javascript:;" class="s_btn">不是会员，马上注册 >></a>
-							    	 		<a href="javascript:;" class="x_btn">我是会员，完善资料 >></a>
+							    	 	<div class="c" id="consd"></div>
+							    	 	<div class="btnBox" id="btnBox">
 							    	 	</div>
 						    	 	</div>
 						    	 	<div class="ul-from" id="ulfrom">
@@ -530,8 +525,10 @@
 	   	 	            var btnApply=doc.getElementById("btnApply");
 	   	 	            var tabnav=doc.getElementById("tab-nav");
 	   	 	            var navWidth=nav.parentNode.offsetWidth;
+	   	 	            var consd=doc.getElementById("consd");
+	   	 	            var btnBox=doc.getElementById("btnBox");
 	   	 	            var tablist=doc.getElementById("tablist");
-	   	 	            var ulfrom=doc.getElementById("ul-from");
+	   	 	            var ulfrom=doc.getElementById("ulfrom");
  	                	navActive=doc.getElementById("navActive");
 			  			a = nav.querySelectorAll(".a");
 			  			var type=a[0].getAttribute("data-type");
@@ -554,6 +551,8 @@
 				      	});
 			        $.plusReady(function() {
 	   	 	            plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+	   	 	            var stateDate = app.getStateDate();
+	   	 	            var currentWs=plus.webview.currentWebview();
 				      	var getCur=function(index){
 			  		    	  var offsetL=a[index].offsetLeft;
 			  		    	  navActive.style.cssText="width:"+resultW[index]+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
@@ -563,16 +562,101 @@
 			  		//判断窗户提交信息
 		      		var yhtml='<div class="title">提交客户信息</div>'
 		    	 		+'<ul>'
-		    	 		+'	<li><span>客户姓名：</span><p><input type="text" class="i" placeholder="请输入姓名" /></p></li>'
-		    	 		+'	<li><span>客户电话：</span><p><input type="text" class="i" placeholder="请输入客户电话" /></p></li>'
-		    	 		+'	<li><span>租金预算：</span><p><input type="text" class="i" placeholder="请输入租金预算" /></p></li>'
-		    	 		+'	<li><span>可作用途：</span><p><input type="text" class="i" placeholder="请输入可作用途" /></p></li>'
-		    	 		+'	<li><span>备注信息：</span><p><textarea class="textarea" placeholder="请输入备注信息"></textarea></p></li>'
+		    	 		+'	<li><span>客户姓名：</span><p><input type="text" class="i" id="postName" placeholder="请输入姓名" /></p></li>'
+		    	 		+'	<li><span>客户电话：</span><p><input type="text" class="i" id="postPhone" placeholder="请输入客户电话" /></p></li>'
+		    	 		+'	<li><span>租金预算：</span><p><input type="text" class="i" id="postPricemath" placeholder="请输入租金预算" /></p></li>'
+		    	 		+'	<li><span>可作用途：</span><p><input type="text" class="i" id="postApplication" placeholder="请输入可作用途" /></p></li>'
+		    	 		+'	<li><span>备注信息：</span><p><textarea class="textarea" id="postTextarea" placeholder="请输入备注信息"></textarea></p></li>'
 		    	 		+'</ul>'
 		    	 		+'<div class="btn-box">'
 						+'	<a href="javascript:;" class="btn-apply">提交</a>'
 						+'</div>';
-						if(app.has_login())ulfrom.innerHTML=html;
+					var btnHtml='<a href="javascript:;" class="s_btn">不是会员，马上注册 >></a>'
+							   +'<a href="javascript:;" class="x_btn">我是会员，完善资料 >></a>';
+					 var Waiting=plus.nativeUI.showWaiting();
+					 J.dataAjax(CONFING.Interface.hzptAppInit,{wait:true,user_id:stateDate['id']},function(data){
+				  		consd.innerHTML=data.hzptInfo;
+				  		if(data.status==3 && app.has_login()){
+				  			ulfrom.innerHTML=yhtml;
+				  			//平台提交
+							$(".btn-box").on("tap",'.btn-apply',function(){
+								var postName=doc.getElementById("postName");
+								var postPhone=doc.getElementById("postPhone");
+								var postPricemath=doc.getElementById("postPricemath");
+								var postApplication=doc.getElementById("postApplication");
+								var postTextarea=doc.getElementById("postTextarea")
+								var dataArr={
+								    user_id:stateDate['id'],
+						    	 	type:"post",
+						    	 	wait:true,
+						    	 	customer_name:postName.value,
+						    	 	customer_phone:postPhone.value,
+						    	 	price_math:postPricemath.value,
+						    	 	application:postApplication.value,
+						    	 	remarks:postTextarea.value
+						    	  }
+								 J.dataAjax(CONFING.Interface.addHzptApp,dataArr,function(data){
+								 	if(data.type==1){
+								 		plus.nativeUI.alert("提交成功")
+								 	}else{
+								 		plus.nativeUI.toast(data.msg)
+								 	}
+								 })
+							})
+				  		}else{
+				  			btnBox.innerHTML=btnHtml;
+				  			$(".btnBox").on("tap",'.x_btn',function(){
+					  			 	 if(!app.has_login()){
+											$.openWindow({
+												id: 'login.html',
+											    url:'login.html',
+												show: {
+													autoShow:true,
+													aniShow:'slide-in-bottom',
+													duration:350
+												},
+											    extras: {
+													sid:currentWs.id,
+												},
+												waiting: {
+													autoShow: true
+												}
+											});
+											app.setisBrak(true)
+									 }else{
+										$.openWindow({
+											id: 'partner.html',
+										    url:'partner.html',
+											show: {
+												aniShow:'slide-in-bottom',
+												duration:350
+											},
+											extras:{
+												status:data.status
+											},
+											waiting: {
+												autoShow: true
+											}
+										});
+									}
+							})
+							$(".btnBox").on("tap",'.s_btn',function(){
+									$.openWindow({
+										id: 'reg.html',
+									    url:'reg.html',
+										show: {
+											autoShow:true,
+											aniShow:'slide-in-bottom',
+											duration:350
+										},
+										waiting: {
+											autoShow: true
+										}
+									});
+							})
+				  		}
+				  		Waiting.close();
+				  	 })
 			  	    //阻尼系数
 					var deceleration = mui.os.ios?0.003:0.0009;
 					$('.mui-scroll-wrapper').scroll({
@@ -615,6 +699,9 @@
 											aniShow:'slide-in-bottom',
 											duration:350
 										},
+										extras:{
+									      id:currentWs.id,
+									    },
 										waiting: {
 											autoShow: true
 										}

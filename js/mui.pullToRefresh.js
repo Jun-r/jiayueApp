@@ -340,6 +340,13 @@
 			}
 			this.loading = false;
 		},
+		endRefresh:function(){
+			    this.finished = true;
+			    this.BOTTOM_TIPS.classList.remove(CLASS_HIDDEN);
+				this.pullUpspinner.classList.add(CLASS_HIDDEN);
+				this.pullUpTipsIcon.innerHTML = this.options.up.contentnomore;
+				this.element.removeEventListener('dragup', this);
+		},
 		setStopped: function(stopped) {
 			if (stopped != this.stopped) {
 				this.stopped = stopped;

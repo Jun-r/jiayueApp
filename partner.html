@@ -16,40 +16,73 @@
 	    body,.ui-page{
 	    	background:#eee;
 	    }
-	    .ui-page{
-	      	padding-top:44px;
-	    }
-		.mui-control-content .mui-loading {
-			margin-top: 50px;
-		}
-		.mui-slider-indicator.mui-segmented-control{
-			background:#F5F5F5;
-		}
-	    .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar{
-	    	background:#595785;
-	    	position:relative;
-	    	top:-2px;
-	    }
-	    .mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
-	    	border:none;
-	    	background:none;
-	    }
-	    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
-	    	color:#595785;
-	    }
-	    .mui-slider .mui-slider-group .mui-slider-item .mui-scroll-wrapper .mui-table-view{
-	      margin:0 10px
-	    }
-	    .mui-slider .mui-slider-group{
-	    	position:absolute;
-	    	top:40px;
-	    	left:0;
-	    	bottom:0;
-	    	right:0;
-	    }
-	    .mui-segmented-control .mui-control-item{
-	    	line-height:40px;
-	    }
+	    
+		.mui-sliders{
+				right: 0;
+				bottom: 0;
+				top: 44px;
+				left: 0;
+				position: absolute;
+				width:100%;
+				overflow:hidden;
+			}
+			
+			.tab-nav{
+				height: 44px;
+				position:relative;
+				background:#F5F5F5;
+				z-index:9999;
+				border-bottom:.05em solid #E9E9E9;
+			}
+			.tab-nav .a{
+				float: left;
+				height: 45px;
+				width:50%;
+				text-align: center;
+				line-height: 45px;
+				color: #595785;
+				font-size: 15px;
+				box-sizing: border-box;
+			}
+		
+			.mui-slider-groups{
+				position: absolute;
+				top: 44px;
+				bottom: 0;
+				width: 100%;
+			}
+			.mui-slider-groups .mui-slider-item{
+				display: inline-block;
+				width: 100%;
+				position: absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+				font-size: 17px;
+				vertical-align: top;
+				height: 100%;
+				transition: opacity 300ms ease;
+				opacity:0;
+			}
+			.mui-slider-groups .mui-slider-item.mui-active{
+				opacity:1;
+				
+			}
+			.mui-slider-groups .mui-slider-item .mui-scroll-wrapper{
+				background: none;
+			}
+			#navActive{
+				height:2px;
+				width:50%;
+				background:#595785;
+				display:block;
+				position:absolute;
+				bottom:-1px;
+				left:0;
+				-webkit-transition: -webkit-transform 300ms ease;
+				transition: transform 300ms ease;
+			}
 	   
     	.mui-page-content{
     		height:100%;
@@ -96,7 +129,7 @@
     	.mui-table-view-radio li{
     		padding:5px 15px;
     	}
-    	.vip-list li.certification a,.from-btn{
+    	a.submitC,.from-btn{
     		 padding:0 10px;
     		 background:#fff;
     		 display:block;
@@ -109,7 +142,14 @@
     		 text-align:center;
     		background:#393767;
     	}
-    	.vip-list li.certification a:active{
+    	a.submitC{
+    		position:fixed;
+    		top:290px;
+    		left:12px;
+    		right:12px;
+    		z-index: 9999;
+    	}
+    	 a.submitC:active{
     		background:#22214d;
     	}
     	.from-btn{
@@ -152,7 +192,7 @@
 		}
 		.vip-list li .input{
 			background:none;
-			width:100%;
+			width:280px;
 			border:none;
 			height:40px;
 		}
@@ -181,41 +221,42 @@
     	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
     </header>
 	    <section class="vip-order">
-	    	 <div id="slider" class="mui-slider" style="height:100%;">
-					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-						<a class="mui-control-item" href="#item1mobile">公司认证</a>
-						<a class="mui-control-item" href="#item2mobile">个人认证</a>
-					</div>
-					<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
-					<div class="mui-slider-group">
-						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+	    	 <div id="slider" class="mui-sliders">
+	    	 	    <nav class="tab-nav">
+					  	<a href="#itemmobile1" class="a mui-control-item" index="1">个人认证</a>
+					  	<a href="#itemmobile2" class="a mui-control-item" index="2">企业认证</a>
+					  	<span id="navActive"></span>
+					 </nav>
+					<div class="mui-slider-groups" id="fromInfo">
+						<div id="itemmobile1" class="mui-slider-item mui-control-content mui-active">
 							<div id="scroll1" class="mui-scroll-wrapper">
+									<div class="vip-list">
+									<ul>
+						                <li class="input-in"><span class="f-l">姓名</span><span class="f-r"><input type="text" class="input" id="sename" placeholder="输入姓名"/></li>
+						                <li class="input-in"><span class="f-l">身份证号码</span><span class="f-r"><input type="number" id="nameId" class="input" placeholder="输入身份证号码"/></li>
+									    <li class="input-in"><span class="f-l">联系电话</span><span class="f-r"><input type="number" class="input" id="nipone" placeholder="输入联系电话"/></li>
+									    <li class="input-in"><span class="f-l">认证状态</span><span class="f-r"><input type="text" class="input" id="lname" readonly="readonly"/></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div id="itemmobile2" class="mui-slider-item mui-control-content">
+							<div id="scroll2" class="mui-scroll-wrapper">
 								<div class="vip-list">
 									<ul>
 						                <li class="input-in"><span class="f-l">公司名称</span><span class="f-r"><input type="text" class="input" id="enterprisename" placeholder="输入公司名称"/></li>
-						                <li class="input-in"><span class="f-l">企业注册号</span><span class="f-r"><input type="text" id="fname" class="input" placeholder="输入企业注册号"/></li>
+						                <li class="input-in"><span class="f-l">企业注册号</span><span class="f-r"><input type="number" id="fname" class="input" placeholder="输入企业注册号"/></li>
 						                <li class="input-in"><span class="f-l">税务登记号</span><span class="f-r"><input type="number" id="nname" class="input" placeholder="输入税务登记号" /></li>
-						                <li class="input-in"><span class="f-l">公司法人</span><span class="f-r"><input type="text" class="input" id="zCode" placeholder="输入公司法人"/></li>
-						                <li class="input-in"><span class="f-l">联系人</span><span class="f-r"><input type="text" class="input" id="zCode" placeholder="输入联系人"/></li>
-						                <li class="input-in"><span class="f-l">联系电话</span><span class="f-r"><input type="text" class="input" id="zCode" placeholder="输入联系电话"/></li>
-						                <li class="certification"><a href="javascript:;" id='submitC' class="btn">马上认证</a></li>
+						                <li class="input-in"><span class="f-l">企业法人</span><span class="f-r"><input type="text" class="input" id="gname" placeholder="输入公司法人"/></li>
+						                <li class="input-in"><span class="f-l">联系电话</span><span class="f-r"><input type="number" class="input" id="qiphone" placeholder="输入联系电话"/></li>
+						                <li class="input-in"><span class="f-l">联系人</span><span class="f-r"><input type="number" class="input" id="lnname" placeholder="输入联系人"/></li>
+						                <li class="input-in"><span class="f-l">认证状态</span><span class="f-r"><input type="text" class="input" id="qname" readonly="readonly"/></li>
 									</ul>
 								</div>
 							</div>
-						</div>
-						<div id="item2mobile" class="mui-slider-item mui-control-content">
-							<div id="scroll2" class="mui-scroll-wrapper">
-									<div class="vip-list">
-									<ul>
-						                <li class="input-in"><span class="f-l">姓名</span><span class="f-r"><input type="text" class="input" id="enterprisename" placeholder="输入姓名"/></li>
-						                <li class="input-in"><span class="f-l">身份证号码</span><span class="f-r"><input type="text" id="fname" class="input" placeholder="输入身份证号码"/></li>
-						                <li class="certification"><a href="javascript:;" id='submitMy' class="btn">马上认证</a></li>
-									</ul>
-								</div>
-							</div>
-	
 						</div>
 					</div>
+					<a href="javascript:;" id='submitC' class="submitC">马上认证</a>
 				</div>
 	    </section>
   </div>
@@ -230,6 +271,109 @@
 		 $('.mui-scroll-wrapper').scroll();
       	$.plusReady(function() {
       		plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+      		var submitC=document.getElementById("submitC");
+      		var stateDate = app.getStateDate();
+      		var curIndex=1;
+      		var curId;
+      		var nav = doc.querySelector(".tab-nav");
+      		var curWs=plus.webview.currentWebview();
+      		var enterprisename=doc.getElementById("enterprisename");
+      		var fname=doc.getElementById("fname");
+      		var nname=doc.getElementById("nname");
+      		var gname=doc.getElementById("gname");
+      		var qname=doc.getElementById("qname");
+      		var lname=doc.getElementById("lname");
+      		var lnname=doc.getElementById("lnname");
+      		var qiphone=doc.getElementById("qiphone");
+      		var sename=doc.getElementById("sename");
+      		var nameId=doc.getElementById("nameId");
+      		var nipone=doc.getElementById("nipone");
+      		var status=curWs.status;
+      		var a = nav.querySelectorAll(".a");
+      		if(status==2){
+      			submitC.innerText='修改认证';
+      		}else if(status==3){
+      		    submitC.innerText='返回';
+//    		    submitC.getAttribute("id","back");
+      		}else{
+      			submitC.innerText='马上认证';
+      		}
+      		var getTab=function(index){
+	  			 var itemmobile=document.getElementById("itemmobile"+index);
+	  			  var offsetL=(index-1)*a[0].offsetWidth;
+	  			 var fromInfo=doc.getElementById("fromInfo").querySelectorAll(".mui-slider-item");
+			 	  for(var i=0;i<fromInfo.length;i++){
+			 	    	 fromInfo[i].classList.remove("mui-active");
+			 	  }
+			 	doc.getElementById("itemmobile"+index).classList.add('mui-active');
+			 	navActive.style.cssText="width:"+a[0].offsetWidth+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"
+  				if(index==1){
+			 		submitC.style.top='290px';
+			 	}else{
+			 		submitC.style.top='440px';
+			 	}	
+      		}
+      		var navActive=doc.getElementById("navActive");
+      		 $(".tab-nav").on("tap",".a",function(){
+	  			 var index=this.getAttribute("index");
+	  			 curIndex=parseInt(index);
+	  			 getTab(index);
+	  	     });
+	  	     
+	  	     //初始化认证
+	  	     J.dataAjax(CONFING.Interface.hzptAppSubInit,{wait:true,user_id:stateDate['id']},function(data){
+	  	     	   var dataValue=data.hzrzMap;
+	  	     	   var index=parseInt(dataValue['attestation']);
+	  	     	   curIndex=index;
+	  	     	   curId=dataValue.id;
+	  	     	   var isstAtus;
+	  	     	   if(dataValue['is_status']=='1'){
+	  	     	     	isstAtus='未认证';
+	  	     	   }else if(dataValue['is_status']=='2'){
+	  	     	   	    isstAtus='审核中';
+	  	     	   }else{
+	  	     	   	    isstAtus='已认证';
+	  	     	   }
+	  	     	   enterprisename.value=dataValue['company_name'];
+	  	     	   fname.value=dataValue['registration_number'];
+	  	     	   nname.value=dataValue['login_code'];
+	  	     	   gname.value=dataValue['corporate_representative'];
+	  	     	   qiphone.value=dataValue['contacts'];
+  	     	   	   sename.value=dataValue['real_name'];
+  	     	   	   lnname.value=dataValue['real_name'];
+  	     	   	   qname.value=isstAtus;
+  	     	   	   lname.value=isstAtus;
+	  	     	   nameId.value=dataValue['card'];
+	  	     	   nipone.value=dataValue['contacts'];
+    	     })
+      		submitC.addEventListener("tap",function(){
+      			var n=curIndex==1?sename.value:lnname.value;
+      			var tel=curIndex==1?qiphone.value:nipone.value;
+      			var dataArr={
+      				wait:true,
+		  	     	user_id:stateDate['id'],
+		  	     	company_name:enterprisename.value,
+		  	     	registration_number:fname.value,
+		  	     	login_code:nname.value,
+		  	     	corporate_representative:gname.value,
+		  	     	contacts:qiphone.value,
+		  	     	real_name:n,
+		  	     	card:nameId.value,
+		  	     	contacts:tel,
+		  	     	attestation:curIndex,
+		  	     	id:curId
+		  	     }
+      			var Waiting=plus.nativeUI.showWaiting();
+      			J.dataAjax(CONFING.Interface.hzptAppSub,dataArr,function(data){
+	  	     	      if(data.type==1){
+	  	     	      	Waiting.close()
+	  	     	      	plus.nativeUI.alert("提交成功");
+	  	     	      }else{
+	  	     	      	plus.nativeUI.toast(data.msg);
+	  	     	      }
+    	        })
+      		})
+      		
 		});
    }(mui, document));
    </script>

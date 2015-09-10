@@ -68,7 +68,9 @@
 	 	yyptAppList:cfg.httpUrl+'/jy/yyptAppList.do',           //平台介绍
 	 	hzptAppInit:cfg.httpUrl+'/jy/hzptAppInit.do',           //合作平台初始化
 	 	addHzptApp:cfg.httpUrl+'/jy/addHzptApp.do',             //合作平台信息提交
-	 	addCzsq:cfg.httpUrl+'/jy/addCzsq.do'                    //出租申请提交
+	 	addCzsq:cfg.httpUrl+'/jy/addCzsq.do',                   //出租申请提交
+	 	hzptAppSubInit:cfg.httpUrl+'/jy/hzptAppSubInit.do',     //伙伴认证初始化
+	 	hzptAppSub:cfg.httpUrl+'/jy/hzptAppSub.do'              //伙伴认证提交
 	 }
 	 $.plusReady(function() {
 		 /**

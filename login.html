@@ -41,6 +41,7 @@
 		 $.plusReady(function() {
 			plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
 			plus.screen.lockOrientation("portrait-primary");
+			var currentWs=plus.webview.currentWebview();
 				var username=doc.getElementById("username"),
 				    password=doc.getElementById("password");
 				    var mainPage = $.preload({
@@ -78,6 +79,12 @@
 							}else{
 								$.doAction('backs');
 								app.getisBrak(false);
+								//多么聪明的我想出这种方式来处理,登录返回原页面刷新
+								//重新加载当前窗口html,使用时必须判断是否有参数
+								if(currentWs.sid){
+									var getBrakWebview=plus.webview.getWebviewById(currentWs.sid)
+									getBrakWebview.evalJS("plus.webview.currentWebview().reload(true)");
+								}
 							}
 							//plus.webview.getWebviewById("main.html").evalJS("document.getElementById('back').style.display='none'");
 						});

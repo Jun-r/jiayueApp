@@ -307,6 +307,7 @@
 					 var priceId=-1;    //排序id
 					 var containid=-1;  //剩余卡位排序id
 					 var indexCur=1;
+					 var Level=[];
 					 var showCurUrl=CONFING.Interface.scrList;
 					 var imgLazyloadApi=$(document).imageLazyload({
 							placeholder:'../images/60x60.gif'
@@ -316,6 +317,7 @@
    	                    var menuSlide=doc.getElementById("menuSlide");
 					    var priceDesc=doc.getElementById("priceDesc");
 					    var containDesc=doc.getElementById("containDesc");
+					    var kaDesc=doc.getElementById("kaDesc");
 					    var pullrefresh=doc.getElementById("plist");
 						var sildeMenu= new J.toggleSlideMenu(menuSlide);
 						doc.getElementById("lou").addEventListener("tap",function(){
@@ -332,7 +334,8 @@
 			  			
 			  			nav.style.width = a.length*width+"px";
 			  			var navActive=doc.getElementById("navActive");
-					var getData=function(index){
+			  	//滑动初始化获取数据
+				var getData=function(index){
 			  		 	  count=1;
 			  		 	  var id="#itemmobile"+(index+1)+" .mui-scroll";
 					 	  var getOBJ=doc.getElementById("itemmobile"+(index+1));
@@ -355,194 +358,200 @@
 									});
 								}
 						   }
-					}
-					//我的预订
-					var getajaxData = function(UlClass,self,url,firstid,secondid,thirdid,call) {
-							var uls = doc.createElement('ul');
-							var dataArr={};
-				            uls.className = UlClass+' mui-table-view';
-				            var eltId=doc.getElementById(UlClass);
-				            eltId.querySelector(".con").appendChild(uls);
-				            var ul = eltId.querySelector('.mui-table-view');
-							var li,title,showUrl;
-							if(typeof firstid =='function'){
-						 		secondid='';
-						 		thirdid='';
-						 		call=firstid;
-						 	}
-						 	if(firstid || secondid || call)eltId.style.opacity=0;
-						 	if(UlClass=='p-list1'){
-						 	  	 title='卡位';
-						 	  	 showUrl=CONFING.Interface.scrDetails;
-						 	  	 dataArr.excess_seat=containid;
-						 	}else if(UlClass=='p-list2'){
-						 	  	 title='会议室';
-						 	  	 showUrl=CONFING.Interface.meRoomDetails;
-						 	  	 dataArr.contain_num=containid;
-						 	}else{
-						 	  	 title='展厅';
-						 	  	 showUrl=CONFING.Interface.exhDetails;
-						 	  	 dataArr.area=containid;
-						 	}
-					 		dataArr.wait=true;
-					 		dataArr.price=priceId;
-					 		dataArr.first_id=parseInt(firstid) || '';
-					 		dataArr.second_id=parseInt(secondid) || '';
-					 		dataArr.third_id=parseInt(thirdid) || '';
-					 		dataArr.curPage=count;
-						 	 J.dataAjax(url,dataArr,function(data){
-						 	  if(data.type==2 || !data){
-										self.endPullUpToRefresh(true);
-//                                      ul.innerHTML='<span class="noDate">找不到任何数据</span>'
-						 	     	    if(firstid || secondid || call)eltId.style.opacity=1;
-						 	  }else{
-							 	  var page=data.totalPage,
-							 	      infoArr=data.ObjectList;
-							 	      pageSize=data.pageSize;
-							 	  var isPage=infoArr?++count>(page+1):true;
-							 	      self.endPullUpToRefresh(isPage);
-							 	      if(infoArr){
-										for (var i = 0; i <infoArr.length; i++) {
-											var imgArr=infoArr[i].img_list.split(',');
-											var html='<a href="javascript:;" class="listShow" data-url="'+showUrl+'" data-title="'+title+'" data-id="'+infoArr[i].id+'">';
-											    html+='<div class="img"><img class="imglazy" data-lazyload="'+CONFING.httpUrl+imgArr[0]+'?version='+Math.random()*1000+'"/></div>';
-											    html+='<div class="info">';
-												html+='<p>位置：'+infoArr[i].firstname+infoArr[i].secondname+infoArr[i].thirdname+'</p>';
-												if(UlClass=='p-list1'){
-													html+='<p>总卡位：'+infoArr[i].total_seat+'个</p>';
-													html+='<p>剩余卡位：'+infoArr[i].excess_seat+'个</p>';
-													html+='<p>价格：<span class="c4">'+infoArr[i].price+'元/天/个</span></p>';
-												}else if(UlClass=='p-list2'){
-													html+='<p>面积：'+infoArr[i].area+'㎡</p>';
-													html+='<p>价格：<span class="c4">￥'+infoArr[i].price+'/小时</span></p>';
-													html+='<p>可容纳人数：<span class="c4">'+infoArr[i].contain_num+'人</span></p>';
-												}else{
-													html+='<p>面积：'+infoArr[i].area+'㎡</p>';
-													html+='<p>价格：<span class="c4">￥'+infoArr[i].price+'/天</span></p>';
-												}
-												html+='</div>';
-											    html+='</a>';
-											var li = doc.createElement('li');
-											li.className = 'mui-table-view-cell';
-											li.innerHTML =html;
-											ul.appendChild(li);
-										}
-										if(firstid || secondid || call)eltId.style.opacity=1;
-										imgLazyloadApi.addElements();
-									    if(ul.clientHeight <  window.screen.availHeight-44)self.hiddenUpTis(isPage);
-									   }
-								}
-						 	    call && call();
-							 })
-						    var deceleration = mui.os.ios?0.003:0.0009;
-						    scroll=$('#'+UlClass).scroll({
-								indicators: true, //是否显示滚动条
-								deceleration:deceleration
-							});
-						};
-		  				$(".tab-nav").on("tap",".a",function(){
-		  					var index=this.getAttribute("index");
-		  					var URL=this.getAttribute("data-url");
-		  					var kw=this.getAttribute("data-kw");
-		  					navActive.style.width=a[index-1].offsetWidth+"px";
-		  					doc.getElementById("kaDesc").innerText=kw;
-		  					    indexCur=index;    //当前的索引                   
-		  					    showCurUrl=CONFING.httpUrl+"/jy/"+URL; //当前的URL
-		  					    getData(index-1);
-		  					    sildeMenu.close();
-		  					    //点击加载下拉刷新插件
-		  					    selfEl=$('#itemmobile'+index+' .mui-scroll').pullToRefresh({
-									up: {
-										contentrefresh: '正在加载...',
-										callback: function() {
-											var self = this;
-											console.log("1")
-											 setTimeout(function(){
-											  getajaxData('p-list'+indexCur,self,showCurUrl);
-											}, 500);
-										}
-									}
-								});
-								priceId=-1;
-						 	    containid=-1;
-		  			     });
-		  			     $.trigger(a[0],'tap');//初始化数据
-						  var iSdesc=function(el){
-						 	 sildeMenu.close();
-						 	  count=1;
-						 	  var id=el.getAttribute("id");
-						 	  var curId=doc.getElementById('p-list'+indexCur);
-						 	  var elements=doc.getElementById(id);
-						 	  var isClass=J.hasClass(el,'icon-down');
-						 	  if(isClass){
-						 	  	if(id=='priceDesc'){
-						 	  		priceId=1;
-						 	  		containid=-1;
-						 	  	}else{
-						 	  		priceId=-1;
-						 	  		containid=1;
-						 	  	}
-						 	  	el.classList.add('icon-up');
-						 	  	el.classList.remove('icon-down');
-						 	  }else{
-						 	  	if(id=='priceDesc'){
-						 	  		priceId=2;
-						 	  		containid=-1;
-						 	  	}else{
-						 	  		priceId=-1;
-						 	  		containid=2;
-						 	  	}
-						 	  	el.classList.add('icon-down');
-						 	  	el.classList.remove('icon-up')
-						 	  }
-							  curId.querySelector('.mui-table-view').innerHTML='';
-						 	  var Waiting=plus.nativeUI.showWaiting();
-						 	  scroll.scrollTo(0,0,0);
-						 	  selfEl.refresh(true);   //坑爹的更新方法方法，害苦了我
-						 	   getajaxData('p-list'+indexCur,selfEl,showCurUrl,-1,-1,-1,function(){
-							 		 setTimeout(function() {Waiting.close()},500);
-							   });
-						 }
-						   //价格、卡位、可容纳人数、面积排序
-						 $(".screening").on("tap",".icon-arrow-desc",function(){
-						 	 iSdesc(this);
-						 })
-				
-					 var ws=plus.webview.currentWebview();
-						 ws.addEventListener("hide",function(){
-						 	sildeMenu.close();
-						 })
-						var setMenuList=function(arr,id){
-					 		var menuContent=doc.getElementById(id);
-					 		var arrHtml='';
-					 		if(!arr){
-					 			menuContent.innerHTML='';
-					 			return;
-					 		}
-					 		for(var i=0;i<arr.length;i++){
-					 			    if(i==0){
-					 			    	arrHtml+='<li><a href="javascript:;" class="'+id+'_a" id="'+id+'_sub" data-id="'+arr[i].id+'">'+arr[i].category_name+'</li>'
-					 			    }else{
-					 			    	arrHtml+='<li><a href="javascript:;" class="'+id+'_a" data-id="'+arr[i].id+'">'+arr[i].category_name+'</li>'
-					 			    }
-					 		}
-					 		menuContent.innerHTML=arrHtml;
-					 		if(id=='menuContent' || id=='submenuContent'){
-						 		var subN = doc.getElementById(id+'_sub');
-								if(subN)$.trigger(subN, 'tap');
-							}
+				}
+				//获取数据
+				var getajaxData = function(UlClass,self,url,firstid,secondid,thirdid,call) {
+						var uls = doc.createElement('ul');
+						var dataArr={};
+			            uls.className = UlClass+' mui-table-view';
+			            var eltId=doc.getElementById(UlClass);
+			            eltId.querySelector(".con").appendChild(uls);
+			            var ul = eltId.querySelector('.mui-table-view');
+						var li,title,showUrl;
+						if(typeof firstid =='function'){
+					 		secondid='';
+					 		thirdid='';
+					 		call=firstid;
 					 	}
-					 //楼层联动查询
-					 var publicQuery=function(dataUrl,Cid,aid){
-					 	var dataArr={
-					 		wait:true,
-					 		id:aid || ''
-					 	 }
-					 	J.dataAjax(dataUrl,dataArr,function(data){
-					 		var arr=data.posList;
-					 		if(arr)setMenuList(arr,Cid);
-					 	})
+						if(firstid || secondid || call)eltId.style.opacity=0;
+					 	if(UlClass=='p-list1'){
+					 	  	 title='卡位';
+					 	  	 showUrl=CONFING.Interface.scrDetails;
+					 	  	 dataArr.excess_seat=containid;
+					 	}else if(UlClass=='p-list2'){
+					 	  	 title='会议室';
+					 	  	 showUrl=CONFING.Interface.meRoomDetails;
+					 	  	 dataArr.contain_num=containid;
+					 	}else{
+					 	  	 title='展厅';
+					 	  	 showUrl=CONFING.Interface.exhDetails;
+					 	  	 dataArr.area=containid;
+					 	}
+				 		dataArr.wait=true;
+				 		dataArr.price=priceId;
+				 		dataArr.first_id=parseInt(firstid) || '';
+				 		dataArr.second_id=parseInt(secondid) || '';
+				 		dataArr.third_id=parseInt(thirdid) || '';
+				 		dataArr.curPage=count;
+					 	J.dataAjax(url,dataArr,function(data){
+					 	  if(data.type==2 || !data){
+									self.endRefresh();
+					 	     	    if(firstid || secondid || call)eltId.style.opacity=1;
+					 	  }else{
+						 	  var page=data.totalPage,
+						 	      infoArr=data.ObjectList;
+						 	      pageSize=data.pageSize;
+						 	  var isPage=infoArr?++count>(page+1):true;
+						 	      self.endPullUpToRefresh(isPage);
+						 	      if(infoArr){
+									for (var i = 0; i <infoArr.length; i++) {
+										var imgArr=infoArr[i].img_list.split(',');
+										var html='<a href="javascript:;" class="listShow" data-url="'+showUrl+'" data-title="'+title+'" data-id="'+infoArr[i].id+'">';
+										    html+='<div class="img"><img class="imglazy" data-lazyload="'+CONFING.httpUrl+imgArr[0]+'?version='+Math.random()*1000+'"/></div>';
+										    html+='<div class="info">';
+											html+='<p>位置：'+infoArr[i].firstname+infoArr[i].secondname+infoArr[i].thirdname+'</p>';
+											if(UlClass=='p-list1'){
+												html+='<p>总卡位：'+infoArr[i].total_seat+'个</p>';
+												html+='<p>剩余卡位：'+infoArr[i].excess_seat+'个</p>';
+												html+='<p>价格：<span class="c4">'+infoArr[i].price+'元/天/个</span></p>';
+											}else if(UlClass=='p-list2'){
+												html+='<p>面积：'+infoArr[i].area+'㎡</p>';
+												html+='<p>价格：<span class="c4">￥'+infoArr[i].price+'/小时</span></p>';
+												html+='<p>可容纳人数：<span class="c4">'+infoArr[i].contain_num+'人</span></p>';
+											}else{
+												html+='<p>面积：'+infoArr[i].area+'㎡</p>';
+												html+='<p>价格：<span class="c4">￥'+infoArr[i].price+'/天</span></p>';
+											}
+											html+='</div>';
+										    html+='</a>';
+										var li = doc.createElement('li');
+										li.className = 'mui-table-view-cell';
+										li.innerHTML =html;
+										ul.appendChild(li);
+									}
+									if(firstid || secondid || call)eltId.style.opacity=1;
+									imgLazyloadApi.addElements();
+								    if(ul.clientHeight <  window.screen.availHeight-44)self.hiddenUpTis(isPage);
+								   }
+							}
+					 	    call && call();
+						 })
+					    var deceleration = mui.os.ios?0.003:0.0009;
+					    scroll=$('#'+UlClass).scroll({
+							indicators: true, //是否显示滚动条
+							deceleration:deceleration
+						});
+					};
+	  				$(".tab-nav").on("tap",".a",function(){
+	  					var index=this.getAttribute("index");
+	  					var URL=this.getAttribute("data-url");
+	  					var kw=this.getAttribute("data-kw");
+	  					navActive.style.width=a[index-1].offsetWidth+"px";
+	  					doc.getElementById("kaDesc").innerText=kw;
+	  					    indexCur=index;    //当前的索引                   
+	  					    showCurUrl=CONFING.httpUrl+"/jy/"+URL; //当前的URL
+	  					    getData(index-1);
+	  					    sildeMenu.close();
+	  					    //点击加载下拉刷新插件
+	  					    selfEl=$('#itemmobile'+index+' .mui-scroll').pullToRefresh({
+								up: {
+									contentrefresh: '正在加载...',
+									callback: function() {
+										var self = this;
+										 setTimeout(function(){
+										  getajaxData('p-list'+indexCur,self,showCurUrl);
+										}, 500);
+									}
+								}
+							});
+							priceId=-1;
+					 	    containid=-1;
+					 	    priceDesc.classList.remove('icon-up');
+					 	  	priceDesc.classList.add('icon-down');
+					 	  	kaDesc.classList.remove('icon-up');
+					 	  	kaDesc.classList.add('icon-down');
+	  			     });
+	  			     $.trigger(a[0],'tap');//初始化数据
+	  			     
+	  			     //所有排序筛选
+					 var iSdesc=function(el){
+					 	  sildeMenu.close();
+					 	  count=1;
+					 	  var id=el.getAttribute("id");
+					 	  var curId=doc.getElementById('p-list'+indexCur);
+					 	  var elements=doc.getElementById(id);
+					 	  var isClass=J.hasClass(el,'icon-down');
+					 	  if(isClass){
+					 	  	if(id=='priceDesc'){
+					 	  		priceId=1;
+					 	  		containid=-1;
+					 	  	}else{
+					 	  		priceId=-1;
+					 	  		containid=1;
+					 	  	}
+					 	  	el.classList.add('icon-up');
+					 	  	el.classList.remove('icon-down');
+					 	  }else{
+					 	  	if(id=='priceDesc'){
+					 	  		priceId=2;
+					 	  		containid=-1;
+					 	  	}else{
+					 	  		priceId=-1;
+					 	  		containid=2;
+					 	  	}
+					 	  	el.classList.add('icon-down');
+					 	  	el.classList.remove('icon-up')
+					 	  }
+						  curId.querySelector('.mui-table-view').innerHTML='';
+					 	  var Waiting=plus.nativeUI.showWaiting();
+					 	  scroll.scrollTo(0,0,0);
+					 	  selfEl.refresh(true);   //坑爹的更新方法，害得我想了好久的方法去解决
+					 	  setTimeout(function() {
+						 	  getajaxData('p-list'+indexCur,selfEl,showCurUrl,Level[0],Level[1],Level[2],function(){
+							 		 Waiting.close();
+							  });
+						  },500)
 					 }
+					   //价格、卡位、可容纳人数、面积排序
+					 $(".screening").on("tap",".icon-arrow-desc",function(){
+					 	 iSdesc(this);
+					 })
+			
+				 var ws=plus.webview.currentWebview();
+					 ws.addEventListener("hide",function(){
+					 	sildeMenu.close();
+					 })
+					var setMenuList=function(arr,id){
+				 		var menuContent=doc.getElementById(id);
+				 		var arrHtml='';
+				 		if(!arr){
+				 			menuContent.innerHTML='';
+				 			return;
+				 		}
+				 		for(var i=0;i<arr.length;i++){
+				 			    if(i==0){
+				 			    	arrHtml+='<li><a href="javascript:;" class="'+id+'_a" id="'+id+'_sub" data-id="'+arr[i].id+'">'+arr[i].category_name+'</li>'
+				 			    }else{
+				 			    	arrHtml+='<li><a href="javascript:;" class="'+id+'_a" data-id="'+arr[i].id+'">'+arr[i].category_name+'</li>'
+				 			    }
+				 		}
+				 		menuContent.innerHTML=arrHtml;
+				 		if(id=='menuContent' || id=='submenuContent'){
+					 		var subN = doc.getElementById(id+'_sub');
+							if(subN)$.trigger(subN, 'tap');
+						}
+				 	}
+				 //楼层联动查询
+				 var publicQuery=function(dataUrl,Cid,aid){
+				 	var dataArr={
+				 		wait:true,
+				 		id:aid || ''
+				 	 }
+				 	J.dataAjax(dataUrl,dataArr,function(data){
+				 		var arr=data.posList;
+				 		if(arr)setMenuList(arr,Cid);
+				 	})
+				 }
 				 publicQuery(CONFING.Interface.meRoomWhe,"menuContent");
 				 var pid=0,atid=0,ptext='',ttext='';
 				 var lou=doc.getElementById("lou");
@@ -578,7 +587,10 @@
 				 	var selfEl=$('#itemmobile'+indexCur+' .mui-scroll').pullToRefresh();
 				 	var Waiting=plus.nativeUI.showWaiting();
 				 	sildeMenu.close();
-				 	
+				 	scroll.scrollTo(0,0,0);
+				    selfEl.refresh(true);
+				    Level=[];
+				    Level.push(pid,atid,thirdid);
 				 	getajaxData('p-list'+indexCur,selfEl,showCurUrl,pid,atid,thirdid,function(){
 //				 		var str=ptext+ttext+atext;
 //				 		lou.innerText=str.substr(0,8)+'...';
