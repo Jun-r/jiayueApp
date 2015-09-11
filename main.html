@@ -47,6 +47,9 @@
     		font-size:13px;
     		margin-left:3px;
     	}
+    	.icon-vip-customer:before{
+    		font-size:19px
+    	}
     	.vip-top .vip-info .level{
     		color:#fff;
     		font-size:12px;
@@ -120,8 +123,9 @@
 							<li class="mui-table-view-cell"><a href="vip-application.html" class="ui-link icon-vip-application icon">我的申请</a></li>
 							<li class="mui-table-view-cell"><a href="vip-activities.html" class="ui-link icon-vip-activities icon">我的活动</a></li>
 							<li class="mui-table-view-cell"><a href="vip-survey.html" class="ui-link icon-vip-survey icon">满意度调查</a></li>
-							<li class="mui-table-view-cell"><a href="javascript:;" class="icon-vip-update icon" id="update">版本更新</a></li>
+							<!--<li class="mui-table-view-cell"><a href="javascript:;" class="icon-vip-update icon" id="update">版本更新</a></li>-->
 							<li class="mui-table-view-cell"><a href="vip-notification.html" class="ui-link icon-vip-notification icon">系统通知</a></li>
+							<li class="mui-table-view-cell"><a href="vip-survey.html" class="ui-link icon-vip-customer icon">客户信息</a></li>
 							<li class="mui-table-view-cell"><a href="javascript:;" class="exit" id="exit">退出</a></li>
 						</ul>
 					</div>
@@ -210,20 +214,20 @@
 			   	    	  getdata(event.detail.msg)
 			   	      })
 		        }
-				 //检查更新
-				update.addEventListener('tap', function() {
-					$.getJSON(CONFING.server,{"appid":plus.runtime.appid,"version":plus.runtime.version,"imei":plus.device.imei},function (data) {
-						if(data.status){
-							plus.ui.confirm( data.note, function(i){
-								if ( 0==i ) {
-									plus.runtime.openURL( data.url );
-								}
-							}, data.title, ["立即更新","取　　消"] );
-						}else{
-							mui.toast('已是最新版本~')
-						} 
-					});
-				});
+//				 //检查更新
+//				update.addEventListener('tap', function() {
+//					$.getJSON(CONFING.server,{"appid":plus.runtime.appid,"version":plus.runtime.version,"imei":plus.device.imei},function (data) {
+//						if(data.status){
+//							plus.ui.confirm( data.note, function(i){
+//								if ( 0==i ) {
+//									plus.runtime.openURL( data.url );
+//								}
+//							}, data.title, ["立即更新","取　　消"] );
+//						}else{
+//							mui.toast('已是最新版本~')
+//						} 
+//					});
+//				});
 				        
 			});
    }(mui, document));

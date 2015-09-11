@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>卡位预定提交</title>
+	<link href="css/app.css" rel="stylesheet" />
+	<style type="text/css">
+	   .ui-page,html,body{
+	    	height:100%;
+	    	overflow:hidden;
+	    }
+	    .ui-page{
+	    	padding-top:0px;
+	    }
+	    .content{
+	    	position:absolute;
+	    	top:44px;
+	    	left:0;
+	    	right:0;
+	    	bottom:0;
+	    }
+		.noDatalist{
+			font-size:14px;
+			color:#666;
+			line-height:40px;
+			text-align:center;
+		}
+		
+		img.imglazy{
+			background:#eee url('images/noPic.png') no-repeat center center;
+			background-size:62px 14px;
+		}
+		.calendar .mui-scroll-wrapper{
+			background:#f5f5f5;
+		}
+		.calendar .show-title{
+			height:50px;
+			border-bottom:.05em solid #ddd
+		}
+		.calendar .show-title span{
+			line-height:50px;
+			display:block;
+			padding:0 15px;
+			font-size:14px
+		}
+		.calendar .nav-top{
+			height:33px;
+			background:#fff;
+			text-align: center;
+			border-bottom:.05em solid #ddd
+		}
+		.calendar .nav-top span{
+			display:inline-block;
+			font-size:12px;
+			margin:0 5px;
+			line-height:33px;
+			vertical-align:middle;
+		}
+		.calendar .nav-top span:before{
+			content:'';
+			display:inline-block;
+			width:10px;
+			height:10px;
+			vertical-align:middle;
+			margin-right:4px;
+		}
+		.calendar .nav-top span.kd:before{
+			border:.05em solid #ddd
+		}
+		.calendar .nav-top span.yx:before{
+			border:.05em solid #41b33d;
+			background:#41b33d;
+		}
+		.calendar .nav-top span.yd:before{
+			border:.05em solid #d42f2f;
+			background:#d42f2f;
+		}
+		.calendar .nav-top span.nd:before{
+			border:.05em solid #666;
+			background:#666;
+		}
+		/*日历控件*/
+		.time-box {
+			background: #f5f5f5;
+			position: relative;
+		}
+		.time-box .nav {
+			border-bottom:.05em solid #ddd;
+			background: #f5f5f5;
+			text-align: center;
+			overflow:hidden;
+		}
+		
+		.time-box .nav .icon{
+			width:130px;
+			display:inline-block;
+			height:34px;
+			line-height:34px;
+			font-size:14px;
+			margin:13px 0;
+			color:#6c6a96;
+			border:1px solid #6c6a96;
+			border-radius:2px;
+			-webkit-border-radius:2px;
+		}
+		.time-box .nav .icon:after{
+			margin-left:10px;
+		}
+		.time-box .nav em{
+			font-style: normal;
+			margin:0 10px;
+			font-size:14px;
+		}
+		.time-box table {
+			width: 100%;
+		}
+		
+		.time-box table td {
+			height: 27px;
+			color: #333;
+			font-size: 13px;
+			text-align: center;
+			position: relative;
+			
+		}
+		#calendar{
+			border-bottom:.05em solid #ddd;
+		}
+		.eims-calendar-body table td.n{
+			color:#d4d0d0;
+		}
+		.time-box table td span,.time-box table td em {
+			display: block;
+			font-style:normal;
+			text-align: center;
+			padding: 10px;
+			border: .05em solid #fff;
+			background:#f5f5f5;
+			margin: -.05em;
+		}
+		.calendar-con{
+			height:246px;
+			overflow:hidden;
+			position:relative;
+		}
+		.time-box table td em.state-yx,.time-box table td span.state-yx{
+			background:#41b33d;
+			color:#fff;
+		}
+		.time-box table td em.state-no{
+			background:#666;
+			color:#fff;
+		}
+		.time-box table td span.state-yd{
+			background:#d42f2f;
+			color:#fff;
+		}
+		.calendar-data .h-t{
+			height:40px;
+			line-height:40px;
+			font-size:13px;
+			color:#333;
+			padding:0 15px;
+			background:#fff;
+		}
+		.calendar-data .mui-table-view li{
+			height:40px;
+			line-height:40px;
+			font-size:14px;
+			color:#333;
+			padding-left:15px;
+			background:#f5f5f5;
+			border-bottom:.05em solid #ddd
+		}
+		.calendar-data .mui-table-view li a.del{
+			float:right;
+			color:red;
+			padding:0 15px;
+		}
+		.calendar-data .h-c{
+			position:relative;
+		}
+		.submitfrom{
+			position:absolute;
+			bottom:15px;
+			left:50%;
+			margin-left:-35%;
+			width:70%;
+			height:40px;
+			line-height:40px;
+			text-align:center;
+			font-size:15px;
+			background:#393767;
+			border-radius:3px;
+			-webkit-border-radius:3px;
+			color:#fff;
+			display:block;
+		}
+		.mui-slide.mui-slide-right{
+			overflow:hidden;
+		}
+		.menuSlide{
+			top:44px;
+		}
+		.submitfrom:active{
+			background:#29284c;
+			color:#fff;
+		}
+		#menuSlide .month{
+			height:100%;
+			-webkit-transition: -webkit-transform 300ms ease;
+			transition: transform 300ms ease;
+			position:relative;
+			 z-index:98;
+		}
+		#menuSlide .transitionAdd .month.transitionRe{
+			width:160px;
+			position:relative;
+		   -webkit-transform: translate3d(-80px,0, 0);
+	        transform: translate3d(-80px,0, 0);
+	       
+		}
+		#menuSlide .transitionAdd .month.transitionRe:after{
+			content:'';
+			position:absolute;
+			top:0;
+			bottom:0;
+			right:.01em;
+			content:'';
+			border-right:.05em solid #ddd;
+			display:block;
+			z-index:1;
+		}
+		#menuSlide .month.transitionRe li a{
+			text-align:right;
+			padding-right:30px;
+			border-bottom:.05em solid #fff;
+		}
+		.menuSlide .mui-slide .mui-table-view-cell.active a{
+			color:#fff;
+			position:relative;
+			z-index:2;
+		}
+		.menuSlide .mui-slide .mui-table-view-cell.active{
+			position:relative;
+		}
+		.menuSlide .mui-slide .mui-table-view-cell.active:after{
+			position:absolute;
+			top:0;
+			left:1px;
+			bottom:0;
+			right:0;
+			content:'';
+			display:block;
+			background:#393767;
+		}
+		#menuSlide .day{
+			-webkit-transform: translate3d(80px,0, 0);
+	        transform: translate3d(80px,0, 0);
+	        width:70%;
+	        position:absolute;
+	        top:0;
+	        right:0;
+	        left:0;
+	        bottom:0;
+	        display:none;
+	        opacity:0;
+	        -webkit-transition:opacity ease .5s;
+            transition:opacity ease .5s;
+            background:#fff;
+		}
+	</style>
+</head>
+<body style="background:#fff;">
+<div class="ui-page" id='ui-page' style="overflow:hidden;">
+  <header class="ui-bar jy-bar" id="header">
+    	<a href="javascript:;" class="icon-back icon"></a>
+    	<div class="ui-title"><span id="Htitle"></span>预订</div>
+    	<a href="javascript:;" class="icon-categorys icon" id="categorys"></a>
+  </header>
+  <section class="content">
+  	     <div class="calendar" id="calendar-box">
+  	     	<div class="show-title"><span class="title" id="title">加载中...</span></div>
+  	     	<div class="time-box">
+  	     	 <div class="nav" id="monthTime">
+  	     	 	<span class="starttime icon icon-calendar" id="starttime"></span>
+  	     	 	<em>至</em>
+  	     	 	<span class="endtime icon icon-calendar" id="endtime"></span>
+  	     	 </div>
+  	     	 <div class="nav-top">
+  	     		<span class="kd">可订</span>
+  	     		<span class="yx">已选</span>
+  	     		<span class="yd">已订</span>
+  	     	</div>
+  	     	<div class="calendar-con">
+  	     		<div class="mui-scroll-wrapper">
+ 		            <div class="mui-scroll">
+			  	     	  <table>
+			  	     		<tbody class="calendar-body" id="dataChoice">
+			  	     			
+			  	     		</tbody>
+			  	     	  </table>
+	  	     	    </div>
+	  	     	 </div>
+  	     	</div>
+  	     	</div>
+  	     	<div class="calendar-data">
+  	     		<div class="h-t">您选择的租用时间是：</div>
+  	     		<div class="h-c" id="scroll-wp">
+  	     			<div class="mui-scroll-wrapper">
+ 		              <div class="mui-scroll">
+	  	     			<ul class="mui-table-view" id="dataArr">
+	  	     				
+	  	     			</ul>
+		  	     		</div>
+		  	     	</div>
+		  	    </div>
+  	         </div>
+  	         <a href="javascript:;" class="submitfrom" id="submitfrom">提交</a>
+  	      </div>
+  	    </div>
+		<!--菜单滑动公用区域-->
+	    <div class="menuSlide" id="menuSlide"  style="display:none;">
+	      <div class="mui-backdrop"></div>
+	      <div class="mui-slide mui-slide-right">
+	      	 <div class="month">
+			      <div class="mui-scroll-wrapper" id="monthlist">
+					 <div class="mui-scroll">
+				    	<ul id="menuContent">
+						</ul>
+					 </div>
+				 </div>
+			 </div>
+			 <div class="day">
+			 	 <div class="mui-scroll-wrapper daySlist">
+					 <div class="mui-scroll">
+				    	<ul id="daylist">
+						</ul>
+					 </div>
+				 </div>
+			 </div>
+			</div>
+		</div>
+  </section>
+ </div>
+  <script type="text/javascript" src="js/mui.min.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/calender.js"></script>
+  <script type="text/javascript" charset="utf-8">
+	(function($, doc) {
+//		    var dataA=doc.getElementById("dataArr");
+//		    var daylist=doc.getElementById("daylist");
+		    var menuSlide=doc.getElementById("menuSlide");
+		    var monthId=menuSlide.querySelector(".month");
+		    var dayId=menuSlide.querySelector(".day");
+//		    var title=doc.getElementById("title");
+//		    var Htitle=doc.getElementById("Htitle");
+            var starttime=doc.getElementById("starttime");
+            var endtime=doc.getElementById("endtime");
+		    var muislide=menuSlide.querySelector(".mui-slide");
+	        var sildeMenu= new J.toggleSlideMenu(menuSlide);
+//	        var datatetx='';
+	        var menuContent=doc.getElementById("menuContent");
+	        var oneT=menuContent.children;
+		    var dataTimeArr=[];
+		    var submitDataTime=[];
+		    var timeArr=[];
+		    var Time=new Date();
+		    var nYear=Time.getFullYear();
+		    var mMonth=Time.getMonth()+1;
+		    var dDay=Time.getDate();
+		    var m=mMonth<10?'0'+mMonth:mMonth;
+		    var d=dDay<10?'0'+dDay:dDay;
+		    var endDay=dDay+6;
+		    var ed=endDay<10?'0'+endDay:endDay;
+		    var stime=nYear+"-"+m+"-"+d;      //开始时间
+		    var etime=nYear+"-"+m+"-"+ed;     //结束时间
+		    starttime.innerText=stime;
+		    endtime.innerText=etime;
+		    var timeId;
+		    var seatid=[];         //卡位Id数组
+		    var seattext=[];       //卡位文本数组
+		    var dataChoice=doc.getElementById("dataChoice");
+//		    var submitfrom=doc.getElementById("submitfrom");
+//		    var dataAs=null;
+//			//移除数组的值
+//			Array.prototype.indexOf = function(val) {
+//		        for (var i = 0; i < this.length; i++) {
+//		            if (this[i] == val) return i;
+//		        }
+//		        return -1;
+//		    };
+//		    Array.prototype.remove = function(val) {
+//		        var index = this.indexOf(val);
+//		        if (index > -1) {
+//		            this.splice(index, 1);
+//		        }
+//		    };
+		    
+		  $.init({
+		    	swipeBack: false,
+	      		statusBarBackground:'#393767'
+	      	 });
+		   $.plusReady(function() {
+			 plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+			 var ws=plus.webview.currentWebview(),getUrl,subUrl;
+			 getUrl=CONFING.Interface.scrDetailsLoadInit;
+			 getStateUrl=CONFING.Interface.scrDetailsLoadApp;
+//		 	 subUrl=CONFING.Interface.meRoomSub;
+			 title.innerText=ws.pos;
+			 Htitle.innerText=ws.title;
+			 var stateDate = app.getStateDate();
+			 var userid=stateDate['id'];
+		   /*
+		    * 初始化单元格
+		    */
+		   var onRenderDay=function(){
+			   	   	var dataAs={
+			   	   		  wait:false,
+			   	   		  id:ws.sId,
+			   	   	    }
+			   	   	var _this=this;
+			   	   	var seat;
+			   	   	_this.td=null;
+			   	   	var html='';
+			   	   	J.dataAjax(getUrl,dataAs,function(data){
+			   	    	seat =data.seatInfoList;
+			   	    	var row=data.row;
+			   	    	var col=data.col;
+			   	    	if(seat){
+			   	    		//根据行列初始化单表格
+			            	for(var i=0;i<row;i++){
+			            		 html += '<tr>';
+				                	for(var b=0;b<col;b++){
+				                	    html +='<td></td>';
+				                    }
+			                	 html += '</tr>';
+			            	}
+			            	dataChoice.innerHTML=html;
+			            	var td=dataChoice.querySelectorAll("td");
+			            	//获取数据
+		            		for(var c=0;c<seat.length;c++){
+		            			seattext.push(seat[c]['seat_num'])  
+			            		seatid.push(seat[c]['id'])
+			            	}
+		            		$('.calendar-con .mui-scroll-wrapper').scroll({
+		            			bounce:false
+		            		});
+		            		/*
+							 *日期天数选择
+							 */
+							$("#dataChoice tr").on("tap","td span",function(){
+								var iClass=this.getAttribute("class");
+								var Date=month.getAttribute("data-time");
+								var timeText=this.innerText;
+								var time=parseInt(timeText.split(":")[0]);
+								var oTime=(time+1)==24?"0":time+1;
+								var sTime=time<10?"0"+time:JSON.stringify(time);
+					          	if(!iClass){
+					          		 var html='<span>'+Date+" "+sTime+':00 至 '+Date+" "+(oTime<10?"0"+oTime:oTime)+':00</span><a class="del" data-time="'+timeText+'">删除</a></div>';
+						                var li = doc.createElement('li');
+											li.className = 'mui-table-view-cell data-'+Date;
+											li.innerHTML =html;
+											dataA.insertBefore(li, dataA.firstChild);
+											dataTimeArr.push(sTime+":00");
+											submitDataTime.push(Date+" "+sTime+":00");
+											this.className='state-yx';
+					          	}else{
+					          		dataA.removeChild(dataA.querySelector(".data-"+Date));
+					          		dataTimeArr.remove(sTime+":00");
+					          		submitDataTime.remove(Date+" "+sTime+":00");
+					          		this.className='';
+					          	}
+				          	
+							})
+							_this.getState(ws.sId,stime,etime);//初始化预订状态	
+			            }
+			   	    })
+		   };
+		   /*
+		    * 获取预订状态
+		    */
+		   onRenderDay.prototype.getState=function(id,starttime,endtime){
+		   	          var _this=this;
+		   	   	      var dataArr={
+			   	   		  wait:false,
+			   	   		  seat_id:id,
+			   	   		  start_time:starttime,
+			   	   		  end_time:endtime
+			   	   	    }
+			   	   	 var html='';
+			   	   	 var td=dataChoice.querySelectorAll("td");
+			   	   	 J.dataAjax(getStateUrl,dataArr,function(data){
+		   	   	 	    	var appointing=data['appointing']==''?data['appointing']:","+data['appointing'];
+		   	   	 	        var appointed=(data['appointed']+appointing).split(",");
+			   	   	 	    for(var a=0;a<td.length;a++){
+			   	   	 	    	var text=seattext[a];
+			   	   	 	    	var id=seatid[a];
+			   	   	 	    	td[a].innerHTML="<span data-id='"+id+"'>"+text+"</span>";
+			   	   	 	    	 if(data.type==1){
+				   	   	 	    	for(var b=0;b<appointed.length;b++){
+					   	   	 	    	if(id==appointed[b]){
+					   	   	 	    		td[a].querySelector("span").classList.add('state-yd');
+					   	   	 	    	}
+					            	}
+			   	   	 	    	}
+			            	}
+			   	     })
+		   }
+		   /*
+		    * 点击改变状态
+		    */
+		    onRenderDay.prototype.clicksetState=function(){ 
+		               var iClass=this.getAttribute("class");
+						   var Date=month.getAttribute("data-time");
+							var timeText=this.innerText;
+							var time=parseInt(timeText.split(":")[0]);
+							var oTime=(time+1)==24?"0":time+1;
+							var sTime=time<10?"0"+time:JSON.stringify(time);
+				          	if(!iClass){
+				          		 var html='<span>'+Date+" "+sTime+':00 至 '+Date+" "+(oTime<10?"0"+oTime:oTime)+':00</span><a class="del" data-time="'+timeText+'">删除</a></div>';
+					                var li = doc.createElement('li');
+										li.className = 'mui-table-view-cell data-'+Date;
+										li.innerHTML =html;
+										dataA.insertBefore(li, dataA.firstChild);
+										dataTimeArr.push(sTime+":00");
+										submitDataTime.push(Date+" "+sTime+":00");
+										this.className='state-yx';
+				          	}else{
+				          		dataA.removeChild(dataA.querySelector(".data-"+Date));
+				          		dataTimeArr.remove(sTime+":00");
+				          		submitDataTime.remove(Date+" "+sTime+":00");
+				          		this.className='';
+				          	}
+		    }
+		    var State=new onRenderDay();
+			/*
+			 * 初始化月份
+			 */
+			var getMonth= function() {
+				 for(var i=0;i < 12;i++){
+				 	
+		        	var html='<a href="javascript:;" class='+(mMonth>i+1?"cur":"tap-active")+' data-months="'+(i+1)+'">'+(i+1)+'月</a>';
+		        	var li = doc.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML =html;
+						menuContent.appendChild(li);
+		          }
+				 var sTime=mMonth<10?"0"+mMonth:mMonth;
+				  //month.setAttribute("data-time",nYear+"-"+sTime+"-"+dDay);
+//				  month.innerText=mMonth+"月"+dDay+"日";
+			};
+			/*
+			 * 获取日期
+			 */
+			var getDay=function(currentMonth,scroller,isDays){
+				  var currentYear=Time.getFullYear(),
+				      day = new Date(currentYear,currentMonth,0),
+				      daycount = day.getDate(),
+				      T=null,
+				      Month=day.getMonth()+1;
+				      daylist.innerHTML='';
+				  for(var i=1;i<=daycount;i++){
+				  	  var day='<a href="javascript:;" class='+(isDays>i && Month==mMonth?"cur":"tap-day")+' data-months="'+Month+'" data-day="'+i+'">'+i+'日</a>';
+			          var li = doc.createElement('li');
+						  li.className = 'mui-table-view-cell';
+						  li.innerHTML =day;
+						  //判断当前日期以前的不可选择，之前是有个当前日期一直没法回滚到指的位置
+						  if(isDays==i && Month==mMonth){
+						  		var offsetT=i*50;
+							    var navHeight=daycount*50;
+							    var ch=window.screen.availHeight-64;
+							    var maxScrollY= navHeight-ch;
+				                var T=Math.max(Math.min(0, -offsetT + (ch/2)), -maxScrollY);
+				          		scroller.scrollTo(0,T,0);
+						  }
+						  daylist.appendChild(li);
+				    }
+				    if(Month!=mMonth){
+				  	   scroller.scrollTo(0,0,0);//其他月份置顶,这个必须判断
+				    }
+			}
+		     /*
+	         * 选择月份     
+		     */
+			$("#monthTime").on("tap",".icon",function(){
+				$('#monthlist').scroll({
+					indicators: false //是否显示滚动条
+				})
+			    timeId=this.getAttribute("id")=='starttime'?1:2;   //记录开始时间和结束时间 开始时间(1)，结束时间(2)
+			    menuContent.innerHTML='';
+			    daylist.innerHTML='';
+			    getMonth();
+			    monthId.classList.remove('transitionRe');
+			    sildeMenu.init();
+			})
+			 /*
+	         * 选择天数    
+		     */
+			$("#menuContent").on("tap",".tap-active",function(){
+				monthId.className='month transitionRe';
+				var m=this.getAttribute("data-months");
+				dayId.style.opacity=0;
+				dayId.style.display="block";
+				setTimeout(function(){
+					dayId.style.opacity=1;
+				},400)
+				var monthInt=parseInt(m);
+			    var partli=this.parentNode;
+		 	    var li=menuContent.getElementsByTagName("li");
+		 	    for(var i=0;i<li.length;i++){
+		 	    	if(li[i]==partli){
+				 	    partli.className="mui-table-view-cell active";
+				 	 }else{
+				 	 	oneT[i].className='mui-table-view-cell';
+				 	 }
+		 	    }
+		 	    var scroller=$('.daySlist').scroll({
+					indicators: false //是否显示滚动条
+				})
+		 	    //这是不人想的逻辑,写死人了
+		 	    var isDays,timeDay;
+		 	    if(timeId==1){
+		 	    	timeDay=starttime.innerText.split('-')[2];
+			 	    isDays=dDay;
+		 	    }else{
+		 	    	timeDay=endtime.innerText.split('-')[2];
+		 	    	isDays=timeDay;
+		 	    }
+	            getDay(monthInt,scroller,isDays);
+	           
+	        })
+			$("#menuContent,#daylist").on("tap",".cur",function(){
+				plus.nativeUI.toast("只能选择今天以后的时间")
+			})
+			$("#daylist").on("tap",".tap-day",function(){
+				var n=Time.getFullYear();
+				var m=this.getAttribute("data-months");
+				var mt=m<10?"0"+m:m;
+				var d=parseInt(this.getAttribute("data-day"));
+				var dt1=d<10?"0"+d:d;
+				var dt2=d<10?"0"+d:d+6;
+				var time1=n+"-"+mt+"-"+dt1;
+				var time2=n+"-"+mt+"-"+dt2;
+                if(timeId==2){
+                	endtime.innerText=time1
+                }else{
+                	starttime.innerText=time1
+                	endtime.innerText=time2;
+                    State.getState(ws.sId,time1,time2);//初始化预订状态	
+                }
+				sildeMenu.close();
+			})
+
+//			    /*
+//			     *提交
+//			     * */
+//			   submitfrom.addEventListener("tap",function(){
+//	    	        	if(submitDataTime.length>0){
+//	    	        	    var dataAs={
+//					    		 wait:false,
+//					   	   		 id:ws.sId,
+//					   	   		 type:"post",
+//					   	   		 user_id:userid,
+//					   	   		 address:ws.pos,
+//					   	   		 total_date_diff:submitDataTime.length,
+//								 dates:submitDataTime.join(",")
+//					    	}
+//					    	J.dataAjax(subUrl,dataAs,function(data){
+////					    		console.log(J.sDug(data))
+//					    		if(data.type==1){
+//							    	$.openWindow({
+//										"id":"reserve-order-confirm.html",
+//									    "url":"reserve-order-confirm.html",
+//										show: {
+//										    aniShow: 'pop-in',
+//										    duration:300
+//										},
+//										extras:{
+//											pos:ws.pos,
+//											addtime:data['add_time'],
+//											ordercode:data['order_code'],
+//											realmoney:data['real_money'],
+//											orderId:data['order_id'],
+//											sId:ws.sId,
+//											title:ws.title,
+//											submitData:data['listDetailMap']
+//										},
+//										waiting: {
+//											autoShow: false
+//										}
+//									});
+//									
+//									 dataAs.address=null;
+//						   	   		 dataAs.total_date_diff=null;
+//									 dataAs.dates=null;
+//									 submitDataTime=[];
+//									 onRenderDay(month.getAttribute("data-time"));
+//									 dataA.innerHTML='';
+//								}else{
+//									plus.nativeUI.toast(data.msg);
+//								}
+//						     })
+//	    	        }else{
+//	    	           plus.nativeUI.toast("请你选择时间段");
+//	    	        }
+//				})
+	   });
+	}(mui, document));
+	
+	</script>
+</body>
+</html>

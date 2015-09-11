@@ -185,8 +185,8 @@
 			 var str=time.replace(/-/g,"/");
 			 var now=new Date();
 	     	 var endDate = new Date(str);
-			 var leftTime=endDate.getTime()-now.getTime();
-			 var maxtime = parseInt(leftTime/1000)+1401;
+			 var leftTime=(endDate.getTime())-now.getTime();
+			 var maxtime = parseInt(leftTime/1000)+1468;
 	         var CountDown=function(){
 				 if(maxtime>=0){  
 					 var minutes = Math.floor(maxtime/60);  

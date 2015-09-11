@@ -283,8 +283,15 @@
     	 #itemmobile5 .mui-scroll-wrapper{
     	 	bottom:60px;
     	 }
-    	 .mui-slider-item .btn-box{
-				
+    	 #itemmobile5 .btn-box{
+    	 	position:absolute;
+    	 	bottom:0;
+    	 	left:0;
+    	 	right:0;
+    	 	background:#eee;
+    	 	z-index:;
+    	 }
+    	    .mui-slider-item .btn-box{
 				background: #fff;
 				text-align: center;
 			}
@@ -520,7 +527,12 @@
 			      	 var imgLazyloadApi=$(doc).imageLazyload({
 							placeholder:'../images/60x60.gif'
 						 });
-					    var navActive,a,tabnav,resultW=[],W=0;
+					   
+			        $.plusReady(function() {
+	   	 	            plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
+	   	 	            var stateDate = app.getStateDate();
+	   	 	            var currentWs=plus.webview.currentWebview();
+	   	 	             var navActive,a,tabnav,resultW=[],W=0;
 	   	 	            var nav = doc.getElementById("nav");
 	   	 	            var btnApply=doc.getElementById("btnApply");
 	   	 	            var tabnav=doc.getElementById("tab-nav");
@@ -549,10 +561,6 @@
 							indicators: false,
 							snap: '.mui-control-item'
 				      	});
-			        $.plusReady(function() {
-	   	 	            plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent');
-	   	 	            var stateDate = app.getStateDate();
-	   	 	            var currentWs=plus.webview.currentWebview();
 				      	var getCur=function(index){
 			  		    	  var offsetL=a[index].offsetLeft;
 			  		    	  navActive.style.cssText="width:"+resultW[index]+"px;-webkit-transform: translate3d("+offsetL+"px, 0, 0);transform: translate3d("+offsetL+"px, 0, 0);"

@@ -305,6 +305,7 @@
 			 	 wait:true,
 			 	 id:ws.sId
 			 }
+			 var sUrl=ws.title=='卡位'?'reserve-kw-seat.html':'reserve-yd-time.html';
 			 xs.addEventListener("tap",function(){
 			 	if(!app.has_login()){
 			    		$.openWindow({
@@ -322,8 +323,8 @@
 						app.setisBrak(true);
 	    	        }else{
 					 	$.openWindow({
-							"id":ws.details || 'reserve-yd-time.html',
-						    "url": ws.details || 'reserve-yd-time.html',
+							"id":sUrl,
+						    "url":sUrl,
 							show: {
 							    aniShow: 'pop-in',
 							    duration:300
@@ -341,6 +342,7 @@
 			 })
 			 uititle.innerText=ws.title;
 			 titleH3.innerText=ws.title;
+			 if(ws.title=='卡位')xs.innerText='在线选座';
 			 var pos=null;
 			 var Waiting=plus.nativeUI.showWaiting();
 			 J.dataAjax(ws.uRl,dataArr,function(data){

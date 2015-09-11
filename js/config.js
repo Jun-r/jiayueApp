@@ -30,6 +30,7 @@
 	 	meRoomSub:cfg.httpUrl+'/jy/meRoomSubApp.do',            //会议室提交
 	 	scrDetails:cfg.httpUrl+'/jy/scrDetailsApp.do',          //卡位详情查询
 	 	exhDetails:cfg.httpUrl+'/jy/exhDetailsApp.do',          //展厅详情查询
+	 	exhDetailsLoad:cfg.httpUrl+'/jy/exhDetailsLoadApp.do',  //展厅预订加载
 	 	meRoomDetails:cfg.httpUrl+'/jy/meRoomDetailsApp.do',    //会议室详情查询
 	 	zoneIntroduce:cfg.httpUrl+'/jy/zoneIntroduceApp.do',    //创课空间介绍
 	 	resultList:cfg.httpUrl+'/jy/resultListApp.do',          //创课成果列表
@@ -70,7 +71,9 @@
 	 	addHzptApp:cfg.httpUrl+'/jy/addHzptApp.do',             //合作平台信息提交
 	 	addCzsq:cfg.httpUrl+'/jy/addCzsq.do',                   //出租申请提交
 	 	hzptAppSubInit:cfg.httpUrl+'/jy/hzptAppSubInit.do',     //伙伴认证初始化
-	 	hzptAppSub:cfg.httpUrl+'/jy/hzptAppSub.do'              //伙伴认证提交
+	 	hzptAppSub:cfg.httpUrl+'/jy/hzptAppSub.do',             //伙伴认证提交
+	 	scrDetailsLoadInit:cfg.httpUrl+'/jy/scrDetailsLoadInitApp.do', //卡位预订加载 
+	 	scrDetailsLoadApp:cfg.httpUrl+'/jy/scrDetailsLoadApp.do'//卡位预订状态
 	 }
 	 $.plusReady(function() {
 		 /**

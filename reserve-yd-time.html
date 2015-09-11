@@ -439,13 +439,15 @@
 			 	getUrl=CONFING.Interface.meRoomDetailsLoad;
 			 	subUrl=CONFING.Interface.meRoomSub;
 			 }else if(ws.title=='展厅'){
-//			    getUrl=
-//			 	subUrl=
+                getUrl=CONFING.Interface.exhDetailsLoad;
+//			 	subUrl=CONFING.Interface.meRoomSub;
 			 }
 			 title.innerText=ws.pos;
 			 Htitle.innerText=ws.title;
 			 var stateDate = app.getStateDate();
 			 var userid=stateDate['id'];
+			 month.setAttribute("data-time",ydm);
+			 month.innerText=mMonth+"月"+dDay+"日";
 		   /*
 		    * 初始化单元格
 		    */
@@ -473,6 +475,7 @@
 				             }
 				   	    })
 		   };
+		 
 		   //清空所有的选择时段
 		   onRenderDay.prototype.Empty=function(){
 		   	    for(var i=0;i<td.length;i++){
@@ -497,7 +500,7 @@
 			/*
 			 * 初始化月份
 			 */
-			(function(){
+			var getMonth=function(){
 				 for(var i=0;i < 12;i++){
 				 	
 		        	var html='<a href="javascript:;" class='+(mMonth>i+1?"cur":"tap-active")+' data-months="'+(i+1)+'">'+(i+1)+'月</a>';
@@ -507,9 +510,7 @@
 						menuContent.appendChild(li);
 		          }
 				 var sTime=mMonth<10?"0"+mMonth:mMonth;
-				  month.setAttribute("data-time",nYear+"-"+sTime+"-"+dDay);
-				  month.innerText=mMonth+"月"+dDay+"日";
-			})();
+			};
 			/*
 			 * 获取日期
 			 */
@@ -527,11 +528,12 @@
 						  li.innerHTML =day;
 						  //判断当前日期以前的不可选择
 						  if(dDay==i && Month==mMonth){
-						  		var offsetT=i*dDay;
+						  	var offsetT=i*50;
 							    var navHeight=daycount*50;
-							    var maxScrollY= (window.screen.availHeight-44)-navHeight;
-				                T=Math.max(Math.min(0, -offsetT + (navHeight / 2)), -maxScrollY);
-				          		scroller.scrollTo(0,-T,0);
+							    var ch=window.screen.availHeight-64;
+							    var maxScrollY= navHeight-ch;
+				                var T=Math.max(Math.min(0, -offsetT + (ch/2)), -maxScrollY);
+				          		scroller.scrollTo(0,T,0);
 						  }
 						  daylist.appendChild(li);
 				     }
@@ -568,6 +570,10 @@
 				$('#monthlist').scroll({
 					indicators: false //是否显示滚动条
 				})
+				menuContent.innerHTML='';
+			    daylist.innerHTML='';
+			    getMonth();
+			    monthId.classList.remove('transitionRe');
 			    sildeMenu.init();
 			})
 			$("#menuContent").on("tap",".tap-active",function(){
