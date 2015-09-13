@@ -3,6 +3,7 @@
  * 嘉悦中心公共函数
  * =====================================================
  */
+var getviemID='';
 (function($, doc,jy) {
 	//调试函数
 	jy.sDug=function(infoArr){
@@ -170,7 +171,11 @@
 			 	 html+='<div class="box" id="childenBox">';
 				 html+='<ul>';
 				 for(var i=0;i<menuList.length;i++){
-				 	html+='<li class="mui-table-view-cell"><a href="'+menuList[i].url+'" '+(i==2?"isVip='true'":'')+' class="ui-link">'+menuList[i].title+'</a></li>';
+				 	if(i==2){
+				 		html+='<li class="mui-table-view-cell"><a href="javascript:;" data-url="vip.html" class="isVip">'+menuList[i].title+'</a></li>';
+				 	}else{
+				 		html+='<li class="mui-table-view-cell"><a href="'+menuList[i].url+'" class="ui-link">'+menuList[i].title+'</a></li>';
+				 	}
 				 }
 				 html+='</ul>';
 				 html+='</div>';
@@ -254,23 +259,42 @@ $.plusReady(function() {
 	    jy.bstyle=plus.navigator.getStatusBarStyle();
 		$('.ui-page').on('tap','.ui-link', function(e) {
 			var id=this.getAttribute('href'),
-			    isVip=this.getAttribute('isVip')=='true'?true:false;
 			    effect = this.getAttribute("open-effect") || "pop-in";
-			 if(isVip && app.has_login()){
-					$.openWindow({
-						id: 'main.html',
-					    url:'main.html',
-						show: {
-							autoShow:true,
-							aniShow:'pop-in',
-							duration:350
-						},
-						waiting: {
-							autoShow: true
-						}
-					});
-			 }else{
-			 	if(isVip){
+			    console.log(id)
+			$.openWindow({
+				id: id,
+				url: id,
+				styles:{
+					popGesture: "close"
+				},
+				show:{
+			      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+			      aniShow:effect,//页面显示动画，默认为”pop-in,slide-in-left,slide-in-right,slide-in-top,slide-in-bottom,zoom-out,zoom-fade-out,fade-in,flip-x,flip-rx,flip-y,flip-ry,page-forward“;
+			      duration:300//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+			    },
+				waiting: {
+					autoShow: true
+				}
+			});
+					
+			var menu=new jy.dwonMenu();
+                menu.close();	
+		});
+		//返回页面并设置状态栏
+		$(".jy-bar").on('tap',".icon-back",function(e) {
+			$.back();
+			var ws=plus.webview.currentWebview();
+			if(ws.id!='information.html'){
+				setTimeout(function(){
+				   plus.navigator.setStatusBarBackground(jy.bcolor);
+				   plus.navigator.setStatusBarStyle(jy.bstyle);
+				},0)
+			}
+		});
+		//判断会员登录跳转
+		$(document).on('tap',".isVip",function() {
+			var id=this.getAttribute('data-url');
+			if(!app.has_login()){
 			 		$.openWindow({
 						id: 'login.html',
 					    url:'login.html',
@@ -284,38 +308,23 @@ $.plusReady(function() {
 						}
 					});
 					app.setisBrak(false);
-			 	}else{
-				    if(!id)return;//找不到值则不执行
+			  }else{
 					$.openWindow({
-						id: id,
-						url: this.href,
-						styles:{
-							popGesture: "close"
+						id:'main.html',
+					    url:'main.html',
+						show: {
+							autoShow:true,
+							aniShow:'pop-in',
+							duration:300
 						},
-						show:{
-					      autoShow:true,//页面loaded事件发生后自动显示，默认为true
-					      aniShow:effect,//页面显示动画，默认为”pop-in,slide-in-left,slide-in-right,slide-in-top,slide-in-bottom,zoom-out,zoom-fade-out,fade-in,flip-x,flip-rx,flip-y,flip-ry,page-forward“;
-					      duration:300//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-					    },
 						waiting: {
 							autoShow: true
 						}
 					});
-					
-			 	}
-			}
-			var menu=new jy.dwonMenu();
-                menu.close();	
-		});
-		//返回页面并设置状态栏
-		$(".jy-bar").on('tap',".icon-back",function(e) {
-			$.back();
-			var ws=plus.webview.currentWebview();
-			if(ws.id!='information.html'){
-				setTimeout(function(){
-				   plus.navigator.setStatusBarBackground(jy.bcolor);
-				   plus.navigator.setStatusBarStyle(jy.bstyle);
-				},0)
+//					setTimeout(function(){
+//						 var ws=plus.webview.currentWebview();
+//					     	  plus.webview.hide(ws,"none",0);
+//					},350)
 			}
 		});
 	});

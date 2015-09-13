@@ -10,7 +10,7 @@
 	 cfg.Interface={
 	 	payApp:cfg.httpUrl+'/jy/onlinePayments.do',             //支付宝接口
 	 	loginApp:cfg.httpUrl+'/jy/loginApp.do',                 //登录接口
-	 	indexBanner:cfg.httpUrl+'jy/indexBannerApp.do',         //首页Banner接口
+	 	indexBanner:cfg.httpUrl+'/jy/indexBannerApp.do',         //首页Banner接口
 	 	updateuserinfo:cfg.httpUrl+'/jy/updateuserinfoApp.do',  //个人资料修改接口
 	 	appImgUpload:cfg.httpUrl+'/jy/appImgUpload.do',         //图像上传接口
 	 	sendCode:cfg.httpUrl+'/jy/sendCodeApp.do',              //验证码获取接口

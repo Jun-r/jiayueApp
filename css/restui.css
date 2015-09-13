@@ -48,3 +48,6 @@ li,ul{
 .mui-slider-indicator .mui-number span,.mui-slider-indicator .mui-number{
 	color:#fff;
 }
+.jy-home-grid{
+	/*height:calc(100%-236);*/
+}

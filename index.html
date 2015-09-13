@@ -7,6 +7,7 @@
 	<link href="css/mui.min.css" rel="stylesheet" />
 	<link href="css/app.css" rel="stylesheet" />
 	<link href="css/restui.css" rel="stylesheet" />
+	
 </head>
 <body>
   <div class="ui-page home" id="ui-page">
@@ -59,7 +60,7 @@
 					</a>
 				</li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-4">
-					<a href="login.html" class="ui-link" isVip='true'>
+					<a href="javascript:;" data-url='vip-back-index.html' class="isVip">
 						<span class="icon-home icon icon-homeVIP"></span>
 						<div class="mui-media-body">VIP专区</div>
 					</a>
@@ -86,7 +87,7 @@
 		</div>
     </div>
   </div>
-<script src="js/mui.min.js"></script>
+  <script src="js/mui.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -99,6 +100,7 @@
 				//关闭 splash
 				plus.navigator.closeSplashscreen();
 			}, 600);
+			J.getviemID=''
 			var screenHeight = plus.screen.resolutionHeight;
 			var slider=doc.getElementById("slider");
 			var jyhomegrid=doc.getElementById("jy-home-grid");
@@ -107,14 +109,27 @@
 			var sliderHeight= slider.offsetHeight;
 			var headerH=header.offsetHeight;
 			var jyhomechildenH=jyhomechilden.offsetHeight;
-			var margint=((screenHeight-sliderHeight-headerH-22)-jyhomechildenH)/2;
+		    var margint=((screenHeight-sliderHeight-headerH-22)-jyhomechildenH)/2;
 			if(margint>0)jyhomechilden.style.marginTop=margint+"px";
 			plus.navigator.setStatusBarStyle('UIStatusBarStyleBlackTranslucent')
 		 });
 		 //图片切换
-		 
+//		 var sliderimg=document.getElementById("slider-img");
+//			J.dataAjax(CONFING.Interface.indexBannerApp,{wait:true},function(data){
+//				var picList=data.data;
+//				var length=picList.length;
+//				var indicator='';
+//				var siderImg+='<div class="mui-slider-item mui-slider-item-duplicate"><img src="'+CONFING.httpUrl+picList[length-1]['img']+'" /></div>';
+//		 		for(var i=0;i<length;i++){
+//			 		  siderImg+='<div class="mui-slider-item"><img src="'+CONFING.httpUrl+picList[i]['img']+'" /></div></div>';
+//			 		  if(i=0){
+//			 		  	indicator='<div class="mui-indicator mui-active"></div>';
+//			 		  
+//			 	}
+//		 		siderImg+='<div class="mui-slider-item mui-slider-item-duplicate"><img src="'+CONFING.httpUrl+picList[0]['img']+'"  /></div>';
+//	            sliderimg.innerHTML=siderImg;
+//			})
 	}(mui, document));
 	</script>
-	
 </body>
 </html>
