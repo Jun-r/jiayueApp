@@ -15,7 +15,6 @@
 	    .vip-list ul{
 	        padding-bottom:14px;
 	        overflow:hidden;
-	     		
 	    }
         .vip-list li{
     		overflow:hidden;
@@ -109,7 +108,6 @@
 			  		     if(currentWs.tId=='5'){
 			  		     	var address=J.cityGetText(cityData3,conlist['address']);
 			  		     }
-			  		    console.log(J.sDug(conlist))
 						var html='<li><span class="f-l">申请姓名</span><span class="f-r">'+conlist['username']+'</span></li>';
 						    html+='<li><span class="f-l">申请时间</span><span class="f-r">'+conlist['apply_time']+'</span></li>';
 						    if(currentWs.tId=='2'){
@@ -118,8 +116,8 @@
 						    html+='<li class="t"><span class="f-l">手机</span><span class="f-r">'+conlist['phone']+'</span></li>';
 						    html+='<li><span class="f-l">邮箱</span><span class="f-r">'+conlist['email']+'</span></li>';
 						    if(currentWs.tId=='1'){
-						    	 html+='<li class="t"><span class="f-l">项目名称</span><span class="f-r">'+conlist['company_name']+'</span></li>'
-						         html+='<li><span class="f-l">企业注册号</span><span class="f-r">'+conlist['registration_number']+'</span></li>'
+						    	 html+='<li class="t"><span class="f-l">项目名称</span><span class="f-r">'+conlist['company_name']+'</span></li>';
+						         html+='<li><span class="f-l">企业注册号</span><span class="f-r">'+conlist['registration_number']+'</span></li>';
 						    }
 						    if(currentWs.tId=='3'){
 						    	html+='<li><span class="f-l">位置及描述</span><span class="f-r">'+conlist['position']+'</span></li>';
